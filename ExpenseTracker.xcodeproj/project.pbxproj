@@ -99,10 +99,11 @@
 		C9820D2729FA58BD004E0E02 /* ExpenseTracker */ = {
 			isa = PBXGroup;
 			children = (
+				C9820D5A29FA5917004E0E02 /* Model */,
+				C9820D5929FA590C004E0E02 /* Controller */,
+				C9820D5829FA5900004E0E02 /* View */,
 				C9820D2829FA58BD004E0E02 /* AppDelegate.swift */,
 				C9820D2A29FA58BD004E0E02 /* SceneDelegate.swift */,
-				C9820D2C29FA58BD004E0E02 /* ViewController.swift */,
-				C9820D2E29FA58BD004E0E02 /* Main.storyboard */,
 				C9820D3129FA58BD004E0E02 /* Assets.xcassets */,
 				C9820D3329FA58BD004E0E02 /* LaunchScreen.storyboard */,
 				C9820D3629FA58BD004E0E02 /* Info.plist */,
@@ -125,6 +126,29 @@
 				C9820D4B29FA58BD004E0E02 /* ExpenseTrackerUITestsLaunchTests.swift */,
 			);
 			path = ExpenseTrackerUITests;
+			sourceTree = "<group>";
+		};
+		C9820D5829FA5900004E0E02 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C9820D2E29FA58BD004E0E02 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C9820D5929FA590C004E0E02 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C9820D2C29FA58BD004E0E02 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		C9820D5A29FA5917004E0E02 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
