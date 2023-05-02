@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C93D4DE29FE1E9E000F8688 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4DD29FE1E9E000F8688 /* Expense.swift */; };
+		1C93D4E029FF8DDA000F8688 /* ExpensesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4DF29FF8DDA000F8688 /* ExpensesListViewController.swift */; };
+		1C93D4E229FF8DF4000F8688 /* AddExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4E129FF8DF4000F8688 /* AddExpenseViewController.swift */; };
+		1C93D4E429FF8E05000F8688 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4E329FF8E05000F8688 /* SettingsViewController.swift */; };
+		1C93D4E629FF8E55000F8688 /* AlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4E529FF8E55000F8688 /* AlertsViewController.swift */; };
 		C9820D2929FA58BD004E0E02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9820D2829FA58BD004E0E02 /* AppDelegate.swift */; };
 		C9820D2B29FA58BD004E0E02 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9820D2A29FA58BD004E0E02 /* SceneDelegate.swift */; };
 		C9820D2D29FA58BD004E0E02 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9820D2C29FA58BD004E0E02 /* ViewController.swift */; };
@@ -36,6 +41,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C93D4DD29FE1E9E000F8688 /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Expense.swift; path = ../../../Expense.swift; sourceTree = "<group>"; };
+		1C93D4DF29FF8DDA000F8688 /* ExpensesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesListViewController.swift; sourceTree = "<group>"; };
+		1C93D4E129FF8DF4000F8688 /* AddExpenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseViewController.swift; sourceTree = "<group>"; };
+		1C93D4E329FF8E05000F8688 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		1C93D4E529FF8E55000F8688 /* AlertsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsViewController.swift; sourceTree = "<group>"; };
 		C9820D2529FA58BD004E0E02 /* ExpenseTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExpenseTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9820D2829FA58BD004E0E02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9820D2A29FA58BD004E0E02 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -140,6 +150,10 @@
 			isa = PBXGroup;
 			children = (
 				C9820D2C29FA58BD004E0E02 /* ViewController.swift */,
+				1C93D4DF29FF8DDA000F8688 /* ExpensesListViewController.swift */,
+				1C93D4E129FF8DF4000F8688 /* AddExpenseViewController.swift */,
+				1C93D4E329FF8E05000F8688 /* SettingsViewController.swift */,
+				1C93D4E529FF8E55000F8688 /* AlertsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -147,6 +161,7 @@
 		C9820D5A29FA5917004E0E02 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1C93D4DD29FE1E9E000F8688 /* Expense.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -282,7 +297,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C93D4E229FF8DF4000F8688 /* AddExpenseViewController.swift in Sources */,
+				1C93D4E029FF8DDA000F8688 /* ExpensesListViewController.swift in Sources */,
+				1C93D4E629FF8E55000F8688 /* AlertsViewController.swift in Sources */,
+				1C93D4DE29FE1E9E000F8688 /* Expense.swift in Sources */,
 				C9820D2D29FA58BD004E0E02 /* ViewController.swift in Sources */,
+				1C93D4E429FF8E05000F8688 /* SettingsViewController.swift in Sources */,
 				C9820D2929FA58BD004E0E02 /* AppDelegate.swift in Sources */,
 				C9820D2B29FA58BD004E0E02 /* SceneDelegate.swift in Sources */,
 			);
