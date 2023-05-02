@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1C93D4DE29FE1E9E000F8688 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4DD29FE1E9E000F8688 /* Expense.swift */; };
+		1C317F1A2A011B3900E7F4FE /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C317F192A011B3900E7F4FE /* Expense.swift */; };
 		1C93D4E029FF8DDA000F8688 /* ExpensesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4DF29FF8DDA000F8688 /* ExpensesListViewController.swift */; };
 		1C93D4E229FF8DF4000F8688 /* AddExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4E129FF8DF4000F8688 /* AddExpenseViewController.swift */; };
 		1C93D4E429FF8E05000F8688 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4E329FF8E05000F8688 /* SettingsViewController.swift */; };
@@ -41,7 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1C93D4DD29FE1E9E000F8688 /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Expense.swift; path = ../../../Expense.swift; sourceTree = "<group>"; };
+		1C317F192A011B3900E7F4FE /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		1C93D4DF29FF8DDA000F8688 /* ExpensesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesListViewController.swift; sourceTree = "<group>"; };
 		1C93D4E129FF8DF4000F8688 /* AddExpenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseViewController.swift; sourceTree = "<group>"; };
 		1C93D4E329FF8E05000F8688 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +86,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C317F182A011B2C00E7F4FE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1C317F192A011B3900E7F4FE /* Expense.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		C9820D1C29FA58BD004E0E02 = {
 			isa = PBXGroup;
 			children = (
@@ -109,7 +117,7 @@
 		C9820D2729FA58BD004E0E02 /* ExpenseTracker */ = {
 			isa = PBXGroup;
 			children = (
-				C9820D5A29FA5917004E0E02 /* Model */,
+				1C317F182A011B2C00E7F4FE /* Model */,
 				C9820D5929FA590C004E0E02 /* Controller */,
 				C9820D5829FA5900004E0E02 /* View */,
 				C9820D2829FA58BD004E0E02 /* AppDelegate.swift */,
@@ -156,14 +164,6 @@
 				1C93D4E529FF8E55000F8688 /* AlertsViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		C9820D5A29FA5917004E0E02 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				1C93D4DD29FE1E9E000F8688 /* Expense.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,10 +297,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C317F1A2A011B3900E7F4FE /* Expense.swift in Sources */,
 				1C93D4E229FF8DF4000F8688 /* AddExpenseViewController.swift in Sources */,
 				1C93D4E029FF8DDA000F8688 /* ExpensesListViewController.swift in Sources */,
 				1C93D4E629FF8E55000F8688 /* AlertsViewController.swift in Sources */,
-				1C93D4DE29FE1E9E000F8688 /* Expense.swift in Sources */,
 				C9820D2D29FA58BD004E0E02 /* ViewController.swift in Sources */,
 				1C93D4E429FF8E05000F8688 /* SettingsViewController.swift in Sources */,
 				C9820D2929FA58BD004E0E02 /* AppDelegate.swift in Sources */,
