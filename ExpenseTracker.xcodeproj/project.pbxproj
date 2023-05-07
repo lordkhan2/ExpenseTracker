@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1C317F1A2A011B3900E7F4FE /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C317F192A011B3900E7F4FE /* Expense.swift */; };
-		1C93D4E029FF8DDA000F8688 /* ExpensesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4DF29FF8DDA000F8688 /* ExpensesListViewController.swift */; };
-		1C93D4E229FF8DF4000F8688 /* AddExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4E129FF8DF4000F8688 /* AddExpenseViewController.swift */; };
+		1C317F1D2A05EE3300E7F4FE /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C317F1C2A05EE3300E7F4FE /* DBManager.swift */; };
+		1C4C6FEE2A0674BB00A33F39 /* AddExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4C6FED2A0674BB00A33F39 /* AddExpenseViewController.swift */; };
+		1C4C6FF02A068A1400A33F39 /* ExpensesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4C6FEF2A068A1400A33F39 /* ExpensesListViewController.swift */; };
+		1C93BD092A072BD600A0236F /* ExpenseTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93BD072A072BD600A0236F /* ExpenseTableCell.swift */; };
+		1C93BD0A2A072BD600A0236F /* ExpenseTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C93BD082A072BD600A0236F /* ExpenseTableCell.xib */; };
 		1C93D4E429FF8E05000F8688 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4E329FF8E05000F8688 /* SettingsViewController.swift */; };
 		1C93D4E629FF8E55000F8688 /* AlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4E529FF8E55000F8688 /* AlertsViewController.swift */; };
 		C9820D2929FA58BD004E0E02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9820D2829FA58BD004E0E02 /* AppDelegate.swift */; };
@@ -42,8 +45,11 @@
 
 /* Begin PBXFileReference section */
 		1C317F192A011B3900E7F4FE /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
-		1C93D4DF29FF8DDA000F8688 /* ExpensesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesListViewController.swift; sourceTree = "<group>"; };
-		1C93D4E129FF8DF4000F8688 /* AddExpenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseViewController.swift; sourceTree = "<group>"; };
+		1C317F1C2A05EE3300E7F4FE /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
+		1C4C6FED2A0674BB00A33F39 /* AddExpenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseViewController.swift; sourceTree = "<group>"; };
+		1C4C6FEF2A068A1400A33F39 /* ExpensesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesListViewController.swift; sourceTree = "<group>"; };
+		1C93BD072A072BD600A0236F /* ExpenseTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTableCell.swift; sourceTree = "<group>"; };
+		1C93BD082A072BD600A0236F /* ExpenseTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExpenseTableCell.xib; sourceTree = "<group>"; };
 		1C93D4E329FF8E05000F8688 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1C93D4E529FF8E55000F8688 /* AlertsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsViewController.swift; sourceTree = "<group>"; };
 		C9820D2529FA58BD004E0E02 /* ExpenseTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExpenseTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +100,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		1C317F1B2A05EE1500E7F4FE /* SQLiteDBConfig */ = {
+			isa = PBXGroup;
+			children = (
+				1C317F1C2A05EE3300E7F4FE /* DBManager.swift */,
+			);
+			path = SQLiteDBConfig;
+			sourceTree = "<group>";
+		};
 		C9820D1C29FA58BD004E0E02 = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +131,7 @@
 		C9820D2729FA58BD004E0E02 /* ExpenseTracker */ = {
 			isa = PBXGroup;
 			children = (
+				1C317F1B2A05EE1500E7F4FE /* SQLiteDBConfig */,
 				1C317F182A011B2C00E7F4FE /* Model */,
 				C9820D5929FA590C004E0E02 /* Controller */,
 				C9820D5829FA5900004E0E02 /* View */,
@@ -149,6 +164,7 @@
 		C9820D5829FA5900004E0E02 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1C93BD082A072BD600A0236F /* ExpenseTableCell.xib */,
 				C9820D2E29FA58BD004E0E02 /* Main.storyboard */,
 			);
 			path = View;
@@ -158,10 +174,11 @@
 			isa = PBXGroup;
 			children = (
 				C9820D2C29FA58BD004E0E02 /* ViewController.swift */,
-				1C93D4DF29FF8DDA000F8688 /* ExpensesListViewController.swift */,
-				1C93D4E129FF8DF4000F8688 /* AddExpenseViewController.swift */,
 				1C93D4E329FF8E05000F8688 /* SettingsViewController.swift */,
 				1C93D4E529FF8E55000F8688 /* AlertsViewController.swift */,
+				1C4C6FED2A0674BB00A33F39 /* AddExpenseViewController.swift */,
+				1C4C6FEF2A068A1400A33F39 /* ExpensesListViewController.swift */,
+				1C93BD072A072BD600A0236F /* ExpenseTableCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -271,6 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9820D3529FA58BD004E0E02 /* LaunchScreen.storyboard in Resources */,
+				1C93BD0A2A072BD600A0236F /* ExpenseTableCell.xib in Resources */,
 				C9820D3229FA58BD004E0E02 /* Assets.xcassets in Resources */,
 				C9820D3029FA58BD004E0E02 /* Main.storyboard in Resources */,
 			);
@@ -298,13 +316,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C317F1A2A011B3900E7F4FE /* Expense.swift in Sources */,
-				1C93D4E229FF8DF4000F8688 /* AddExpenseViewController.swift in Sources */,
-				1C93D4E029FF8DDA000F8688 /* ExpensesListViewController.swift in Sources */,
 				1C93D4E629FF8E55000F8688 /* AlertsViewController.swift in Sources */,
+				1C317F1D2A05EE3300E7F4FE /* DBManager.swift in Sources */,
+				1C93BD092A072BD600A0236F /* ExpenseTableCell.swift in Sources */,
+				1C4C6FEE2A0674BB00A33F39 /* AddExpenseViewController.swift in Sources */,
 				C9820D2D29FA58BD004E0E02 /* ViewController.swift in Sources */,
 				1C93D4E429FF8E05000F8688 /* SettingsViewController.swift in Sources */,
 				C9820D2929FA58BD004E0E02 /* AppDelegate.swift in Sources */,
 				C9820D2B29FA58BD004E0E02 /* SceneDelegate.swift in Sources */,
+				1C4C6FF02A068A1400A33F39 /* ExpensesListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
