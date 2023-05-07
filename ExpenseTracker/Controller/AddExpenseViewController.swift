@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class AddExpenseViewController : UIViewController {
+class AddExpenseViewController : UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
@@ -26,6 +26,10 @@ class AddExpenseViewController : UIViewController {
         super.viewDidLoad()
         createDatepicker()
         // Do any additional setup after loading the view.
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        recieptImageView.isUserInteractionEnabled = true
+        recieptImageView.addGestureRecognizer(tapGestureRecognizer)
+        recieptImageView.backgroundColor = .systemGray
     }
     
     func createToolbar() -> UIToolbar {
@@ -66,5 +70,29 @@ class AddExpenseViewController : UIViewController {
         print("| EZPROGAMER \(id)| \(expenseDate)| \(expenseAmount)| \(expenseCategory)| \(expensePaymentType)| \(expenseDescription)| \(expenseRecieptImage)| \(expenseNotes)")
         
         db.insert(expenseDate: expenseDate, amount: expenseAmount, category: expenseCategory, paymentType: expensePaymentType, description: expenseDescription, imageLink: expenseRecieptImage, notes: expenseNotes)
+    }
+    
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer)
+    {
+        let tappedImage = tapGestureRecognizer.view as! UIImageView
+        // Your action
+        print("View Tapped")
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+    
+}
+
+extension ViewController:UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+    func imagePickerControllerDidCancel(_ picker:UIImagePickerController){
+        picker.dismiss(animated:true, completion: nil)
+    }
+    func imagePickerController(_ picker:UIImagePickerController, didFinishPickingMediaWithInfo info:[UIImagePickerController.InfoKey : Any]){
+        picker.dismiss(animated: true,completion: nil)
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else{
+            return
+        }
     }
 }

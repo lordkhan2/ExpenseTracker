@@ -24,6 +24,7 @@
 		C9820D4029FA58BD004E0E02 /* ExpenseTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9820D3F29FA58BD004E0E02 /* ExpenseTrackerTests.swift */; };
 		C9820D4A29FA58BD004E0E02 /* ExpenseTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9820D4929FA58BD004E0E02 /* ExpenseTrackerUITests.swift */; };
 		C9820D4C29FA58BD004E0E02 /* ExpenseTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9820D4B29FA58BD004E0E02 /* ExpenseTrackerUITestsLaunchTests.swift */; };
+		EE1A4B102A076D3300516429 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		C9820D4529FA58BD004E0E02 /* ExpenseTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExpenseTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9820D4929FA58BD004E0E02 /* ExpenseTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTrackerUITests.swift; sourceTree = "<group>"; };
 		C9820D4B29FA58BD004E0E02 /* ExpenseTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 				1C4C6FED2A0674BB00A33F39 /* AddExpenseViewController.swift */,
 				1C4C6FEF2A068A1400A33F39 /* ExpensesListViewController.swift */,
 				1C93BD072A072BD600A0236F /* ExpenseTableCell.swift */,
+				EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE1A4B102A076D3300516429 /* SettingTableViewCell.swift in Sources */,
 				1C317F1A2A011B3900E7F4FE /* Expense.swift in Sources */,
 				1C93D4E629FF8E55000F8688 /* AlertsViewController.swift in Sources */,
 				1C317F1D2A05EE3300E7F4FE /* DBManager.swift in Sources */,
