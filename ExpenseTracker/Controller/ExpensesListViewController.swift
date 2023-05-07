@@ -17,6 +17,7 @@ class ExpensesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Configuring the custom expense cell into the table veiw
         self.expensesTableView.register(UINib.init(nibName: "ExpenseTableCell", bundle: .main), forCellReuseIdentifier: "ExpenseTableCell")
         
         self.expensesTableView.delegate = self

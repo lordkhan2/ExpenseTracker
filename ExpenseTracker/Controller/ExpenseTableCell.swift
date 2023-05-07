@@ -9,6 +9,7 @@ import UIKit
 
 class ExpenseTableCell: UITableViewCell {
 
+    //This is for a custom cell for the Expense List Table View - ExpenseTableCell.xib is the layout file
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
