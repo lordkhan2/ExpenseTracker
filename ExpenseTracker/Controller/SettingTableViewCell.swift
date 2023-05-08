@@ -2,7 +2,7 @@
 //  SettingTableViewCell.swift
 //  ExpenseTracker
 //
-//  Created by Yan Hua on 7/5/2023.
+//  Created by Yangru Guo on 7/5/2023.
 //
 
 import UIKit
