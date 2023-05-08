@@ -32,6 +32,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         recieptImageView.backgroundColor = .systemGray
     }
     
+    //Creating a toolbar to handle the view for datepicker
     func createToolbar() -> UIToolbar {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -42,6 +43,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         return toolbar
     }
     
+    //Datepicket function
     func createDatepicker(){
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = .date
@@ -49,6 +51,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         dateTextField.inputAccessoryView = createToolbar()
     }
     
+    //Function to show necessary steps to take once done is pressed after date has been picked
     @objc func donePressed(){
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -57,6 +60,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         self.view.endEditing(true)
     }
 
+    //Button click event to add all data from form into database
     @IBAction func AddExpense(_ sender: Any) {
         var id = 1
         var expenseDate = dateTextField.text ?? ""
