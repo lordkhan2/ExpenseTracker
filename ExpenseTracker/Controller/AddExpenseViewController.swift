@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class AddExpenseViewController : UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class AddExpenseViewController : UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
@@ -36,6 +36,16 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         recieptImageView.addGestureRecognizer(tapGestureRecognizer)
         recieptImageView.backgroundColor = .systemGray
         
+        //enable dismissing the keyboard when the user tapping the area outside the field
+        let tapToHideKeyboardGesture = UITapGestureRecognizer(target: self.view, action:#selector(UIView.endEditing(_:)))
+        self.view.addGestureRecognizer(tapToHideKeyboardGesture)
+        
+        //enable dismissing the keyboard by tapping return key
+        amountTextField.delegate = self
+        categoryTextField.delegate = self
+        paymentTypeTextField.delegate = self
+        descriptionTextField.delegate = self
+        notesTextField.delegate = self
         //initialize the image identifier each time when add expense view is switched to
         if let receiptImageIdentifier = userDefault.value(forKey: RECEIPT_IMAGE_IDENTIFIER_KEY) as? Data {
             self.receiptImageIdentifier = try! PropertyListDecoder().decode(Int.self,from: receiptImageIdentifier)
@@ -43,8 +53,12 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
             self.receiptImageIdentifier = 0
         }
         
-        print(receiptImageIdentifier)
         //recieptImageView.image = manager.getImage(identifier: "0")
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     //Creating a toolbar to handle the view for datepicker
@@ -73,11 +87,23 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         dateFormatter.timeStyle = .none
         self.dateTextField.text = dateFormatter.string(from: datePicker.date)
         self.view.endEditing(true)
+        
+        //check date is no later than today
+
+        guard dateFormatter.date(from: self.dateTextField.text!)! <= Date() else{
+            let dialogMessage = UIAlertController(title: "Wrong Date Alert", message: "The expense date should not later than today! Please check...", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+             })
+            dialogMessage.addAction(ok)
+            self.present(dialogMessage, animated: true, completion: nil)
+            self.dateTextField.text = nil
+            return
+        }
     }
 
     //Button click event to add all data from form into database
     @IBAction func AddExpense(_ sender: Any) {
-
+        
         let expenseDate = dateTextField.text ?? ""
         let expenseAmount = Double(amountTextField.text ?? "0") ?? 0.0
         let expenseCategory = categoryTextField.text ?? ""
@@ -85,6 +111,26 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         let expenseDescription = descriptionTextField.text ?? ""
         let expenseRecieptImage:String
         let expenseNotes = notesTextField.text ?? ""
+        
+        //empty field check
+        guard !dateTextField.text!.isEmpty && !amountTextField.text!.isEmpty && !categoryTextField.text!.isEmpty && !paymentTypeTextField.text!.isEmpty else{
+            let dialogMessage = UIAlertController(title: "Empty Fields Alert", message: "Required fields cannot be empty! Please check...", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+             })
+            dialogMessage.addAction(ok)
+            self.present(dialogMessage, animated: true, completion: nil)
+            return
+        }
+        
+        //check expense is a two decimal number
+        guard isTwoDecimalNumber(testStr: amountTextField.text!) else{
+            let dialogMessage = UIAlertController(title: "Wrong Amount", message: "The expense must be a number with up to two decimal places!Please check...", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+             })
+            dialogMessage.addAction(ok)
+            self.present(dialogMessage, animated: true, completion: nil)
+            return
+        }
         
         //only save image and update identifier if user has taken a photo
         if let recieptImage = recieptImageView.image {
@@ -106,14 +152,14 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         db.insert(expenseDate: expenseDate, amount: expenseAmount, category: expenseCategory, paymentType: expensePaymentType, description: expenseDescription, imageLink: expenseRecieptImage, notes: expenseNotes)
         
         //open a dialog alert to inform the user the item has been added
-        var dialogMessage = UIAlertController(title: "Expense Item Added", message: "Expense item has been added, tap ok to continue", preferredStyle: .alert)
+        let dialogMessage = UIAlertController(title: "Expense Item Added", message: "Expense item has been added, tap ok to continue", preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
             print("Ok button tapped")
          })
         dialogMessage.addAction(ok)
         self.present(dialogMessage, animated: true, completion: nil)
+        
         resetAllViewItems()
-        print(receiptImageIdentifier)
     }
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer)
@@ -127,6 +173,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         picker.delegate = self
         present(picker, animated: true)
     }
+    
     
     func imagePickerControllerDidCancel(_ picker:UIImagePickerController){
         picker.dismiss(animated:true, completion: nil)
@@ -148,5 +195,9 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         descriptionTextField.text = nil
         recieptImageView.image = nil
         notesTextField.text = nil
+    }
+    
+    func isTwoDecimalNumber(testStr:String) -> Bool {
+        return testStr.range(of: "^[0-9]+(?:.[0-9]{1,2})?$",options: .regularExpression, range: nil,locale: nil) != nil
     }
 }
