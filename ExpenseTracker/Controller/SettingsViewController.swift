@@ -26,18 +26,37 @@ struct SettingsOption{
 }
 
 
-class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
+class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var settingTableView: UITableView!
+    @IBOutlet var settingMonthlyAlertView: UIView!
+    
+    @IBOutlet var blurBackgroundView: UIVisualEffectView!
+    @IBOutlet weak var capAmountTextField: UITextField!
     
     var models = [Section]()
-    
+    let MONTHLY_EXPENSE_CAP_KEY = "MonthlyExpenseCap"
+    let userDefault = UserDefaults.standard
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         settingTableView.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.id)
         configure()
+        
+        blurBackgroundView.bounds = self.view.bounds
+        
+        //monthly expense cap alert subview to be shown once click alert button
+        
+        settingMonthlyAlertView.bounds = CGRect(x: 0, y: 0, width: self.view.bounds.width*0.9, height: self.view.bounds.height*0.23)
+        
+        capAmountTextField.delegate = self
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
     func configure(){
         models.append(Section(title: "Expense Settings", options: [
             .staticCell(model:SettingsOption(title: "Fixed Cost and Income", icon: UIImage(systemName:"banknote"), iconBGColor: .systemYellow){
@@ -72,6 +91,12 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
             }),
             .staticCell(model: SettingsOption(title: "Reminder", icon: UIImage(systemName:"exclamationmark.bubble"), iconBGColor: .systemPink){
                 //code to be added when user click the button
+                self.animateViewIn(targetView: self.blurBackgroundView)
+                self.animateViewIn(targetView: self.settingMonthlyAlertView)
+                //if the user previously set a cap, retrive the cap amount and render to the relevant textfield
+                if let MonthlyCapRecord = self.userDefault.value(forKey: self.MONTHLY_EXPENSE_CAP_KEY) as? Data {
+                    self.capAmountTextField.text = String(try! PropertyListDecoder().decode(Double.self,from: MonthlyCapRecord))
+                }
             })
         ])
         )
@@ -140,5 +165,74 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
             model.handler()
         }
     }
-
+    
+    func animateViewIn(targetView:UIView){
+        let bgView = self.view!
+        
+        bgView.addSubview(targetView)
+        
+        //view scalling to be 120%
+        targetView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        targetView.alpha = 0
+        targetView.center = bgView.center
+        
+        //animate the view
+        UIView.animate(withDuration: 0.3, animations:{
+            targetView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            targetView.alpha = 1
+        }
+        )
+    }
+    
+    func animateViewOut(targetView:UIView){
+        UIView.animate(withDuration: 0.3, animations:{
+            targetView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            targetView.alpha = 0
+        }, completion: {_ in
+            targetView.removeFromSuperview()
+        }
+        )
+    }
+    
+    @IBAction func pressAlertConfirmButton(_ sender: Any) {
+        //check empty field
+        guard !capAmountTextField.text!.isEmpty else {
+            let dialogMessage = UIAlertController(title: "Empty Fields Alert", message: "Required fields cannot be empty! Please check...", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+             })
+            dialogMessage.addAction(ok)
+            self.present(dialogMessage, animated: true, completion: nil)
+            return
+        }
+        //check two decimal number
+        guard isTwoDecimalNumber(testStr: capAmountTextField.text!) else{
+            let dialogMessage = UIAlertController(title: "Wrong Amount", message: "The amount must be a number with up to two decimal places!Please check...", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+             })
+            dialogMessage.addAction(ok)
+            self.present(dialogMessage, animated: true, completion: nil)
+            return
+        }
+        
+        //setting monthly cap to local user defaults
+        userDefault.setValue(try? PropertyListEncoder().encode(Double(capAmountTextField.text!)), forKey: MONTHLY_EXPENSE_CAP_KEY)
+        
+        //open a dialog alert to inform the user the cap has been set
+        let dialogMessage = UIAlertController(title: "Expense Cap Set", message: "Expense cap has been set, tap ok to continue", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+         })
+        dialogMessage.addAction(ok)
+        self.present(dialogMessage, animated: true, completion: nil)
+        self.animateViewOut(targetView: self.settingMonthlyAlertView)
+        self.animateViewOut(targetView: self.blurBackgroundView)
+    }
+    
+    @IBAction func cancelCapAmount(_ sender: Any) {
+        self.animateViewOut(targetView: self.settingMonthlyAlertView)
+        self.animateViewOut(targetView: self.blurBackgroundView)
+    }
+    func isTwoDecimalNumber(testStr:String) -> Bool {
+        return testStr.range(of: "^[0-9]+(?:.[0-9]{1,2})?$",options: .regularExpression, range: nil,locale: nil) != nil
+    }
+    
 }
