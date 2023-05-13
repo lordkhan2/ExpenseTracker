@@ -9,6 +9,8 @@ import UIKit
 import Charts
 class ViewController: UIViewController, ChartViewDelegate {
     var pieChart = PieChartView()
+    var lineChart = LineChartView()
+    var barChart = BarChartView()
     
     var db = DBManager()
     var expenses = Array<Expense>()
@@ -24,27 +26,13 @@ class ViewController: UIViewController, ChartViewDelegate {
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        pieChart.frame = CGRect(x:0, y:0, width:self.view.frame.size.width, height: self.view.frame.size.width)
-        pieChart.center = view.center
+        let chartSize: CGFloat = 300.0
+//        pieChart.frame = CGRect(x:0, y:0, width:self.view.frame.size.width, height: self.view.frame.size.width)
+        pieChart.frame = CGRect(x:50, y:100, width:chartSize, height: chartSize)
+        //pieChart.center = view.center
         view.addSubview(pieChart)
         expenses = db.read()
-        print("print now")
-        print(expenses)
-        for expense in expenses {
-            print(expense.amount)
-        }
-        
         var entries = [ChartDataEntry]()
-//        for x in 0..<10 {
-//            entries.append(ChartDataEntry(x: Double(x), y: Double(x)))
-//        }
-//        let expenseData = [
-//            (0, 1000.0),
-//            (1, 500.0),
-//            (2, 300.0),
-//            (3, 800.0),
-//            (4, 900.0),
-//        ]
         var expenseData = [(Int, Double)]()
         for expense in expenses {
             let expenseCategory = expense.id
@@ -67,7 +55,36 @@ class ViewController: UIViewController, ChartViewDelegate {
       
         set.label = "Monthly Expense Breakdown"
         pieChart.data = data
-       
+        
+//        lineChart.frame = CGRect(x:50, y:400, width:chartSize, height: chartSize)
+//        view.addSubview(lineChart)
+//
+//        let setLine = LineChartDataSet(entries: entries)
+//        setLine.colors = ChartColorTemplates.material()
+//        let dataLine = LineChartData(dataSet: setLine)
+//        lineChart.data = dataLine
+        
+        var entriesBar = [BarChartDataEntry]()
+        for (number, amount) in expenseData {
+            let entry = BarChartDataEntry(x: Double(number), y: Double(amount))
+            entriesBar.append(entry)
+        }
+        
+        barChart.frame = CGRect(x:50, y:400, width:chartSize, height: chartSize)
+        view.addSubview(barChart)
+        
+        let setBar = BarChartDataSet(entries: entriesBar)
+        setBar.colors = ChartColorTemplates.joyful()
+        let dataBar = BarChartData(dataSet: setBar)
+        barChart.data = dataBar
+        
+        barChart.rightAxis.enabled = false
+        barChart.xAxis.labelPosition = .bottom
+        
+        barChart.xAxis.drawGridLinesEnabled = false
+        barChart.leftAxis.drawGridLinesEnabled = false
+        barChart.rightAxis.drawGridLinesEnabled = false
+      
         
     }
 
