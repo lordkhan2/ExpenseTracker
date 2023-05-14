@@ -15,6 +15,9 @@
 		1C93BD0A2A072BD600A0236F /* ExpenseTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C93BD082A072BD600A0236F /* ExpenseTableCell.xib */; };
 		1C93D4E429FF8E05000F8688 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4E329FF8E05000F8688 /* SettingsViewController.swift */; };
 		1C93D4E629FF8E55000F8688 /* AlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C93D4E529FF8E55000F8688 /* AlertsViewController.swift */; };
+		1CCE63AA2A0F715D00AE10F1 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCE63A92A0F715D00AE10F1 /* Alert.swift */; };
+		1CCE63AD2A100A8F00AE10F1 /* AlertTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCE63AB2A100A8F00AE10F1 /* AlertTableCell.swift */; };
+		1CCE63AE2A100A8F00AE10F1 /* AlertTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CCE63AC2A100A8F00AE10F1 /* AlertTableCell.xib */; };
 		6BACF0AC3D14AFA18871F7E0 /* Pods_ExpenseTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B90174BA9901182A28CCABE5 /* Pods_ExpenseTrackerTests.framework */; };
 		8C15908119053BC8DA12E471 /* Pods_ExpenseTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 609941440D01C1A208175ADC /* Pods_ExpenseTracker.framework */; };
 		C435D2DC2BC0CC800AC36692 /* Pods_ExpenseTracker_ExpenseTrackerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C5E3A43EFE8571E11982A85 /* Pods_ExpenseTracker_ExpenseTrackerUITests.framework */; };
@@ -57,6 +60,9 @@
 		1C93BD082A072BD600A0236F /* ExpenseTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExpenseTableCell.xib; sourceTree = "<group>"; };
 		1C93D4E329FF8E05000F8688 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1C93D4E529FF8E55000F8688 /* AlertsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsViewController.swift; sourceTree = "<group>"; };
+		1CCE63A92A0F715D00AE10F1 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		1CCE63AB2A100A8F00AE10F1 /* AlertTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTableCell.swift; sourceTree = "<group>"; };
+		1CCE63AC2A100A8F00AE10F1 /* AlertTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertTableCell.xib; sourceTree = "<group>"; };
 		434C361F303EA59A6594A1D0 /* Pods-ExpenseTracker-ExpenseTrackerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExpenseTracker-ExpenseTrackerUITests.release.xcconfig"; path = "Target Support Files/Pods-ExpenseTracker-ExpenseTrackerUITests/Pods-ExpenseTracker-ExpenseTrackerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5824CC75EAF8B83B3DF784C3 /* Pods-ExpenseTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExpenseTracker.release.xcconfig"; path = "Target Support Files/Pods-ExpenseTracker/Pods-ExpenseTracker.release.xcconfig"; sourceTree = "<group>"; };
 		609941440D01C1A208175ADC /* Pods_ExpenseTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExpenseTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				1C317F192A011B3900E7F4FE /* Expense.swift */,
+				1CCE63A92A0F715D00AE10F1 /* Alert.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -137,7 +144,6 @@
 				E32155664DFCF91420CF7EAC /* Pods-ExpenseTrackerTests.debug.xcconfig */,
 				82B980B360279037E826B746 /* Pods-ExpenseTrackerTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -210,6 +216,7 @@
 		C9820D5829FA5900004E0E02 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1CCE63AC2A100A8F00AE10F1 /* AlertTableCell.xib */,
 				1C93BD082A072BD600A0236F /* ExpenseTableCell.xib */,
 				C9820D2E29FA58BD004E0E02 /* Main.storyboard */,
 			);
@@ -226,6 +233,7 @@
 				1C4C6FEF2A068A1400A33F39 /* ExpensesListViewController.swift */,
 				1C93BD072A072BD600A0236F /* ExpenseTableCell.swift */,
 				EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */,
+				1CCE63AB2A100A8F00AE10F1 /* AlertTableCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -351,6 +359,7 @@
 				1C93BD0A2A072BD600A0236F /* ExpenseTableCell.xib in Resources */,
 				C9820D3229FA58BD004E0E02 /* Assets.xcassets in Resources */,
 				C9820D3029FA58BD004E0E02 /* Main.storyboard in Resources */,
+				1CCE63AE2A100A8F00AE10F1 /* AlertTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,8 +490,10 @@
 				EE1A4B102A076D3300516429 /* SettingTableViewCell.swift in Sources */,
 				1C317F1A2A011B3900E7F4FE /* Expense.swift in Sources */,
 				1C93D4E629FF8E55000F8688 /* AlertsViewController.swift in Sources */,
+				1CCE63AD2A100A8F00AE10F1 /* AlertTableCell.swift in Sources */,
 				1C317F1D2A05EE3300E7F4FE /* DBManager.swift in Sources */,
 				1C93BD092A072BD600A0236F /* ExpenseTableCell.swift in Sources */,
+				1CCE63AA2A0F715D00AE10F1 /* Alert.swift in Sources */,
 				1C4C6FEE2A0674BB00A33F39 /* AddExpenseViewController.swift in Sources */,
 				C9820D2D29FA58BD004E0E02 /* ViewController.swift in Sources */,
 				1C93D4E429FF8E05000F8688 /* SettingsViewController.swift in Sources */,
