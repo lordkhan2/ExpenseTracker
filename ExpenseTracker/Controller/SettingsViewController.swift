@@ -7,6 +7,10 @@
 
 import UIKit
 
+struct ExpenseCap:Codable{
+    var monthlyCapAmount:Double
+}
+
 struct Section{
     let title: String
     let options:[SettingsOptionType]
@@ -94,8 +98,9 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
                 self.animateViewIn(targetView: self.blurBackgroundView)
                 self.animateViewIn(targetView: self.settingMonthlyAlertView)
                 //if the user previously set a cap, retrive the cap amount and render to the relevant textfield
-                if let MonthlyCapRecord = self.userDefault.value(forKey: self.MONTHLY_EXPENSE_CAP_KEY) as? Data {
-                    self.capAmountTextField.text = String(try! PropertyListDecoder().decode(Double.self,from: MonthlyCapRecord))
+                if let monthlyCapRecord = self.userDefault.value(forKey: self.MONTHLY_EXPENSE_CAP_KEY) as? Data{
+                    let expenseCapRecord = try! PropertyListDecoder().decode(ExpenseCap.self,from: monthlyCapRecord)
+                    self.capAmountTextField.text = String(expenseCapRecord.monthlyCapAmount)
                 }
             })
         ])
@@ -215,7 +220,8 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
         }
         
         //setting monthly cap to local user defaults
-        userDefault.setValue(try? PropertyListEncoder().encode(Double(capAmountTextField.text!)), forKey: MONTHLY_EXPENSE_CAP_KEY)
+        let newExpenseCap = ExpenseCap(monthlyCapAmount: Double(capAmountTextField.text!)!)
+        userDefault.setValue(try? PropertyListEncoder().encode(newExpenseCap), forKey: MONTHLY_EXPENSE_CAP_KEY)
         
         //open a dialog alert to inform the user the cap has been set
         let dialogMessage = UIAlertController(title: "Expense Cap Set", message: "Expense cap has been set, tap ok to continue", preferredStyle: .alert)

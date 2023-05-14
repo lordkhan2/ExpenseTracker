@@ -26,6 +26,12 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
     var receiptImageIdentifier:Int = -1
     let RECEIPT_IMAGE_IDENTIFIER_KEY = "receiptImageIdentifier"
     
+    let MONTHLY_EXPENSE_CAP_KEY = "MonthlyExpenseCap"
+    var setCap: Double = 0.0
+    
+    var expenses = Array<Expense>()
+    var monthlyAmount: Double = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         createDatepicker()
@@ -36,6 +42,8 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         recieptImageView.addGestureRecognizer(tapGestureRecognizer)
         recieptImageView.backgroundColor = .systemGray
         
+        
+    
         //enable dismissing the keyboard when the user tapping the area outside the field
         let tapToHideKeyboardGesture = UITapGestureRecognizer(target: self.view, action:#selector(UIView.endEditing(_:)))
         self.view.addGestureRecognizer(tapToHideKeyboardGesture)
@@ -104,6 +112,8 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
     //Button click event to add all data from form into database
     @IBAction func AddExpense(_ sender: Any) {
         
+        
+        
         let expenseDate = dateTextField.text ?? ""
         let expenseAmount = Double(amountTextField.text ?? "0") ?? 0.0
         let expenseCategory = categoryTextField.text ?? ""
@@ -111,7 +121,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         let expenseDescription = descriptionTextField.text ?? ""
         let expenseRecieptImage:String
         let expenseNotes = notesTextField.text ?? ""
-        
+
         //empty field check
         guard !dateTextField.text!.isEmpty && !amountTextField.text!.isEmpty && !categoryTextField.text!.isEmpty && !paymentTypeTextField.text!.isEmpty else{
             let dialogMessage = UIAlertController(title: "Empty Fields Alert", message: "Required fields cannot be empty! Please check...", preferredStyle: .alert)
@@ -121,7 +131,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
             self.present(dialogMessage, animated: true, completion: nil)
             return
         }
-        
+
         //check expense is a two decimal number
         guard isTwoDecimalNumber(testStr: amountTextField.text!) else{
             let dialogMessage = UIAlertController(title: "Wrong Amount", message: "The expense must be a number with up to two decimal places!Please check...", preferredStyle: .alert)
@@ -131,7 +141,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
             self.present(dialogMessage, animated: true, completion: nil)
             return
         }
-        
+
         //only save image and update identifier if user has taken a photo
         if let recieptImage = recieptImageView.image {
             //for data storage guideline, refer to https://developer.apple.com/documentation/foundation/optimizing_your_app_s_data_for_icloud_backup/index.html
@@ -146,10 +156,45 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         } else{
             expenseRecieptImage = "nil"
         }
-        
+
         print("| EZPROGAMER \(expenseDate)| \(expenseAmount)| \(expenseCategory)| \(expensePaymentType)| \(expenseDescription)| \(expenseRecieptImage)| \(expenseNotes)")
-        
+
         db.insert(expenseDate: expenseDate, amount: expenseAmount, category: expenseCategory, paymentType: expensePaymentType, description: expenseDescription, imageLink: expenseRecieptImage, notes: expenseNotes)
+        
+        expenses = db.read()
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        let stringDate = dateFormatter.string(from: date)
+        let components = stringDate.components(separatedBy: " ")
+        let month = components[0]
+        let year = components[2]
+        let dateConstruct = "\(components[0]) \(components[2])"
+        print(dateConstruct)
+        
+        for expense in expenses{
+            print("This is expense date\(expense.expenseDate)")
+            if(expense.expenseDate.contains(month) && expense.expenseDate.contains(year))
+            {
+                monthlyAmount += expense.amount
+            }
+        }
+        
+        
+        if let monthlyCapRecord = self.userDefault.value(forKey: self.MONTHLY_EXPENSE_CAP_KEY) as? Data{
+            let expenseCapRecord = try! PropertyListDecoder().decode(ExpenseCap.self,from: monthlyCapRecord)
+            setCap = expenseCapRecord.monthlyCapAmount
+        }
+        
+        print("THIS IS EXPENSE\(setCap)")
+        
+        if((setCap-monthlyAmount) < 100)
+        {
+            var alertDate = stringDate
+            var amount = monthlyAmount
+            var description = "Your Monthly Expense is almost surpassing the limit set. Currently \(setCap-monthlyAmount) is left. Please expend carefully."
+            db.insertAlert(alertDate: alertDate, amount: amount, description: description)
+        }
         
         //open a dialog alert to inform the user the item has been added
         let dialogMessage = UIAlertController(title: "Expense Item Added", message: "Expense item has been added, tap ok to continue", preferredStyle: .alert)

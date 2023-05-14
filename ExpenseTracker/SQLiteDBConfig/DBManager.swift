@@ -14,6 +14,7 @@ class DBManager
     {
         db = openDatabase()
         createTable()
+        createAlertsTable()
     }
     
     let dbPath: String = "myDb.sqlite"
@@ -34,7 +35,7 @@ class DBManager
         }
     }
     
-    //Create a table if it does not exist
+    //Create an Expense table if it does not exist
     func createTable(){
         let createTableString = "CREATE TABLE IF NOT EXISTS Expense(Id INTEGER PRIMARY KEY, expenseDate TEXT, amount DOUBLE, category TEXT, paymentType TEXT, description TEXT, imageLink TEXT, notes TEXT);"
         var createTableStatement: OpaquePointer? = nil
@@ -44,12 +45,30 @@ class DBManager
             {
                 print("Expense Table Created!")
             } else {
-                print("Expense Table Count not be Created!")
+                print("Expense Table could not be Created!")
             }
         }else{
             print("Create Table Statement could not be prepared!")
         }
         sqlite3_finalize(createTableStatement)
+    }
+    
+    //Create an Alert table if does not exist
+    func createAlertsTable(){
+        let createAlertTableString = "CREATE TABLE IF NOT EXISTS Alert(Id INTEGER PRIMARY KEY, alertDate TEXT, amount Double, description TEXT);"
+        var createAlertTableStatement: OpaquePointer? = nil
+        if sqlite3_prepare_v2(db, createAlertTableString, -1, &createAlertTableStatement, nil) == SQLITE_OK
+        {
+            if sqlite3_step(createAlertTableStatement) == SQLITE_DONE
+            {
+                print("Alerts Table Created!")
+            }else{
+                print("Alert table creation error!")
+            }
+        }else{
+            print("Create Table Statement could not be prepared!")
+        }
+        sqlite3_finalize(createAlertTableStatement)
     }
     
     //Insert Expense data into the database
@@ -72,9 +91,30 @@ class DBManager
                 print("Count not insert row.")
             }
         } else {
-            print("INSERT statement coult not be prepared.")
+            print("INSERT statement could not be prepared.")
         }
         sqlite3_finalize(insertStatement)
+    }
+    
+    //Insert Alert data into the database
+    func insertAlert(alertDate: String, amount: Double, description: String){
+        let insertAlertString = "INSERT INTO Alert(alertDate, amount, description)VALUES(?,?,?);"
+        var insertAlertStatement: OpaquePointer? = nil
+        if sqlite3_prepare_v2(db, insertAlertString, -1, &insertAlertStatement, nil) == SQLITE_OK{
+            sqlite3_bind_text(insertAlertStatement, 1, (alertDate as NSString).utf8String, -1, nil)
+            sqlite3_bind_double(insertAlertStatement, 2, amount)
+            sqlite3_bind_text(insertAlertStatement, 3, (description as NSString).utf8String, -1, nil)
+            
+            if sqlite3_step(insertAlertStatement) == SQLITE_DONE{
+                print("Successfully Inserted Alert Data.")
+            }else{
+                print("Data insertion error!")
+            }
+        } else {
+            print("INSERT statement could not be prepared.")
+        }
+        sqlite3_finalize(insertAlertStatement)
+        
     }
     
     //Read Data from the Database
@@ -105,9 +145,49 @@ class DBManager
         return expenses
     }
     
+    
+    func readAlerts() -> [Alert] {
+        let queryAlertStatementString = "SELECT * FROM Alert;"
+        
+        var queryAlertStatement: OpaquePointer? = nil
+        var alerts: [Alert] = []
+        if sqlite3_prepare_v2(db, queryAlertStatementString, -1, &queryAlertStatement, nil) == SQLITE_OK {
+            while sqlite3_step(queryAlertStatement) == SQLITE_ROW {
+                let id = sqlite3_column_int(queryAlertStatement, 0)
+                let alertDate = String(describing: String(cString: sqlite3_column_text(queryAlertStatement, 1)))
+                let amount = sqlite3_column_double(queryAlertStatement, 2)
+                let description = String(describing: String(cString: sqlite3_column_text(queryAlertStatement, 3)))
+                alerts.append(Alert(id: Int(id), alertDate: alertDate, amount: amount, description: description))
+                print("Query Result")
+                print("\(id)| \(alertDate) | \(amount) | \(description)")
+            }
+        } else {
+            print("SELECT statement could not be prepared")
+        }
+        sqlite3_finalize(queryAlertStatement)
+        return alerts
+    }
+    
+    //Delete a specific Alert record from the Alert table based on the id
+    func deleteAlertByID(id: Int){
+        let deleteAlertStatementString = "DELETE FROM Alert WHERE Id =?;"
+        var deleteAlertStatement: OpaquePointer? = nil
+        if sqlite3_prepare_v2(db, deleteAlertStatementString, -1, &deleteAlertStatement, nil) == SQLITE_OK{
+            sqlite3_bind_int(deleteAlertStatement, 1, Int32(id))
+            if sqlite3_step(deleteAlertStatement) == SQLITE_DONE{
+                print("Successfully deleted row.")
+            } else {
+                print("Could not delete row.")
+            }
+        } else {
+            print("DELETE statement could not be prepared")
+        }
+        sqlite3_finalize(deleteAlertStatement)
+    }
+    
     //Delete a specific expense record from the Expense table based on the id
     func deleteByID(id:Int) {
-          let deleteStatementString = "DELETE FROM Expenses WHERE Id = ?;"
+          let deleteStatementString = "DELETE FROM Expense WHERE Id = ?;"
           var deleteStatement: OpaquePointer? = nil
           if sqlite3_prepare_v2(db, deleteStatementString, -1, &deleteStatement, nil) == SQLITE_OK {
               sqlite3_bind_int(deleteStatement, 1, Int32(id))
