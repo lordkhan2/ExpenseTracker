@@ -30,6 +30,7 @@
 		C9820D4029FA58BD004E0E02 /* ExpenseTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9820D3F29FA58BD004E0E02 /* ExpenseTrackerTests.swift */; };
 		C9820D4A29FA58BD004E0E02 /* ExpenseTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9820D4929FA58BD004E0E02 /* ExpenseTrackerUITests.swift */; };
 		C9820D4C29FA58BD004E0E02 /* ExpenseTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9820D4B29FA58BD004E0E02 /* ExpenseTrackerUITestsLaunchTests.swift */; };
+		EE0A93FC2A126302006E27DA /* ExpenseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0A93FB2A126302006E27DA /* ExpenseDetailViewController.swift */; };
 		EE1A4B102A076D3300516429 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */; };
 		EE49C6F22A08CE2400409239 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE49C6F12A08CE2400409239 /* LocalFileManager.swift */; };
 /* End PBXBuildFile section */
@@ -85,6 +86,7 @@
 		C9820D4929FA58BD004E0E02 /* ExpenseTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTrackerUITests.swift; sourceTree = "<group>"; };
 		C9820D4B29FA58BD004E0E02 /* ExpenseTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E32155664DFCF91420CF7EAC /* Pods-ExpenseTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExpenseTrackerTests.debug.xcconfig"; path = "Target Support Files/Pods-ExpenseTrackerTests/Pods-ExpenseTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		EE0A93FB2A126302006E27DA /* ExpenseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailViewController.swift; sourceTree = "<group>"; };
 		EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		EE49C6F12A08CE2400409239 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -234,6 +236,7 @@
 				1C93BD072A072BD600A0236F /* ExpenseTableCell.swift */,
 				EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */,
 				1CCE63AB2A100A8F00AE10F1 /* AlertTableCell.swift */,
+				EE0A93FB2A126302006E27DA /* ExpenseDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				1C93D4E429FF8E05000F8688 /* SettingsViewController.swift in Sources */,
 				C9820D2929FA58BD004E0E02 /* AppDelegate.swift in Sources */,
 				C9820D2B29FA58BD004E0E02 /* SceneDelegate.swift in Sources */,
+				EE0A93FC2A126302006E27DA /* ExpenseDetailViewController.swift in Sources */,
 				1C4C6FF02A068A1400A33F39 /* ExpensesListViewController.swift in Sources */,
 				EE49C6F22A08CE2400409239 /* LocalFileManager.swift in Sources */,
 			);

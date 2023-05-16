@@ -40,20 +40,24 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
     var models = [Section]()
     let MONTHLY_EXPENSE_CAP_KEY = "MonthlyExpenseCap"
     let userDefault = UserDefaults.standard
+    var popUpViewAppear:Bool = false
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         settingTableView.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.id)
         configure()
-        
-        blurBackgroundView.bounds = self.view.bounds
-        
+
         //monthly expense cap alert subview to be shown once click alert button
-        
-        settingMonthlyAlertView.bounds = CGRect(x: 0, y: 0, width: self.view.bounds.width*0.9, height: self.view.bounds.height*0.23)
-        
         capAmountTextField.delegate = self
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        if popUpViewAppear {
+            self.animateViewOut(targetView: self.blurBackgroundView)
+            self.animateViewOut(targetView: self.settingMonthlyAlertView)
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -95,6 +99,8 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
             }),
             .staticCell(model: SettingsOption(title: "Reminder", icon: UIImage(systemName:"exclamationmark.bubble"), iconBGColor: .systemPink){
                 //code to be added when user click the button
+                self.blurBackgroundView.bounds = self.view.bounds
+                self.settingMonthlyAlertView.bounds = CGRect(x: 0, y: 0, width: 310, height: 192)
                 self.animateViewIn(targetView: self.blurBackgroundView)
                 self.animateViewIn(targetView: self.settingMonthlyAlertView)
                 //if the user previously set a cap, retrive the cap amount and render to the relevant textfield
@@ -187,6 +193,8 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
             targetView.alpha = 1
         }
         )
+        
+        popUpViewAppear = true
     }
     
     func animateViewOut(targetView:UIView){
@@ -197,6 +205,8 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
             targetView.removeFromSuperview()
         }
         )
+        
+        popUpViewAppear = false
     }
     
     @IBAction func pressAlertConfirmButton(_ sender: Any) {
@@ -218,19 +228,18 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
             self.present(dialogMessage, animated: true, completion: nil)
             return
         }
-        
         //setting monthly cap to local user defaults
         let newExpenseCap = ExpenseCap(monthlyCapAmount: Double(capAmountTextField.text!)!)
         userDefault.setValue(try? PropertyListEncoder().encode(newExpenseCap), forKey: MONTHLY_EXPENSE_CAP_KEY)
-        
+
         //open a dialog alert to inform the user the cap has been set
         let dialogMessage = UIAlertController(title: "Expense Cap Set", message: "Expense cap has been set, tap ok to continue", preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
          })
         dialogMessage.addAction(ok)
         self.present(dialogMessage, animated: true, completion: nil)
-        self.animateViewOut(targetView: self.settingMonthlyAlertView)
         self.animateViewOut(targetView: self.blurBackgroundView)
+        self.animateViewOut(targetView: self.settingMonthlyAlertView)
     }
     
     @IBAction func cancelCapAmount(_ sender: Any) {
