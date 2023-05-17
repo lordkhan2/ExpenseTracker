@@ -9,7 +9,6 @@ import UIKit
 import Charts
 class ViewController: UIViewController, ChartViewDelegate {
     var pieChart = PieChartView()
-    var lineChart = LineChartView()
     var barChart = BarChartView()
     
     var db = DBManager()
@@ -17,52 +16,69 @@ class ViewController: UIViewController, ChartViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewDidLayoutSubviews()
-       
+        
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let chartSize: CGFloat = 300.0
-//        pieChart.frame = CGRect(x:0, y:0, width:self.view.frame.size.width, height: self.view.frame.size.width)
-        pieChart.frame = CGRect(x:50, y:100, width:chartSize, height: chartSize)
-        //pieChart.center = view.center
+        let spacing: CGFloat = 50.0
+        
+        
+        
+        let isLandscape = UIDevice.current.orientation.isLandscape
+        
+        if isLandscape {
+            
+            let availableWidth = view.bounds.width - 3 * spacing - chartSize
+            let availableHeight = view.bounds.height - 2 * spacing - 30
+            
+            pieChart.frame = CGRect(x: spacing, y: spacing, width: chartSize, height: availableHeight)
+            barChart.frame = CGRect(x: spacing * 2 + chartSize, y: spacing, width: availableWidth, height: availableHeight)
+        } else {
+            
+            let availableHeight = view.bounds.height - 3 * spacing - (chartSize + 50)
+            let availableWidth = view.bounds.width - 2 * spacing
+            
+            pieChart.frame = CGRect(x: spacing, y: spacing, width: availableWidth, height: chartSize)
+            barChart.frame = CGRect(x: spacing, y: spacing * 2 + chartSize, width: availableWidth, height: availableHeight)
+        }
+        
+        
         view.addSubview(pieChart)
+        view.addSubview(barChart)
         expenses = db.read()
         var entries = [ChartDataEntry]()
         var expenseData = [(Int, Double)]()
+        
+        
         for expense in expenses {
             let expenseCategory = expense.id
-                let expenseAmount = expense.amount
-                
-                let expenseTuple = (expenseCategory, expenseAmount)
-                expenseData.append(expenseTuple)
+            let expenseAmount = expense.amount
+            
+            let expenseTuple = (expenseCategory, expenseAmount)
+            expenseData.append(expenseTuple)
         }
         
-       
+        
         for (number, amount) in expenseData {
             let entry = ChartDataEntry(x: Double(number), y: Double(amount))
             entries.append(entry)
         }
-   
+        
         let set = PieChartDataSet(entries: entries)
         
         set.colors = ChartColorTemplates.material()
         let data = PieChartData(dataSet: set)
-      
+        
         set.label = "Monthly Expense Breakdown"
         pieChart.data = data
         
-//        lineChart.frame = CGRect(x:50, y:400, width:chartSize, height: chartSize)
-//        view.addSubview(lineChart)
-//
-//        let setLine = LineChartDataSet(entries: entries)
-//        setLine.colors = ChartColorTemplates.material()
-//        let dataLine = LineChartData(dataSet: setLine)
-//        lineChart.data = dataLine
+        
         
         var entriesBar = [BarChartDataEntry]()
         for (number, amount) in expenseData {
@@ -70,7 +86,7 @@ class ViewController: UIViewController, ChartViewDelegate {
             entriesBar.append(entry)
         }
         
-        barChart.frame = CGRect(x:50, y:400, width:chartSize, height: chartSize)
+        
         view.addSubview(barChart)
         
         let setBar = BarChartDataSet(entries: entriesBar)
@@ -84,10 +100,8 @@ class ViewController: UIViewController, ChartViewDelegate {
         barChart.xAxis.drawGridLinesEnabled = false
         barChart.leftAxis.drawGridLinesEnabled = false
         barChart.rightAxis.drawGridLinesEnabled = false
-      
+        
         
     }
-
-
 }
 
