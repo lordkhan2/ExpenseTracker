@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v0Z-Wp-b3X">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v0Z-Wp-b3X">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -417,14 +416,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tYS-Ne-XZj">
-                                <rect key="frame" x="0.0" y="59" width="393" height="701"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tYS-Ne-XZj">
+                                <rect key="frame" x="0.0" y="59" width="393" height="710"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="XA5-vJ-QvY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="tYS-Ne-XZj" firstAttribute="leading" secondItem="XA5-vJ-QvY" secondAttribute="leading" id="2NT-LW-f7B"/>
+                            <constraint firstItem="tYS-Ne-XZj" firstAttribute="trailing" secondItem="XA5-vJ-QvY" secondAttribute="trailing" id="ZVQ-Ju-dYd"/>
+                            <constraint firstItem="tYS-Ne-XZj" firstAttribute="top" secondItem="XA5-vJ-QvY" secondAttribute="top" id="rxY-ev-Qen"/>
+                            <constraint firstItem="XA5-vJ-QvY" firstAttribute="bottom" secondItem="tYS-Ne-XZj" secondAttribute="bottom" id="yml-Tn-n1X"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Alets" image="bell" catalog="system" id="dzQ-IE-ReR"/>
                     <connections>
@@ -696,11 +700,11 @@
             <objects>
                 <viewController storyboardIdentifier="AboutAppController" id="uAW-ig-xns" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Pcp-Fd-RTb">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tkw-fq-Opt">
-                                <rect key="frame" x="20" y="20" width="353" height="802"/>
+                                <rect key="frame" x="20" y="79" width="353" height="684"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Minimalistic and Simplified UI Design">
@@ -746,10 +750,10 @@ Users can add expenses into the system by accessing the Add Expense form and add
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <mutableString key="content">
+                                        <string key="content">
 Users can capture an image of expense documents (receipt, invoice, etc) in order to keep a record along with an expense that they intend to add into the system. This functionality in available within the form itself where the user can tap on the image box which opens up the camera and they can take an image, crop and add it to the expense. (IMPORTANT : This functionality requires an actual device since emulators tend not to have cameras and requires user permission to use the camera function of their device)
 
-</mutableString>
+</string>
                                         <attributes>
                                             <color key="NSColor" systemColor="labelColor"/>
                                             <font key="NSFont" metaFont="system" size="14"/>
@@ -846,17 +850,17 @@ Based on the threshold that users set, users are notified once they are nearly r
             <objects>
                 <viewController storyboardIdentifier="FAQController" id="oPV-mP-qkd" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FlO-K0-On6">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UTR-sP-sav">
-                                <rect key="frame" x="20" y="20" width="353" height="802"/>
+                                <rect key="frame" x="20" y="79" width="353" height="684"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <attributedString key="attributedText">
                                     <fragment>
-                                        <mutableString key="content">How would you describe the UI design of the app?  The app features a minimalistic and simplified UI design. It avoids complex UI features and focuses on simplicity and ease of use.  How does the navigation work in the app?  The app uses a tab-based navigation system, making it easier to move between different sections of the applications.  How can I add expense to the app?  To add expenses, you can access the "Add Expense" form within the app. Fill in the necessary details about your expenses, and upon submission the expense will be recorded and stored for future reference and analytics  Can I save photos of my expenditure documents?  Yes, you can capture images of your expense documents (such as receipts or invoices) within the app. Simply tap on the image box in the expense form to open the camera function on your device. You can then take a photo, crop it if necessary and attach it to the expense.  Can I set a monthly expenditure threshold?  Absolutely! In the settings page of the app, you can set a monthly expenditure threshold. This feature helps you keep track of your expenses for the current month.  Will the app notify me if I'm approaching my expenditure threshold?
+                                        <string key="content">How would you describe the UI design of the app?  The app features a minimalistic and simplified UI design. It avoids complex UI features and focuses on simplicity and ease of use.  How does the navigation work in the app?  The app uses a tab-based navigation system, making it easier to move between different sections of the applications.  How can I add expense to the app?  To add expenses, you can access the "Add Expense" form within the app. Fill in the necessary details about your expenses, and upon submission the expense will be recorded and stored for future reference and analytics  Can I save photos of my expenditure documents?  Yes, you can capture images of your expense documents (such as receipts or invoices) within the app. Simply tap on the image box in the expense form to open the camera function on your device. You can then take a photo, crop it if necessary and attach it to the expense.  Can I set a monthly expenditure threshold?  Absolutely! In the settings page of the app, you can set a monthly expenditure threshold. This feature helps you keep track of your expenses for the current month.  Will the app notify me if I'm approaching my expenditure threshold?
 
-Yes, the app provides alerts based on the threshold you've set. If your expenses are nearing the threshold, you'll receive notifications to keep you informed. The alerts will continue to generate if your expenses exceed the threshold, ensuring you stay updated on your spending.  Where can I find the alerts and how are they displayed?  The alerts are displayed in a tabulature format within the app. You can access the alerts list, which shows the date of the alert, the total amount spent for that particular month, and the remaining amount based on the threshold you've set. The alerts are accessible within the app itself, making it convenient for you to monitor your expenditures.</mutableString>
+Yes, the app provides alerts based on the threshold you've set. If your expenses are nearing the threshold, you'll receive notifications to keep you informed. The alerts will continue to generate if your expenses exceed the threshold, ensuring you stay updated on your spending.  Where can I find the alerts and how are they displayed?  The alerts are displayed in a tabulature format within the app. You can access the alerts list, which shows the date of the alert, the total amount spent for that particular month, and the remaining amount based on the threshold you've set. The alerts are accessible within the app itself, making it convenient for you to monitor your expenditures.</string>
                                         <attributes>
                                             <color key="NSColor" systemColor="labelColor"/>
                                             <font key="NSFont" metaFont="system" size="14"/>
