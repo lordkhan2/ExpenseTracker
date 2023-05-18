@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v0Z-Wp-b3X">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v0Z-Wp-b3X">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -310,7 +311,7 @@
                         <outlet property="settingMonthlyAlertView" destination="1aa-3s-gzm" id="5qm-cp-agm"/>
                         <outlet property="settingTableView" destination="Vj5-zs-FLK" id="V3m-4h-3lP"/>
                         <segue destination="uAW-ig-xns" kind="show" identifier="ToAboutApp" id="x3X-ge-7YR"/>
-                        <segue destination="W5Y-ME-F9n" kind="show" identifier="ToFAQController" id="bss-yp-Yw9"/>
+                        <segue destination="QhB-FU-pS0" kind="show" identifier="ToFAQController" id="arn-km-UBe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mci-LM-eNd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -331,7 +332,7 @@
                             <rect key="frame" x="2" y="2" width="258" height="124"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="Frc-Qn-te8">
-                                    <rect key="frame" x="-1" y="-11.666666666666664" width="260" height="147.33333333333337"/>
+                                    <rect key="frame" x="-1" y="-11.666666666666664" width="260" height="147.33333333333334"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monthly Spending Cap" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Esi-5s-AxW">
                                             <rect key="frame" x="0.0" y="0.0" width="260" height="23"/>
@@ -695,11 +696,11 @@
             <objects>
                 <viewController storyboardIdentifier="AboutAppController" id="uAW-ig-xns" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Pcp-Fd-RTb">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tkw-fq-Opt">
-                                <rect key="frame" x="20" y="79" width="353" height="684"/>
+                                <rect key="frame" x="20" y="20" width="353" height="802"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Minimalistic and Simplified UI Design">
@@ -711,7 +712,7 @@
                                     <fragment>
                                         <string key="content">
 
-The application was designed to be simple to use and not having any complex UI features. A tab based naviation allows easier traversing across various sections of the application. All views consist of simplified UI elements to provide for both faster adaptability in using the app along with easier accessability and easier usability.
+The application was designed to be simple to use and not having any complex UI features. A tab based navigation allows easier traversing across various sections of the application. All views consist of simplified UI elements to provide for both faster adaptability in using the app along with easier accessibility and easier usability.
 
 </string>
                                         <attributes>
@@ -728,7 +729,7 @@ The application was designed to be simple to use and not having any complex UI f
                                     <fragment>
                                         <string key="content">
 
-Users can add expenses into the system by accessing the Add Expense form and adding various data regarding their expenses. Upon submitting the form, the expense is added into a persistance storage for future referencing and analytics.
+Users can add expenses into the system by accessing the Add Expense form and adding various data regarding their expenses. Upon submitting the form, the expense is added into a persistence storage for future referencing and analytics.
 
 </string>
                                         <attributes>
@@ -746,7 +747,7 @@ Users can add expenses into the system by accessing the Add Expense form and add
                                     </fragment>
                                     <fragment>
                                         <mutableString key="content">
-Users can capture an image of expense documents (receipt, invoice, etc) in order to keep a record along with an expense that they intend to add into the system. This functionality in available withint the form itself where the user can tap on the image box which opens up the camera and they can take an image, crop and add it to the expense. (IMPORTANT : This functionality requires an actual device since emulators tend not to have cameras and requires user permission to use the camera function of their device)
+Users can capture an image of expense documents (receipt, invoice, etc) in order to keep a record along with an expense that they intend to add into the system. This functionality in available within the form itself where the user can tap on the image box which opens up the camera and they can take an image, crop and add it to the expense. (IMPORTANT : This functionality requires an actual device since emulators tend not to have cameras and requires user permission to use the camera function of their device)
 
 </mutableString>
                                         <attributes>
@@ -764,7 +765,7 @@ Users can capture an image of expense documents (receipt, invoice, etc) in order
                                     </fragment>
                                     <fragment>
                                         <string key="content">
-THe user can view a list of all expenses added to the system with the date of the expenditure, cateogory and amount spent in a tabulature form. Upon clicking any of the items in the list, users are navigated to a view where they can view the details for the expense along with any images they saved.
+The user can view a list of all expenses added to the system with the date of the expenditure, category and amount spent in a tabulature form. Upon clicking any of the items in the list, users are navigated to a view where they can view the details for the expense along with any images they saved.
 
 </string>
                                         <attributes>
@@ -781,7 +782,7 @@ THe user can view a list of all expenses added to the system with the date of th
                                     <fragment>
                                         <string key="content">
 
-Based on the added expenditures, users are provided with thrends of their expenditure in the overview tab (landing page) of the application. Users are provided with 2 Charts (Pie Chart and Bar Chart) which provides category-amounts expendtiure analysis, depicting visualizations of their expendture along with the timeline.
+Based on the added expenditures, users are provided with trends of their expenditure in the overview tab (landing page) of the application. Users are provided with 2 Charts (Pie Chart and Bar Chart) which provides category-amounts expenditure analysis, depicting visualizations of their expenditure along with the timeline.
 
 </string>
                                         <attributes>
@@ -840,6 +841,44 @@ Based on the threshold that users set, users are notified once they are nearly r
             </objects>
             <point key="canvasLocation" x="3524" y="777"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="232-YS-JNF">
+            <objects>
+                <viewController storyboardIdentifier="FAQController" id="QhB-FU-pS0" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9ow-ML-smw">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IIl-Su-jtV">
+                                <rect key="frame" x="20" y="20" width="353" height="802"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="GSl-u1-rqK"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="GSl-u1-rqK" firstAttribute="bottom" secondItem="IIl-Su-jtV" secondAttribute="bottom" constant="20" id="7xx-iA-P5a"/>
+                            <constraint firstItem="IIl-Su-jtV" firstAttribute="top" secondItem="GSl-u1-rqK" secondAttribute="top" constant="20" id="F0K-vE-YuD"/>
+                            <constraint firstItem="IIl-Su-jtV" firstAttribute="leading" secondItem="GSl-u1-rqK" secondAttribute="leading" constant="20" id="QHE-gB-uPH"/>
+                            <constraint firstItem="GSl-u1-rqK" firstAttribute="trailing" secondItem="IIl-Su-jtV" secondAttribute="trailing" constant="20" id="g9D-Z1-waj"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="RXx-LZ-Azm"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MWg-Tj-BdV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3524" y="1467"/>
+        </scene>
         <!--All Expenses-->
         <scene sceneID="lGW-tl-ACU">
             <objects>
@@ -858,36 +897,6 @@ Based on the threshold that users set, users are notified once they are nearly r
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C6g-WU-qlZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1498.4732824427481" y="7.746478873239437"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="AoL-KY-Psl">
-            <objects>
-                <viewController id="W5Y-ME-F9n" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="h47-8y-egC">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pUk-b2-tFH">
-                                <rect key="frame" x="20" y="79" width="353" height="684"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <attributedString key="attributedText"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="QYh-3M-zwE"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="pUk-b2-tFH" firstAttribute="top" secondItem="QYh-3M-zwE" secondAttribute="top" constant="20" id="EU8-fn-dRK"/>
-                            <constraint firstItem="QYh-3M-zwE" firstAttribute="trailing" secondItem="pUk-b2-tFH" secondAttribute="trailing" constant="20" id="Qor-NJ-x7T"/>
-                            <constraint firstItem="pUk-b2-tFH" firstAttribute="leading" secondItem="QYh-3M-zwE" secondAttribute="leading" constant="20" id="Xvd-vu-wXc"/>
-                            <constraint firstItem="QYh-3M-zwE" firstAttribute="bottom" secondItem="pUk-b2-tFH" secondAttribute="bottom" constant="20" id="ZTy-7e-sms"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="vXt-PI-G8I"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zuD-xR-9zC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3524" y="1507"/>
         </scene>
     </scenes>
     <resources>
