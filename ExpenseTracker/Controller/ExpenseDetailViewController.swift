@@ -2,7 +2,7 @@
 //  ExpenseDetailViewController.swift
 //  ExpenseTracker
 //
-//  Created by Yan Hua on 15/5/2023.
+//  Created by Yangru Guo on 15/5/2023.
 //
 
 import UIKit
@@ -27,10 +27,9 @@ class ExpenseDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         descriptionTextView.layer.borderWidth = 1
-        descriptionTextView.layer.borderColor = UIColor.black.cgColor
+
         noteTextView.layer.borderWidth = 1
-        noteTextView.layer.borderColor = UIColor.black.cgColor
-        print(self.expense!.imageLink)
+
         if let expense = self.expense {
             expenseDateTextField.text = expense.expenseDate
             amountTextField.text = String(expense.amount)
@@ -42,7 +41,16 @@ class ExpenseDetailViewController: UIViewController {
             }
             notesTextView.text = expense.notes
         }
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if traitCollection.userInterfaceStyle == .light {
+            descriptionTextView.layer.borderColor = UIColor.black.cgColor
+            noteTextView.layer.borderColor = UIColor.black.cgColor
+        } else{
+            descriptionTextView.layer.borderColor = UIColor.white.cgColor
+            noteTextView.layer.borderColor = UIColor.white.cgColor
+        }
     }
     
 

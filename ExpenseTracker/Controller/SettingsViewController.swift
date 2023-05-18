@@ -19,6 +19,7 @@ struct Section{
 //enlist all types of button
 enum SettingsOptionType{
     case staticCell(model:SettingsOption)
+    case switchCell(model:SettingsSwitchOption)
 }
 
 // To be added if more types of button are needed
@@ -27,6 +28,14 @@ struct SettingsOption{
     let icon:UIImage?
     let iconBGColor:UIColor
     let handler:(() -> Void)
+}
+
+struct SettingsSwitchOption{
+    let title:String
+    let icon:UIImage?
+    let iconBGColor:UIColor
+    let handler:(() -> Void)
+    var isOn:Bool
 }
 
 
@@ -41,23 +50,32 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
     let MONTHLY_EXPENSE_CAP_KEY = "MonthlyExpenseCap"
     let userDefault = UserDefaults.standard
     var popUpViewAppear:Bool = false
+    var nightModeOn:Bool = false
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         settingTableView.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.id)
+        settingTableView.register(NightModeTableViewCell.self, forCellReuseIdentifier: NightModeTableViewCell.id)
+        
         configure()
 
         //monthly expense cap alert subview to be shown once click alert button
         capAmountTextField.delegate = self
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewDidLayoutSubviews()
+    }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        if popUpViewAppear {
-            self.animateViewOut(targetView: self.blurBackgroundView)
-            self.animateViewOut(targetView: self.settingMonthlyAlertView)
-        }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.blurBackgroundView.bounds = self.view.bounds
+        blurBackgroundView.center = self.view.center
+        self.settingMonthlyAlertView.center = self.view.center
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -66,37 +84,26 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
     }
     
     func configure(){
-        models.append(Section(title: "Expense Settings", options: [
-            .staticCell(model:SettingsOption(title: "Fixed Cost and Income", icon: UIImage(systemName:"banknote"), iconBGColor: .systemYellow){
-                //code to be added when user click the button
-                print("Test: First cell has been selected")
-            }),
-            .staticCell(model:SettingsOption(title: "Edit Categories", icon: UIImage(systemName:"pencil"), iconBGColor: .systemBlue){
-                //code to be added when user click the button
-            })
-        ])
-        )
-        
-        models.append(Section(title: "Graph Settings", options: [
-            .staticCell(model: SettingsOption(title: "Start Date of Month", icon: UIImage(systemName:"calendar"), iconBGColor: .systemGreen){
-                //code to be added when user click the button
-            }),
-            .staticCell(model: SettingsOption(title: "Start Date of Week", icon: UIImage(systemName:"calendar"), iconBGColor: .systemGreen){
-                //code to be added when user click the button
-            }),
-            .staticCell(model: SettingsOption(title: "Graph Settings", icon: UIImage(systemName:"chart.xyaxis.line"), iconBGColor: .systemGreen){
-                //code to be added when user click the button
-            })
-        ])
-        )
-        
         models.append(Section(title: "General Settings", options: [
-            .staticCell(model: SettingsOption(title: "Language", icon: UIImage(systemName:"text.bubble"), iconBGColor: .systemBlue){
-                //code to be added when user click the button
-            }),
-            .staticCell(model: SettingsOption(title: "Currency", icon: UIImage(systemName:"dollarsign.arrow.circlepath"), iconBGColor: .systemRed){
-                //code to be added when user click the button
-            }),
+            .switchCell(model: SettingsSwitchOption(title:"Night Mode",icon:UIImage(systemName: "airplane"),iconBGColor: .systemRed,handler:{
+                if self.nightModeOn == false{
+                    self.nightModeOn = true
+                } else{
+                    self.nightModeOn = false
+                }
+                let connectedScenes = UIApplication.shared.connectedScenes
+                    .filter { $0.activationState == .foregroundActive }
+                    .compactMap { $0 as? UIWindowScene }
+                
+                let window = connectedScenes.first?
+                    .windows
+                    .first { $0.isKeyWindow }
+                if self.nightModeOn {
+                    window?.overrideUserInterfaceStyle = .dark
+                } else{
+                    window?.overrideUserInterfaceStyle = .light
+                }
+            },isOn:false)),
             .staticCell(model: SettingsOption(title: "Reminder", icon: UIImage(systemName:"exclamationmark.bubble"), iconBGColor: .systemPink){
                 //code to be added when user click the button
                 self.blurBackgroundView.bounds = self.view.bounds
@@ -112,28 +119,14 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
         ])
         )
         
-        models.append(Section(title: "Reporting Settings", options: [
-            .staticCell(model: SettingsOption(title: "Yearly Report", icon: UIImage(systemName:"newspaper"), iconBGColor: .systemBlue){
-                //code to be added when user click the button
-            }),
-            .staticCell(model: SettingsOption(title: "Yearly Category-wise Report", icon: UIImage(systemName:"newspaper"), iconBGColor: .systemBlue){
-                //code to be added when user click the button
-            }),
-            .staticCell(model: SettingsOption(title: "Yearly Reporting Yearly Category-wise Report", icon: UIImage(systemName:"calendar.badge.clock"), iconBGColor: .systemBlue){
-                //code to be added when user click the button
-            }),
-            .staticCell(model: SettingsOption(title: "Yearly Category-wise Report Yearly Category-wise Report", icon: UIImage(systemName:"calendar.badge.clock"), iconBGColor: .systemGreen){
-                //code to be added when user click the button
-            })
-        ])
-        )
-        
         models.append(Section(title: "App Settings", options: [
             .staticCell(model: SettingsOption(title: "FAQ", icon: UIImage(systemName:"person.fill.questionmark"), iconBGColor: .systemBlue){
                 //code to be added when user click the button
+                self.performSegue(withIdentifier: "ToFAQController", sender: Any?.self)
             }),
             .staticCell(model: SettingsOption(title: "About the App", icon: UIImage(systemName:"app"), iconBGColor: .systemGreen){
                 //code to be added when user click the button
+                self.performSegue(withIdentifier: "ToAboutApp", sender: Any?.self)
             })
         ])
         )
@@ -162,8 +155,13 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
             }
             cell.configure(with: model)
             return cell
+        case .switchCell(let model):
+            guard let cell  = tableView.dequeueReusableCell(withIdentifier: NightModeTableViewCell.id, for:indexPath) as? NightModeTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.configure(with: model)
+            return cell
         }
-
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -173,6 +171,8 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
         //to be added based on different types of cells
         switch type.self{
         case .staticCell(let model):
+            model.handler()
+        case .switchCell(let model):
             model.handler()
         }
     }

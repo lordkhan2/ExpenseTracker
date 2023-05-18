@@ -33,6 +33,7 @@
 		EE0A93FC2A126302006E27DA /* ExpenseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0A93FB2A126302006E27DA /* ExpenseDetailViewController.swift */; };
 		EE1A4B102A076D3300516429 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */; };
 		EE49C6F22A08CE2400409239 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE49C6F12A08CE2400409239 /* LocalFileManager.swift */; };
+		EE98EB112A15C67A00F45581 /* NightModeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98EB102A15C67A00F45581 /* NightModeTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		EE0A93FB2A126302006E27DA /* ExpenseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailViewController.swift; sourceTree = "<group>"; };
 		EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		EE49C6F12A08CE2400409239 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
+		EE98EB102A15C67A00F45581 /* NightModeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightModeTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +239,7 @@
 				EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */,
 				1CCE63AB2A100A8F00AE10F1 /* AlertTableCell.swift */,
 				EE0A93FB2A126302006E27DA /* ExpenseDetailViewController.swift */,
+				EE98EB102A15C67A00F45581 /* NightModeTableViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				1CCE63AA2A0F715D00AE10F1 /* Alert.swift in Sources */,
 				1C4C6FEE2A0674BB00A33F39 /* AddExpenseViewController.swift in Sources */,
 				C9820D2D29FA58BD004E0E02 /* ViewController.swift in Sources */,
+				EE98EB112A15C67A00F45581 /* NightModeTableViewCell.swift in Sources */,
 				1C93D4E429FF8E05000F8688 /* SettingsViewController.swift in Sources */,
 				C9820D2929FA58BD004E0E02 /* AppDelegate.swift in Sources */,
 				C9820D2B29FA58BD004E0E02 /* SceneDelegate.swift in Sources */,

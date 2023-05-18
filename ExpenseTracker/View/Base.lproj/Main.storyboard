@@ -240,7 +240,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="mUM-xu-31T"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="mUM-xu-31T" firstAttribute="bottom" secondItem="ReO-xG-dYo" secondAttribute="bottom" id="2zX-C2-LbQ"/>
                             <constraint firstItem="DDS-UE-YH6" firstAttribute="leading" secondItem="mUM-xu-31T" secondAttribute="leading" constant="15" id="9UA-FA-Q4H"/>
@@ -309,6 +309,8 @@
                         <outlet property="capAmountTextField" destination="gcU-ks-XPf" id="JMe-OJ-3Tu"/>
                         <outlet property="settingMonthlyAlertView" destination="1aa-3s-gzm" id="5qm-cp-agm"/>
                         <outlet property="settingTableView" destination="Vj5-zs-FLK" id="V3m-4h-3lP"/>
+                        <segue destination="uAW-ig-xns" kind="show" identifier="ToAboutApp" id="x3X-ge-7YR"/>
+                        <segue destination="W5Y-ME-F9n" kind="show" identifier="ToFAQController" id="bss-yp-Yw9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mci-LM-eNd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -688,6 +690,156 @@
             </objects>
             <point key="canvasLocation" x="3524.4274809160306" y="8.4507042253521139"/>
         </scene>
+        <!--About the App-->
+        <scene sceneID="QNK-p6-ixO">
+            <objects>
+                <viewController storyboardIdentifier="AboutAppController" id="uAW-ig-xns" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Pcp-Fd-RTb">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tkw-fq-Opt">
+                                <rect key="frame" x="20" y="79" width="353" height="684"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Minimalistic and Simplified UI Design">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="18"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">
+
+The application was designed to be simple to use and not having any complex UI features. A tab based naviation allows easier traversing across various sections of the application. All views consist of simplified UI elements to provide for both faster adaptability in using the app along with easier accessability and easier usability.
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Adding Expenses">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="18"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">
+
+Users can add expenses into the system by accessing the Add Expense form and adding various data regarding their expenses. Upon submitting the form, the expense is added into a persistance storage for future referencing and analytics.
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">Save Photo of Expenditure Documents
+</string>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="18"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <mutableString key="content">
+Users can capture an image of expense documents (receipt, invoice, etc) in order to keep a record along with an expense that they intend to add into the system. This functionality in available withint the form itself where the user can tap on the image box which opens up the camera and they can take an image, crop and add it to the expense. (IMPORTANT : This functionality requires an actual device since emulators tend not to have cameras and requires user permission to use the camera function of their device)
+
+</mutableString>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">Expenses List and Detailed Expenses View
+</string>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="18"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">
+THe user can view a list of all expenses added to the system with the date of the expenditure, cateogory and amount spent in a tabulature form. Upon clicking any of the items in the list, users are navigated to a view where they can view the details for the expense along with any images they saved.
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Basic Expenditure Analytics">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="18"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">
+
+Based on the added expenditures, users are provided with thrends of their expenditure in the overview tab (landing page) of the application. Users are provided with 2 Charts (Pie Chart and Bar Chart) which provides category-amounts expendtiure analysis, depicting visualizations of their expendture along with the timeline.
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Mostly Expenditure Threshold">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="18"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">
+
+Users can set a monthly expenditure threshold in the settings page in order to allow the system to alert them in keeping track of their expenses for the current month.
+
+</string>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Alerts and Alerts List">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="18"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">
+
+Based on the threshold that users set, users are notified once they are nearly reaching their threshold. The alert keeps generating if users keep adding expenditures and the sum exceeds the threshold. The alerts are displayed in a tabulature format with each alert depicting the date of the alert, the total amount spent by the user for that particular month, and the amount left to be spent for the month based on the threshold. The alerts are in-app.</string>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="E1q-vO-ZQC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="E1q-vO-ZQC" firstAttribute="trailing" secondItem="Tkw-fq-Opt" secondAttribute="trailing" constant="20" id="DjG-FW-CgD"/>
+                            <constraint firstItem="E1q-vO-ZQC" firstAttribute="bottom" secondItem="Tkw-fq-Opt" secondAttribute="bottom" constant="20" id="P19-8f-7Am"/>
+                            <constraint firstItem="Tkw-fq-Opt" firstAttribute="leading" secondItem="E1q-vO-ZQC" secondAttribute="leading" constant="20" id="kQA-LI-g0q"/>
+                            <constraint firstItem="Tkw-fq-Opt" firstAttribute="top" secondItem="E1q-vO-ZQC" secondAttribute="top" constant="20" id="sKG-6o-ytC"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="About the App" id="FbS-ow-tUl"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yrt-uM-I9D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3524" y="777"/>
+        </scene>
         <!--All Expenses-->
         <scene sceneID="lGW-tl-ACU">
             <objects>
@@ -706,6 +858,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C6g-WU-qlZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1498.4732824427481" y="7.746478873239437"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="AoL-KY-Psl">
+            <objects>
+                <viewController id="W5Y-ME-F9n" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="h47-8y-egC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pUk-b2-tFH">
+                                <rect key="frame" x="20" y="79" width="353" height="684"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <attributedString key="attributedText"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="QYh-3M-zwE"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="pUk-b2-tFH" firstAttribute="top" secondItem="QYh-3M-zwE" secondAttribute="top" constant="20" id="EU8-fn-dRK"/>
+                            <constraint firstItem="QYh-3M-zwE" firstAttribute="trailing" secondItem="pUk-b2-tFH" secondAttribute="trailing" constant="20" id="Qor-NJ-x7T"/>
+                            <constraint firstItem="pUk-b2-tFH" firstAttribute="leading" secondItem="QYh-3M-zwE" secondAttribute="leading" constant="20" id="Xvd-vu-wXc"/>
+                            <constraint firstItem="QYh-3M-zwE" firstAttribute="bottom" secondItem="pUk-b2-tFH" secondAttribute="bottom" constant="20" id="ZTy-7e-sms"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="vXt-PI-G8I"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zuD-xR-9zC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3524" y="1507"/>
         </scene>
     </scenes>
     <resources>
