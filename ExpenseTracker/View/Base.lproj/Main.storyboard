@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v0Z-Wp-b3X">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v0Z-Wp-b3X">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,7 +12,7 @@
         <!--Overview-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="ExpenseTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="OverviewController" customModule="ExpenseTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -303,7 +304,7 @@
                             <constraint firstItem="Vj5-zs-FLK" firstAttribute="leading" secondItem="bEm-QB-HSy" secondAttribute="leading" id="zO6-1R-1gw"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Settngs" image="accounting" id="IiY-PP-ANZ"/>
+                    <tabBarItem key="tabBarItem" title="Settngs" image="settings" id="IiY-PP-ANZ"/>
                     <connections>
                         <outlet property="blurBackgroundView" destination="GCQ-rK-Awn" id="hT6-IE-bkQ"/>
                         <outlet property="capAmountTextField" destination="gcU-ks-XPf" id="JMe-OJ-3Tu"/>
@@ -700,11 +701,11 @@
             <objects>
                 <viewController storyboardIdentifier="AboutAppController" id="uAW-ig-xns" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Pcp-Fd-RTb">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tkw-fq-Opt">
-                                <rect key="frame" x="20" y="79" width="353" height="684"/>
+                                <rect key="frame" x="20" y="20" width="353" height="802"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Minimalistic and Simplified UI Design">
@@ -850,17 +851,113 @@ Based on the threshold that users set, users are notified once they are nearly r
             <objects>
                 <viewController storyboardIdentifier="FAQController" id="oPV-mP-qkd" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FlO-K0-On6">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UTR-sP-sav">
-                                <rect key="frame" x="20" y="79" width="353" height="684"/>
+                                <rect key="frame" x="20" y="20" width="353" height="802"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <attributedString key="attributedText">
+                                    <fragment content="How would you describe the UI design of the app?">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="17"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
                                     <fragment>
-                                        <string key="content">How would you describe the UI design of the app?  The app features a minimalistic and simplified UI design. It avoids complex UI features and focuses on simplicity and ease of use.  How does the navigation work in the app?  The app uses a tab-based navigation system, making it easier to move between different sections of the applications.  How can I add expense to the app?  To add expenses, you can access the "Add Expense" form within the app. Fill in the necessary details about your expenses, and upon submission the expense will be recorded and stored for future reference and analytics  Can I save photos of my expenditure documents?  Yes, you can capture images of your expense documents (such as receipts or invoices) within the app. Simply tap on the image box in the expense form to open the camera function on your device. You can then take a photo, crop it if necessary and attach it to the expense.  Can I set a monthly expenditure threshold?  Absolutely! In the settings page of the app, you can set a monthly expenditure threshold. This feature helps you keep track of your expenses for the current month.  Will the app notify me if I'm approaching my expenditure threshold?
+                                        <string key="content">  The app features a minimalistic and simplified UI design. It avoids complex UI features and focuses on simplicity and ease of use.  </string>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="How does the navigation work in the app? ">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="17"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" The app uses a tab-based navigation system, making it easier to move between different sections of the applications.  ">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="How can I add expense to the app?">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="17"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">  To add expenses, you can access the "Add Expense" form within the app. Fill in the necessary details about your expenses, and upon submission the expense will be recorded and stored for future reference and analytics  </string>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Can I save photos of my expenditure documents?">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="17"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <mutableString key="content">  Yes, you can capture images of your expense documents (such as receipts or invoices) within the app. Simply tap on the image box in the expense form to open the camera function on your device. You can then take a photo, crop it if necessary and attach it to the expense.  </mutableString>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Can I set a monthly expenditure threshold?">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="17"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">  Absolutely! In the settings page of the app, you can set a monthly expenditure threshold. This feature helps you keep track of your expenses for the current month.  </string>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Will the app notify me if I'm approaching my expenditure threshold?">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="17"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <mutableString key="content">
 
-Yes, the app provides alerts based on the threshold you've set. If your expenses are nearing the threshold, you'll receive notifications to keep you informed. The alerts will continue to generate if your expenses exceed the threshold, ensuring you stay updated on your spending.  Where can I find the alerts and how are they displayed?  The alerts are displayed in a tabulature format within the app. You can access the alerts list, which shows the date of the alert, the total amount spent for that particular month, and the remaining amount based on the threshold you've set. The alerts are accessible within the app itself, making it convenient for you to monitor your expenditures.</string>
+Yes, the app provides alerts based on the threshold you've set. If your expenses are nearing the threshold, you'll receive notifications to keep you informed. The alerts will continue to generate if your expenses exceed the threshold, ensuring you stay updated on your spending.  </mutableString>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Where can I find the alerts and how are they displayed?">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" metaFont="system" size="17"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <mutableString key="content">  The alerts are displayed in a tabulature format within the app. You can access the alerts list, which shows the date of the alert, the total amount spent for that particular month, and the remaining amount based on the threshold you've set. The alerts are accessible within the app itself, making it convenient for you to monitor your expenditures.</mutableString>
                                         <attributes>
                                             <color key="NSColor" systemColor="labelColor"/>
                                             <font key="NSFont" metaFont="system" size="14"/>
@@ -911,6 +1008,7 @@ Yes, the app provides alerts based on the threshold you've set. If your expenses
         <image name="analysis" width="25" height="25"/>
         <image name="bell" catalog="system" width="125" height="128"/>
         <image name="expense" width="25" height="25"/>
+        <image name="settings" width="25" height="25"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

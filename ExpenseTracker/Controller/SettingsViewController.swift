@@ -7,10 +7,6 @@
 
 import UIKit
 
-struct ExpenseCap:Codable{
-    var monthlyCapAmount:Double
-}
-
 struct Section{
     let title: String
     let options:[SettingsOptionType]
@@ -36,6 +32,10 @@ struct SettingsSwitchOption{
     let iconBGColor:UIColor
     let handler:(() -> Void)
     var isOn:Bool
+}
+
+struct ExpenseCap:Codable{
+    var monthlyCapAmount:Double
 }
 
 
@@ -70,6 +70,7 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
         viewDidLayoutSubviews()
     }
     
+    //Make the view responsive when screen is rotated
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.blurBackgroundView.bounds = self.view.bounds
@@ -78,11 +79,18 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
         
     }
     
+    //Function to handle on click for return and hide the keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
+    //Functionto check if amount field has 2 decimal places (e.g $20.00)
+    func isTwoDecimalNumber(testStr:String) -> Bool {
+        return testStr.range(of: "^[0-9]+(?:.[0-9]{1,2})?$",options: .regularExpression, range: nil,locale: nil) != nil
+    }
+    
+    //Configuation of the Settings table view
     func configure(){
         models.append(Section(title: "General Settings", options: [
             .switchCell(model: SettingsSwitchOption(title:"Night Mode",icon:UIImage(systemName: "airplane"),iconBGColor: .systemRed,handler:{
@@ -145,6 +153,7 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
     func tableView(_ tableView:UITableView, numberOfRowsInSection section:Int) -> Int{
         return models[section].options.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = models[indexPath.section].options[indexPath.row]
         //configure based on different type of cells
@@ -176,7 +185,7 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
             model.handler()
         }
     }
-    
+    //Animation for the pop-up view when it appears
     func animateViewIn(targetView:UIView){
         let bgView = self.view!
         
@@ -197,6 +206,7 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
         popUpViewAppear = true
     }
     
+    //Animation for the pop up view when it disappers
     func animateViewOut(targetView:UIView){
         UIView.animate(withDuration: 0.3, animations:{
             targetView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
@@ -246,8 +256,4 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
         self.animateViewOut(targetView: self.settingMonthlyAlertView)
         self.animateViewOut(targetView: self.blurBackgroundView)
     }
-    func isTwoDecimalNumber(testStr:String) -> Bool {
-        return testStr.range(of: "^[0-9]+(?:.[0-9]{1,2})?$",options: .regularExpression, range: nil,locale: nil) != nil
-    }
-    
 }

@@ -46,13 +46,25 @@ extension AlertsViewController: UITableViewDataSource {
     }
     
     func tableView(_ expensesTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("this is happening")
         let cell: AlertTableCell = expensesTableView.dequeueReusableCell(withIdentifier: "AlertTableCell", for: indexPath) as! AlertTableCell
-        cell.alertDateLabel.text = alerts[indexPath.row].alertDate
-        cell.alertAmountLabel.text = alerts[indexPath.row].amount.description
+        cell.alertDateLabel.text = "Alert Date: \(alerts[indexPath.row].alertDate)"
+        cell.alertAmountLabel.text = "Expense Amount: $\(alerts[indexPath.row].amount.description)"
         cell.alertDescription.text = alerts[indexPath.row].description
-        print(alerts[indexPath.row],description)
         cell.selectionStyle = .none
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath:IndexPath){
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+            db.deleteAlertByID(id: alerts[indexPath.row].id)
+            alerts.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+        }
     }
 }

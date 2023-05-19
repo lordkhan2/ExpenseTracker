@@ -95,7 +95,7 @@ class NightModeTableViewCell: UITableViewCell {
         label.text = nil
         nightModeSwitch.isOn = false
     }
-    
+    //Function to configure the switch cell with the customized model
     public func configure(with model:SettingsSwitchOption){
         label.text = model.title
         iconImageView.image = model.icon

@@ -20,6 +20,7 @@ class DBManager
     let dbPath: String = "myDb.sqlite"
     var db: OpaquePointer?
     
+    //Open Database Connection
     func openDatabase() -> OpaquePointer?
     {
         let filePath = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(dbPath)
@@ -117,7 +118,7 @@ class DBManager
         
     }
     
-    //Read Data from the Database
+    //Read Data from the Expense Table
     func read() -> [Expense] {
         let queryStatementString = "SELECT * FROM Expense;"
         
@@ -134,8 +135,6 @@ class DBManager
                 let imageLink = String(describing: String(cString: sqlite3_column_text(queryStatement, 6)))
                 let notes = String(describing: String(cString: sqlite3_column_text(queryStatement, 7)))
                 expenses.append(Expense(id: Int(id), expenseDate: expenseDate, amount: amount, category: category, paymentType: paymentType, description: description, imageLink: imageLink, notes: notes))
-                print("Query Result")
-                print("\(id)| \(expenseDate) | \(amount) | \(category) | \(paymentType) | \(description) | \(imageLink) | \(notes)")
             }
         } else {
             print("SELECT statement could not be prepared")
@@ -145,7 +144,7 @@ class DBManager
         return expenses
     }
     
-    
+    //Read Data from the Alerts Table
     func readAlerts() -> [Alert] {
         let queryAlertStatementString = "SELECT * FROM Alert;"
         
@@ -158,8 +157,6 @@ class DBManager
                 let amount = sqlite3_column_double(queryAlertStatement, 2)
                 let description = String(describing: String(cString: sqlite3_column_text(queryAlertStatement, 3)))
                 alerts.append(Alert(id: Int(id), alertDate: alertDate, amount: amount, description: description))
-                print("Query Result")
-                print("\(id)| \(alertDate) | \(amount) | \(description)")
             }
         } else {
             print("SELECT statement could not be prepared")
@@ -200,5 +197,6 @@ class DBManager
               print("DELETE statement could not be prepared")
           }
           sqlite3_finalize(deleteStatement)
+
       }
 }

@@ -20,35 +20,35 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var addExpenseButton: UIButton!
     
     var db = DBManager()
-    let datePicker = UIDatePicker()
+    
     let manager = LocalFileManager.fileManagerInstance
+    
     let userDefault = UserDefaults.standard
-    var receiptImageIdentifier:Int = -1
     let RECEIPT_IMAGE_IDENTIFIER_KEY = "receiptImageIdentifier"
-    
     let MONTHLY_EXPENSE_CAP_KEY = "MonthlyExpenseCap"
-    var setCap: Double = 0.0
     
+    let datePicker = UIDatePicker()
+    var receiptImageIdentifier:Int = -1
     var expenses = Array<Expense>()
+    
+    var setCap: Double = 0.0
     var monthlyAmount: Double = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         createDatepicker()
-        // Do any additional setup after loading the view.
+        
         //initialize image view
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         recieptImageView.isUserInteractionEnabled = true
         recieptImageView.addGestureRecognizer(tapGestureRecognizer)
         recieptImageView.backgroundColor = .systemGray
         
-        
-    
         //enable dismissing the keyboard when the user tapping the area outside the field
         let tapToHideKeyboardGesture = UITapGestureRecognizer(target: self.view, action:#selector(UIView.endEditing(_:)))
         self.view.addGestureRecognizer(tapToHideKeyboardGesture)
         
-        //enable dismissing the keyboard by tapping return key
+        //Initializing delegates
         amountTextField.delegate = self
         categoryTextField.delegate = self
         paymentTypeTextField.delegate = self
@@ -60,10 +60,9 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         } else{
             self.receiptImageIdentifier = 0
         }
-        
-        //recieptImageView.image = manager.getImage(identifier: "0")
     }
     
+    //enable dismissing the keyboard by tapping return key
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
@@ -111,9 +110,6 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
 
     //Button click event to add all data from form into database
     @IBAction func AddExpense(_ sender: Any) {
-        
-        
-        
         let expenseDate = dateTextField.text ?? ""
         let expenseAmount = Double(amountTextField.text ?? "0") ?? 0.0
         let expenseCategory = categoryTextField.text ?? ""
@@ -157,8 +153,6 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
             expenseRecieptImage = "nil"
         }
 
-        print("| EZPROGAMER \(expenseDate)| \(expenseAmount)| \(expenseCategory)| \(expensePaymentType)| \(expenseDescription)| \(expenseRecieptImage)| \(expenseNotes)")
-
         db.insert(expenseDate: expenseDate, amount: expenseAmount, category: expenseCategory, paymentType: expensePaymentType, description: expenseDescription, imageLink: expenseRecieptImage, notes: expenseNotes)
         
         expenses = db.read()
@@ -169,37 +163,44 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         let components = stringDate.components(separatedBy: " ")
         let month = components[0]
         let year = components[2]
-        let dateConstruct = "\(components[0]) \(components[2])"
-        print(dateConstruct)
         
+        //Looping the 2D expense array to find expenses in the current month and adding the amounts to the monthly amount variable
+        monthlyAmount = 0.0
         for expense in expenses{
-            print("This is expense date\(expense.expenseDate)")
             if(expense.expenseDate.contains(month) && expense.expenseDate.contains(year))
             {
+
                 monthlyAmount += expense.amount
             }
         }
         
-        
+        //Getting acccess to the cap record value in User Defaults
         if let monthlyCapRecord = self.userDefault.value(forKey: self.MONTHLY_EXPENSE_CAP_KEY) as? Data{
             let expenseCapRecord = try! PropertyListDecoder().decode(ExpenseCap.self,from: monthlyCapRecord)
             setCap = expenseCapRecord.monthlyCapAmount
         }
         
-        print("THIS IS EXPENSE\(setCap)")
+        //Checking if current monthly expense amount has breached the threshold set by User, if so sending an alert.
+        let difference = setCap - monthlyAmount
         
-        if((setCap-monthlyAmount) < 100)
+        if( difference < 100 && difference >= 0)
         {
-            var alertDate = stringDate
-            var amount = monthlyAmount
-            var description = "Your Monthly Expense is almost surpassing the limit set. Currently \(setCap-monthlyAmount) is left. Please expend carefully."
+            let alertDate = stringDate
+            let amount = monthlyAmount
+            let description = "Your Monthly Expense is almost surpassing the limit set. Currently $\(setCap-monthlyAmount) is left. Please expend carefully."
+            db.insertAlert(alertDate: alertDate, amount: amount, description: description)
+        }
+        else if (difference < 0) {
+            let alertDate = stringDate
+            let amount = monthlyAmount
+            let description = "Your Monthly Expense has surpassed the set cap. Currently you have exceed your expense by $\(-difference) Please expend carefully."
             db.insertAlert(alertDate: alertDate, amount: amount, description: description)
         }
         
         //open a dialog alert to inform the user the item has been added
         let dialogMessage = UIAlertController(title: "Expense Item Added", message: "Expense item has been added, tap ok to continue", preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-            print("Ok button tapped")
+
          })
         dialogMessage.addAction(ok)
         self.present(dialogMessage, animated: true, completion: nil)
@@ -207,11 +208,9 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         resetAllViewItems()
     }
     
+    //Function to activate camera when image view is tapped
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer)
     {
-        //_ = tapGestureRecognizer.view as! UIImageView
-        // Your action
-        print("View Tapped")
         let picker = UIImagePickerController()
         picker.sourceType = .camera
         picker.allowsEditing = true
@@ -219,11 +218,12 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         present(picker, animated: true)
     }
     
-    
+    //Function to handle tapping cancel button
     func imagePickerControllerDidCancel(_ picker:UIImagePickerController){
         picker.dismiss(animated:true, completion: nil)
     }
     
+    //Function to retrieve the image and put it in the editor to allow the user to do some basic editing (crop, etc) and then return the edited photo to the image view
     func imagePickerController(_ picker:UIImagePickerController, didFinishPickingMediaWithInfo info:[UIImagePickerController.InfoKey : Any]){
         picker.dismiss(animated: true,completion: nil)
         guard let receiptImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else{
@@ -232,6 +232,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         recieptImageView.image = receiptImage
     }
     
+    //Function to reset all elements of the view once an expense is added
     func resetAllViewItems(){
         dateTextField.text = nil
         amountTextField.text = nil
@@ -242,6 +243,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         notesTextField.text = nil
     }
     
+    //Validation to check if amount has 2 decimal place (e.g $20.00)
     func isTwoDecimalNumber(testStr:String) -> Bool {
         return testStr.range(of: "^[0-9]+(?:.[0-9]{1,2})?$",options: .regularExpression, range: nil,locale: nil) != nil
     }

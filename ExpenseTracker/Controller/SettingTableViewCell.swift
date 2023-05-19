@@ -64,7 +64,7 @@ class SettingTableViewCell: UITableViewCell {
         iconImageView.image = nil
         iconContainer.backgroundColor = nil
     }
-    
+    //Function to configure the static cell with the customized model
     public func configure(with model:SettingsOption){
         label.text = model.title
         iconImageView.image = model.icon

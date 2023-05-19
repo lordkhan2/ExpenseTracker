@@ -32,6 +32,13 @@ class ExpensesListViewController: UIViewController, UISearchResultsUpdating, UIS
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        expenses = db.read()
+        self.expensesTableView.reloadData()
+    }
+    
+    //Iniitalizer function for search bar
     func initSearchController(){
         searchController.loadViewIfNeeded()
         searchController.searchResultsUpdater = self
@@ -40,23 +47,20 @@ class ExpensesListViewController: UIViewController, UISearchResultsUpdating, UIS
         searchController.searchBar.returnKeyType = UIReturnKeyType.done
         searchController.searchBar.placeholder = "Search by expense date"
         definesPresentationContext = true
-        
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-//        searchController.searchBar.scopeButtonTitles = ["All","First Quarter","Second Quarter","Third Quarter","Last Quarter"]
         searchController.searchBar.delegate = self
-        
     }
     
+    //Function to update the search results
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
-        //let scopeButton = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
         let searchText = searchBar.text!
-        
-        filterForSearchTextAndScopeButton(searchText: searchText)
+        filterForSearchText(searchText: searchText)
     }
     
-    func filterForSearchTextAndScopeButton(searchText:String){
+    //Function to live filter the search results
+    func filterForSearchText(searchText:String){
         filteredExpense = expenses.filter
         {
             expense in
@@ -70,13 +74,7 @@ class ExpensesListViewController: UIViewController, UISearchResultsUpdating, UIS
             }
             return searchTextMatch
         }
-        print(searchController.isActive,filteredExpense)
         expensesTableView.reloadData()
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        expenses = db.read()
-        self.expensesTableView.reloadData()
     }
 }
 
@@ -97,9 +95,7 @@ extension ExpensesListViewController: UITableViewDataSource {
     }
     
     func tableView(_ expensesTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //print("this is happening")
         let cell: ExpenseTableCell = expensesTableView.dequeueReusableCell(withIdentifier: "ExpenseTableCell", for: indexPath) as! ExpenseTableCell
-        
         var thisExpense:Expense
         
         if (searchController.isActive){
@@ -108,17 +104,12 @@ extension ExpensesListViewController: UITableViewDataSource {
         else{
             thisExpense = expenses[indexPath.row]
         }
-        
         cell.dateLabel.text = thisExpense.expenseDate
         cell.categoryLabel.text = thisExpense.category
-        cell.amountLabel.text = thisExpense.amount.description
+        cell.amountLabel.text = "$\(thisExpense.amount.description)"
         
         cell.selectionStyle = .none
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .delete
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -126,6 +117,10 @@ extension ExpensesListViewController: UITableViewDataSource {
             self.navigationController?.pushViewController(vc, animated: true)
             vc.expense = expenses[indexPath.row]
         }
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath:IndexPath){
