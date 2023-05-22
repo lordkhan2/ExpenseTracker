@@ -126,8 +126,14 @@ extension ExpensesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath:IndexPath){
         if editingStyle == .delete {
             tableView.beginUpdates()
-            db.deleteByID(id: expenses[indexPath.row].id)
-            expenses.remove(at: indexPath.row)
+            if searchController.isActive{
+                db.deleteByID(id: filteredExpense[indexPath.row].id)
+                filteredExpense.remove(at: indexPath.row)
+                expenses = db.read()
+            } else {
+                db.deleteByID(id: expenses[indexPath.row].id)
+                expenses.remove(at: indexPath.row)
+            }
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
         }

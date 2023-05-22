@@ -15,6 +15,7 @@ struct SummarisedExpense{
 
 class ChartDataHandler{
     
+    //Function to configure and manipulate the date returned by the system and into a tuple and return it with all necessary information in the correct format
     func getCurrentMonthAndYear() -> (String,String,String){
         let date = Date()
         let dateFormatter = DateFormatter()
@@ -31,6 +32,7 @@ class ChartDataHandler{
         return (monthComponent,components[2],stringDate)
     }
     
+    // Function to filter expenses according to the current month and return the filtered expenses
     func filterDataForCharts(expenses:[Expense]) -> [Expense]{
         guard expenses.count > 0 else {
             return [Expense]()
@@ -49,6 +51,7 @@ class ChartDataHandler{
         return filteredExpensesForCharts
     }
     
+    //Function to prepare the data to the required format that can be fed into different charts by calling corresponding additional functions
     func prepareChartData(expenses:[Expense]) -> [SummarisedExpense]{
         guard expenses.count > 0 else{
             return [SummarisedExpense]()
@@ -63,6 +66,7 @@ class ChartDataHandler{
         return preparedData
     }
     
+    //Function to capture all the expense categories from the extracted array from database and create a string that contains all categories in non repetive format and return the string
     func extractLengend(expenses:[Expense]) -> [String]{
         guard expenses.count > 0 else{
             return [String]()
@@ -78,6 +82,7 @@ class ChartDataHandler{
         return legendArrary
     }
     
+    // Function to generate a sum of each category.
     func summariseData(expenses:[Expense],legend:[String]) -> [SummarisedExpense]{
         guard expenses.count > 0 else{
             return [SummarisedExpense]()
@@ -97,6 +102,7 @@ class ChartDataHandler{
         return summarisedExpenses
     }
     
+    // Function to convert expense subtotal to the required whole number values for generic charts.
     func prepareDataForCharts(summarisedExpenses:[SummarisedExpense]) -> [SummarisedExpense]{
         guard summarisedExpenses.count > 0 else{
             return [SummarisedExpense]()
@@ -118,6 +124,7 @@ class ChartDataHandler{
         }
     }
     
+    // Function to geneate the legends description for all charts.
     func getChartsLegends(preparedDataForCharts:[SummarisedExpense]) -> String{
         guard preparedDataForCharts.count > 0 else {
             return "No data now, please add first expense"
@@ -130,6 +137,7 @@ class ChartDataHandler{
         return "[" + legendsLabel + "] For \(timeTuple.0), \(timeTuple.1)"
     }
     
+    // Function to convert expense subtotal to the required percentile values for the pie-chart.
     func prepareDataForPieChart(preparedDataForCharts:[SummarisedExpense]) -> [SummarisedExpense]{
         guard preparedDataForCharts.count > 0 else{
             return [SummarisedExpense]()
@@ -147,6 +155,7 @@ class ChartDataHandler{
         return preparedDataForPieChart
     }
     
+    // Function to convert the prepared data to the piecharts data entries according to the required format.
     func preparePieChartEntry(preparedDataForPieChart:[SummarisedExpense]) -> [ChartDataEntry]{
         guard preparedDataForPieChart.count > 0 else{
             return [ChartDataEntry]()
@@ -158,6 +167,7 @@ class ChartDataHandler{
         return pieChartDataEntries
     }
     
+    // Function to convert the prepared data to the barcharts data entries according to the required format.
     func prepareBarChartEntry(preparedDataForCharts:[SummarisedExpense]) ->[BarChartDataEntry]{
         guard preparedDataForCharts.count > 0 else{
             return [BarChartDataEntry]()
@@ -170,6 +180,7 @@ class ChartDataHandler{
     }
 }
 
+// An extended protocol with a function that resolves all Double related values to the targeted decimal places for the Charts
 extension Double {
     func rounded(digits: Int) -> Double {
         let multiplier = pow(10.0, Double(digits))
