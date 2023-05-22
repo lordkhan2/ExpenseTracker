@@ -49,4 +49,5 @@ alerts are in-app.
 
 At the current stage, the application has not been deployed in the AppStore and hence there is no way to download it or run it natively in
 a iPhone. Hence, the only way to run it is through Xcode from a Mac device and use an emulator or connect an iPhome to use the application.
+Note: Open the app in XCode with the .xcworkspace file.
 
