@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,52 +17,48 @@
                 <rect key="frame" x="0.0" y="0.0" width="319" height="146"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gsj-C1-gtn">
-                        <rect key="frame" x="0.0" y="0.0" width="319" height="146"/>
+                    <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gsj-C1-gtn">
+                        <rect key="frame" x="10" y="10" width="299" height="126"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tfz-K7-2M6">
-                                <rect key="frame" x="8" y="6" width="35.333333333333336" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTB-pc-CPs">
-                                <rect key="frame" x="264.66666666666669" y="6" width="35.333333333333314" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ElG-7P-jrm">
-                                <rect key="frame" x="0.0" y="37" width="319" height="87"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lgY-6p-g1u">
+                                <rect key="frame" x="10" y="10" width="279" height="106"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tfz-K7-2M6">
+                                        <rect key="frame" x="0.0" y="0.0" width="279" height="19.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" systemColor="systemBackgroundColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ElG-7P-jrm">
+                                        <rect key="frame" x="0.0" y="29.333333333333336" width="279" height="76.666666666666657"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" systemColor="systemBackgroundColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ElG-7P-jrm" firstAttribute="height" secondItem="Tfz-K7-2M6" secondAttribute="height" multiplier="4" id="x03-WY-4RV"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemPinkColor"/>
                         <constraints>
-                            <constraint firstItem="ElG-7P-jrm" firstAttribute="top" secondItem="Tfz-K7-2M6" secondAttribute="bottom" constant="14" id="18k-Al-jmb"/>
-                            <constraint firstItem="hTB-pc-CPs" firstAttribute="firstBaseline" secondItem="Tfz-K7-2M6" secondAttribute="firstBaseline" id="7WA-Sy-oyt"/>
-                            <constraint firstItem="Tfz-K7-2M6" firstAttribute="leading" secondItem="gsj-C1-gtn" secondAttribute="leadingMargin" id="KDz-xD-Sal"/>
-                            <constraint firstItem="ElG-7P-jrm" firstAttribute="leading" secondItem="gsj-C1-gtn" secondAttribute="leading" id="Ydr-l5-iwP"/>
-                            <constraint firstAttribute="trailing" secondItem="hTB-pc-CPs" secondAttribute="trailing" constant="19" id="afz-ea-Kgv"/>
-                            <constraint firstItem="Tfz-K7-2M6" firstAttribute="baseline" secondItem="hTB-pc-CPs" secondAttribute="baseline" id="cBc-Eb-Amg"/>
-                            <constraint firstAttribute="trailing" secondItem="ElG-7P-jrm" secondAttribute="trailing" id="cbc-i9-uQE"/>
-                            <constraint firstAttribute="bottom" secondItem="ElG-7P-jrm" secondAttribute="bottom" constant="22" id="hRR-TN-Np4"/>
-                            <constraint firstItem="Tfz-K7-2M6" firstAttribute="top" secondItem="gsj-C1-gtn" secondAttribute="top" constant="6" id="lyL-VY-RaF"/>
+                            <constraint firstAttribute="bottom" secondItem="lgY-6p-g1u" secondAttribute="bottom" constant="10" id="8qe-Ph-0Pd"/>
+                            <constraint firstItem="lgY-6p-g1u" firstAttribute="top" secondItem="gsj-C1-gtn" secondAttribute="top" constant="10" id="ASm-x6-lOF"/>
+                            <constraint firstItem="lgY-6p-g1u" firstAttribute="leading" secondItem="gsj-C1-gtn" secondAttribute="leading" constant="10" id="T7a-GE-6XS"/>
+                            <constraint firstAttribute="trailing" secondItem="lgY-6p-g1u" secondAttribute="trailing" constant="10" id="bUj-7z-TIK"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="gsj-C1-gtn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="D1c-Fl-Juq"/>
-                    <constraint firstAttribute="trailing" secondItem="gsj-C1-gtn" secondAttribute="trailing" id="UEO-Ao-NaJ"/>
-                    <constraint firstItem="gsj-C1-gtn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ciR-m7-gNB"/>
-                    <constraint firstAttribute="bottom" secondItem="gsj-C1-gtn" secondAttribute="bottom" id="tvu-c7-35l"/>
+                    <constraint firstItem="gsj-C1-gtn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="JbD-Bl-8ir"/>
+                    <constraint firstItem="gsj-C1-gtn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Tnt-Ud-YOv"/>
+                    <constraint firstAttribute="bottom" secondItem="gsj-C1-gtn" secondAttribute="bottom" constant="10" id="dGH-bg-uA3"/>
+                    <constraint firstAttribute="trailing" secondItem="gsj-C1-gtn" secondAttribute="trailing" constant="10" id="jLU-gr-Fyt"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="alertAmountLabel" destination="hTB-pc-CPs" id="0Mn-nB-Ef1"/>
                 <outlet property="alertDateLabel" destination="Tfz-K7-2M6" id="7aO-HQ-Ag0"/>
                 <outlet property="alertDescription" destination="ElG-7P-jrm" id="xid-cf-P4j"/>
             </connections>
@@ -73,6 +68,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

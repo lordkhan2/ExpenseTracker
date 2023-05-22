@@ -156,20 +156,18 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         db.insert(expenseDate: expenseDate, amount: expenseAmount, category: expenseCategory, paymentType: expensePaymentType, description: expenseDescription, imageLink: expenseRecieptImage, notes: expenseNotes)
         
         expenses = db.read()
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        let stringDate = dateFormatter.string(from: date)
-        let components = stringDate.components(separatedBy: " ")
-        let month = components[0]
-        let year = components[2]
+        
+        let datahandler = ChartDataHandler()
+        let timeTuple = datahandler.getCurrentMonthAndYear()
+        let month = timeTuple.0
+        let year = timeTuple.1
+        let stringDate = timeTuple.2
         
         //Looping the 2D expense array to find expenses in the current month and adding the amounts to the monthly amount variable
         monthlyAmount = 0.0
         for expense in expenses{
             if(expense.expenseDate.contains(month) && expense.expenseDate.contains(year))
             {
-
                 monthlyAmount += expense.amount
             }
         }
@@ -180,21 +178,23 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
             setCap = expenseCapRecord.monthlyCapAmount
         }
         
-        //Checking if current monthly expense amount has breached the threshold set by User, if so sending an alert.
-        let difference = setCap - monthlyAmount
-        
-        if( difference < 100 && difference >= 0)
-        {
-            let alertDate = stringDate
-            let amount = monthlyAmount
-            let description = "Your Monthly Expense is almost surpassing the limit set. Currently $\(setCap-monthlyAmount) is left. Please expend carefully."
-            db.insertAlert(alertDate: alertDate, amount: amount, description: description)
-        }
-        else if (difference < 0) {
-            let alertDate = stringDate
-            let amount = monthlyAmount
-            let description = "Your Monthly Expense has surpassed the set cap. Currently you have exceed your expense by $\(-difference) Please expend carefully."
-            db.insertAlert(alertDate: alertDate, amount: amount, description: description)
+        if setCap > 0 {
+            //Checking if current monthly expense amount has breached the threshold set by User, if so sending an alert.
+            let difference = setCap - monthlyAmount
+            
+            if( difference < 100 && difference >= 0)
+            {
+                let alertDate = stringDate
+                let amount = monthlyAmount
+                let description = "Your Monthly Expense is almost surpassing the $\(setCap) limit set. Currently $\(setCap-monthlyAmount) is left. Please expend carefully."
+                db.insertAlert(alertDate: alertDate, amount: amount, description: description)
+            }
+            else if (difference < 0) {
+                let alertDate = stringDate
+                let amount = monthlyAmount
+                let description = "Your Monthly Expense has surpassed the set $\(setCap) cap. Currently you have exceed your expense by $\(-difference) Please expend carefully."
+                db.insertAlert(alertDate: alertDate, amount: amount, description: description)
+            }
         }
         
         //open a dialog alert to inform the user the item has been added
