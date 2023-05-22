@@ -34,6 +34,7 @@
 		EE1A4B102A076D3300516429 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */; };
 		EE49C6F22A08CE2400409239 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE49C6F12A08CE2400409239 /* LocalFileManager.swift */; };
 		EE98EB112A15C67A00F45581 /* NightModeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98EB102A15C67A00F45581 /* NightModeTableViewCell.swift */; };
+		EE98EB132A1A5DBD00F45581 /* ChartDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98EB122A1A5DBD00F45581 /* ChartDataHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		EE49C6F12A08CE2400409239 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		EE98EB102A15C67A00F45581 /* NightModeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightModeTableViewCell.swift; sourceTree = "<group>"; };
+		EE98EB122A1A5DBD00F45581 /* ChartDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDataHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 			children = (
 				1C317F192A011B3900E7F4FE /* Expense.swift */,
 				1CCE63A92A0F715D00AE10F1 /* Alert.swift */,
+				EE98EB122A1A5DBD00F45581 /* ChartDataHandler.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -495,6 +498,7 @@
 			files = (
 				EE1A4B102A076D3300516429 /* SettingTableViewCell.swift in Sources */,
 				1C317F1A2A011B3900E7F4FE /* Expense.swift in Sources */,
+				EE98EB132A1A5DBD00F45581 /* ChartDataHandler.swift in Sources */,
 				1C93D4E629FF8E55000F8688 /* AlertsViewController.swift in Sources */,
 				1CCE63AD2A100A8F00AE10F1 /* AlertTableCell.swift in Sources */,
 				1C317F1D2A05EE3300E7F4FE /* DBManager.swift in Sources */,

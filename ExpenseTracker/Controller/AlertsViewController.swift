@@ -48,8 +48,7 @@ extension AlertsViewController: UITableViewDataSource {
     func tableView(_ expensesTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: AlertTableCell = expensesTableView.dequeueReusableCell(withIdentifier: "AlertTableCell", for: indexPath) as! AlertTableCell
         cell.alertDateLabel.text = "Alert Date: \(alerts[indexPath.row].alertDate)"
-        cell.alertAmountLabel.text = "Expense Amount: $\(alerts[indexPath.row].amount.description)"
-        cell.alertDescription.text = alerts[indexPath.row].description
+        cell.alertDescription.text = "You have spent $\(alerts[indexPath.row].amount.description) this Month." + alerts[indexPath.row].description
         cell.selectionStyle = .none
         return cell
     }

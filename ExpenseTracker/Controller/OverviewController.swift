@@ -14,6 +14,8 @@ class OverviewController: UIViewController, ChartViewDelegate {
     var db = DBManager()
     var expenses = Array<Expense>()
     
+    let chartDataHandler = ChartDataHandler()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -25,64 +27,57 @@ class OverviewController: UIViewController, ChartViewDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let chartSize: CGFloat = 300.0
-        let spacing: CGFloat = 50.0
+        let spacing: CGFloat = 10.0
+        var chartWidth: CGFloat
+        var chartHeight:CGFloat
         let isLandscape = UIDevice.current.orientation.isLandscape
         
         if isLandscape {
-            let availableWidth = view.bounds.width - 3 * spacing - chartSize
-            let availableHeight = view.bounds.height - 2 * spacing - 30
             
-            pieChart.frame = CGRect(x: spacing, y: spacing, width: chartSize, height: availableHeight)
-            barChart.frame = CGRect(x: spacing * 2 + chartSize, y: spacing, width: availableWidth, height: availableHeight)
+            chartWidth = (view.safeAreaLayoutGuide.layoutFrame.width - 4 * spacing)/2
+            chartHeight = view.safeAreaLayoutGuide.layoutFrame.height - 2 * spacing
+            
+            pieChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
+            barChart.frame = CGRect(x: spacing * 3 + chartWidth + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
+            
         } else {
-            let availableHeight = view.bounds.height - 3 * spacing - (chartSize + 50)
-            let availableWidth = view.bounds.width - 2 * spacing
+            chartWidth = view.safeAreaLayoutGuide.layoutFrame.width - 2 * spacing
+            chartHeight = (view.safeAreaLayoutGuide.layoutFrame.height - 4 * spacing)/2
             
-            pieChart.frame = CGRect(x: spacing, y: spacing, width: availableWidth, height: chartSize)
-            barChart.frame = CGRect(x: spacing, y: spacing * 2 + chartSize, width: availableWidth, height: availableHeight)
+            pieChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
+            barChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: 3 * spacing + view.safeAreaLayoutGuide.layoutFrame.minY + chartHeight, width: chartWidth, height: chartHeight)
         }
         view.addSubview(pieChart)
         view.addSubview(barChart)
         expenses = db.read()
-        var entries = [ChartDataEntry]()
-        var expenseData = [(Int, Double)]()
         
-        for expense in expenses {
-            let expenseCategory = expense.id
-            let expenseAmount = expense.amount
-            
-            let expenseTuple = (expenseCategory, expenseAmount)
-            expenseData.append(expenseTuple)
-        }
+        let filteredExpense = chartDataHandler.filterDataForCharts(expenses:expenses)
+        let summarisedDataForCharts = chartDataHandler.prepareChartData(expenses: filteredExpense)
+        let dataForPieChart = chartDataHandler.prepareDataForPieChart(preparedDataForCharts: summarisedDataForCharts)
+        let pieChartEntries = chartDataHandler.preparePieChartEntry(preparedDataForPieChart: dataForPieChart)
+        let barChartEntries = chartDataHandler.prepareBarChartEntry(preparedDataForCharts: summarisedDataForCharts)
+        let chartLegendsLabel = chartDataHandler.getChartsLegends(preparedDataForCharts: summarisedDataForCharts)
         
-        for (number, amount) in expenseData {
-            let entry = ChartDataEntry(x: Double(number), y: Double(amount))
-            entries.append(entry)
-        }
-        
-        let set = PieChartDataSet(entries: entries)
+        let set = PieChartDataSet(entries: pieChartEntries)
         set.colors = ChartColorTemplates.material()
         let data = PieChartData(dataSet: set)
-        set.label = "Monthly Expense Breakdown"
+        set.label = chartLegendsLabel
         
         pieChart.data = data
         
-        var entriesBar = [BarChartDataEntry]()
-        for (number, amount) in expenseData {
-            let entry = BarChartDataEntry(x: Double(number), y: Double(amount))
-            entriesBar.append(entry)
-        }
-    
         view.addSubview(barChart)
         
-        let setBar = BarChartDataSet(entries: entriesBar)
+        let setBar = BarChartDataSet(entries: barChartEntries)
         setBar.colors = ChartColorTemplates.joyful()
+        setBar.label = chartLegendsLabel
         let dataBar = BarChartData(dataSet: setBar)
         barChart.data = dataBar
         
+        barChart.leftAxis.axisMinimum = 0
         barChart.rightAxis.enabled = false
         barChart.xAxis.labelPosition = .bottom
+        barChart.xAxis.drawAxisLineEnabled = true
+        barChart.xAxis.drawLabelsEnabled = false
         
         barChart.xAxis.drawGridLinesEnabled = false
         barChart.leftAxis.drawGridLinesEnabled = false
