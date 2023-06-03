@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import UserNotifications
 
 class AddExpenseViewController : UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, UITextFieldDelegate {
 
@@ -187,12 +188,14 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
                 let alertDate = stringDate
                 let amount = monthlyAmount
                 let description = "Your Monthly Expense is almost surpassing the $\(setCap) limit set. Currently $\(setCap-monthlyAmount) is left. Please expend carefully."
+                checkForPermission(title: "Expense Threshold Update", body: description)
                 db.insertAlert(alertDate: alertDate, amount: amount, description: description)
             }
             else if (difference < 0) {
                 let alertDate = stringDate
                 let amount = monthlyAmount
                 let description = "Your Monthly Expense has surpassed the set $\(setCap) cap. Currently you have exceed your expense by $\(-difference) Please expend carefully."
+                checkForPermission(title: "Expense Threshold Surpassed", body: description)
                 db.insertAlert(alertDate: alertDate, amount: amount, description: description)
             }
         }
@@ -244,7 +247,61 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
     }
     
     //Validation to check if amount has 2 decimal place (e.g $20.00)
+    //It checks the settings to see if authorization is provided, if not it will ask for permissioj.
+    //If authorization already exisits, it will run the dispatchNotication() function, if authorization is available. After asking for permission, if granted, will call dispatchNotification, it not, will return.
     func isTwoDecimalNumber(testStr:String) -> Bool {
         return testStr.range(of: "^[0-9]+(?:.[0-9]{1,2})?$",options: .regularExpression, range: nil,locale: nil) != nil
     }
+    // Function to check for notification permissions and carry out actions accordingly
+    func checkForPermission(title: String, body: String){
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.getNotificationSettings{ settings in
+            switch settings.authorizationStatus {
+            case .authorized:
+                self.dispatchNotification(title: title, body: body)
+            case .denied:
+                return
+            case .notDetermined:
+                notificationCenter.requestAuthorization(options: [.alert, .sound]) { didAllow, error in
+                    if didAllow {
+                        self.dispatchNotification(title: title, body: body)
+                    }
+                }
+            default:
+                return
+            }
+        }
+    }
+    
+    // Function to create and dispatch a push otification
+    // This function is called and used in the checkPermission function
+    // The hour and the minute variable are retrieved from the current date/time of the system and used to trigger the notification (in this case, 1 minute + the current minute) These are supplied into the dateComponents which in turn is supplied into the UNCalendarNotificationTrigger(an event that triggers the notification based on the date/time supplied)
+    func dispatchNotification(title: String, body: String){
+        let identifier = "expense-tracker-notification"
+        let title = title
+        let body = body
+        let hour = Calendar.current.component(.hour, from: Date())
+        let minute = Calendar.current.component(.minute, from: Date()) + 1
+        
+        let notificationCenter = UNUserNotificationCenter.current()
+        
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = .default
+        
+        let calendar = Calendar.current
+        var dateComponents = DateComponents(calendar: calendar, timeZone: TimeZone.current)
+        dateComponents.hour = hour
+        dateComponents.minute = minute
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
+        notificationCenter.add(request)
+        print(hour, minute, title, body, "NOTIFICATION SHOULD BE WORKING")
+        
+    }
+    
 }
