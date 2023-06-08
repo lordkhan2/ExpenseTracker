@@ -25,6 +25,8 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
     let manager = LocalFileManager.fileManagerInstance
     
     let userDefault = UserDefaults.standard
+    let alertDefault: Void = UserDefaults.standard.set("", forKey: "capAlertOption")
+    
     let RECEIPT_IMAGE_IDENTIFIER_KEY = "receiptImageIdentifier"
     let MONTHLY_EXPENSE_CAP_KEY = "MonthlyExpenseCap"
     
@@ -34,6 +36,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
     
     var setCap: Double = 0.0
     var monthlyAmount: Double = 0.0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -185,18 +188,65 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
             
             if( difference < 100 && difference >= 0)
             {
+                print("The difference is between 0 and 100")
                 let alertDate = stringDate
                 let amount = monthlyAmount
                 let description = "Your Monthly Expense is almost surpassing the $\(setCap) limit set. Currently $\(setCap-monthlyAmount) is left. Please expend carefully."
                 checkForPermission(title: "Expense Threshold Update", body: description)
                 db.insertAlert(alertDate: alertDate, amount: amount, description: description)
             }
+            
             else if (difference < 0) {
-                let alertDate = stringDate
-                let amount = monthlyAmount
-                let description = "Your Monthly Expense has surpassed the set $\(setCap) cap. Currently you have exceed your expense by $\(-difference) Please expend carefully."
-                checkForPermission(title: "Expense Threshold Surpassed", body: description)
-                db.insertAlert(alertDate: alertDate, amount: amount, description: description)
+                print("The difference is less than 0 or negative")
+                if (-difference > 500)
+                {
+                    print("The -difference is more than $500")
+                    let getCap = UserDefaults.standard.string(forKey: "capAlertOption")
+                    capLogic: if (getCap == "")
+                    {
+                        print("The user has not said anything yet")
+                        let alertDate = stringDate
+                        let amount = monthlyAmount
+                        let description = "Your Monthly Expense has surpassed the set $\(setCap) cap. Currently you have exceed your expense by $\(-difference) Please expend carefully."
+                        checkForPermission(title: "Expense Threshold Surpassed", body: description)
+                        db.insertAlert(alertDate: alertDate, amount: amount, description: description)
+                        
+                        let capAlert = UIAlertController(title: "Expense Cap Alerts", message: "Do you want to continue receiving alerts?", preferredStyle: UIAlertController.Style.alert)
+
+                        capAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+                            UserDefaults.standard.set("Yes", forKey: "capAlertOption")
+                        }))
+
+                        capAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { (action: UIAlertAction!) in
+                            UserDefaults.standard.set("No", forKey: "capAlertOption")
+                        }))
+
+                        present(capAlert, animated: true, completion: nil)
+                    }
+                    else if ( getCap == "Yes")
+                    {
+                        print("The user said NO to prompt, they want to keep receiving alerts.")
+                        let alertDate = stringDate
+                        let amount = monthlyAmount
+                        let description = "Your Monthly Expense has surpassed the set $\(setCap) cap. Currently you have exceed your expense by $\(-difference) Please expend carefully."
+                        checkForPermission(title: "Expense Threshold Surpassed", body: description)
+                        db.insertAlert(alertDate: alertDate, amount: amount, description: description)
+                    }
+                    else
+                    {
+                        print("The user said YES to the prompt, they don't want any more alerts")
+                        break capLogic
+                    }
+                }
+                else
+                {
+                    print("-difference is still less than $500")
+                    let alertDate = stringDate
+                    let amount = monthlyAmount
+                    let description = "Your Monthly Expense has surpassed the set $\(setCap) cap. Currently you have exceed your expense by $\(-difference) Please expend carefully."
+                    checkForPermission(title: "Expense Threshold Surpassed", body: description)
+                    db.insertAlert(alertDate: alertDate, amount: amount, description: description)
+                }
             }
         }
         
