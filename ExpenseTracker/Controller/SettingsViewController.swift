@@ -135,6 +135,34 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
             .staticCell(model: SettingsOption(title: "About the App", icon: UIImage(systemName:"app"), iconBGColor: .systemGreen){
                 //code to be added when user click the button
                 self.performSegue(withIdentifier: "ToAboutApp", sender: Any?.self)
+            }),
+            .staticCell(model: SettingsOption(title: "Turn on/off Notifications", icon: UIImage(systemName:"exclamationmark.triangle.fill"), iconBGColor: .systemOrange){
+                //code to be added when user click the button
+                let alertDefault: String = UserDefaults.standard.string(forKey: "capAlertOption") ?? "Yes"
+                print(alertDefault)
+                
+                
+                if alertDefault == "No" || alertDefault == ""
+                {
+                    UserDefaults.standard.set("Yes", forKey: "capAlertOption")
+                    let dialogMessage = UIAlertController(title: "Notifications Updated.", message: "Notifications turned on!", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+
+                     })
+                    dialogMessage.addAction(ok)
+                    self.present(dialogMessage, animated: true, completion: nil)
+                }
+                
+                if alertDefault == "Yes"
+                {
+                    UserDefaults.standard.set("No", forKey: "capAlertOption")
+                    let dialogMessage = UIAlertController(title: "Notifications Updated.", message: "Notifications turned off!", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+
+                     })
+                    dialogMessage.addAction(ok)
+                    self.present(dialogMessage, animated: true, completion: nil)
+                }
             })
         ])
         )

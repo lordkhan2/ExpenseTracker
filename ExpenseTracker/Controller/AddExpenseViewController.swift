@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import UserNotifications
 
 class AddExpenseViewController : UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, UITextFieldDelegate {
 
@@ -24,6 +25,8 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
     let manager = LocalFileManager.fileManagerInstance
     
     let userDefault = UserDefaults.standard
+    let alertDefault: Void = UserDefaults.standard.set("", forKey: "capAlertOption")
+    
     let RECEIPT_IMAGE_IDENTIFIER_KEY = "receiptImageIdentifier"
     let MONTHLY_EXPENSE_CAP_KEY = "MonthlyExpenseCap"
     
@@ -33,6 +36,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
     
     var setCap: Double = 0.0
     var monthlyAmount: Double = 0.0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -184,16 +188,65 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
             
             if( difference < 100 && difference >= 0)
             {
+                print("The difference is between 0 and 100")
                 let alertDate = stringDate
                 let amount = monthlyAmount
                 let description = "Your Monthly Expense is almost surpassing the $\(setCap) limit set. Currently $\(setCap-monthlyAmount) is left. Please expend carefully."
+                checkForPermission(title: "Expense Threshold Update", body: description)
                 db.insertAlert(alertDate: alertDate, amount: amount, description: description)
             }
+            
             else if (difference < 0) {
-                let alertDate = stringDate
-                let amount = monthlyAmount
-                let description = "Your Monthly Expense has surpassed the set $\(setCap) cap. Currently you have exceed your expense by $\(-difference) Please expend carefully."
-                db.insertAlert(alertDate: alertDate, amount: amount, description: description)
+                print("The difference is less than 0 or negative")
+                if (-difference > 500)
+                {
+                    print("The -difference is more than $500")
+                    let getCap = UserDefaults.standard.string(forKey: "capAlertOption")
+                    capLogic: if (getCap == "")
+                    {
+                        print("The user has not said anything yet")
+                        let alertDate = stringDate
+                        let amount = monthlyAmount
+                        let description = "Your Monthly Expense has surpassed the set $\(setCap) cap. Currently you have exceed your expense by $\(-difference) Please expend carefully."
+                        checkForPermission(title: "Expense Threshold Surpassed", body: description)
+                        db.insertAlert(alertDate: alertDate, amount: amount, description: description)
+                        
+                        let capAlert = UIAlertController(title: "Expense Cap Alerts", message: "Do you want to continue receiving alerts?", preferredStyle: UIAlertController.Style.alert)
+
+                        capAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+                            UserDefaults.standard.set("Yes", forKey: "capAlertOption")
+                        }))
+
+                        capAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { (action: UIAlertAction!) in
+                            UserDefaults.standard.set("No", forKey: "capAlertOption")
+                        }))
+
+                        present(capAlert, animated: true, completion: nil)
+                    }
+                    else if ( getCap == "Yes")
+                    {
+                        print("The user said NO to prompt, they want to keep receiving alerts.")
+                        let alertDate = stringDate
+                        let amount = monthlyAmount
+                        let description = "Your Monthly Expense has surpassed the set $\(setCap) cap. Currently you have exceed your expense by $\(-difference) Please expend carefully."
+                        checkForPermission(title: "Expense Threshold Surpassed", body: description)
+                        db.insertAlert(alertDate: alertDate, amount: amount, description: description)
+                    }
+                    else
+                    {
+                        print("The user said YES to the prompt, they don't want any more alerts")
+                        break capLogic
+                    }
+                }
+                else
+                {
+                    print("-difference is still less than $500")
+                    let alertDate = stringDate
+                    let amount = monthlyAmount
+                    let description = "Your Monthly Expense has surpassed the set $\(setCap) cap. Currently you have exceed your expense by $\(-difference) Please expend carefully."
+                    checkForPermission(title: "Expense Threshold Surpassed", body: description)
+                    db.insertAlert(alertDate: alertDate, amount: amount, description: description)
+                }
             }
         }
         
@@ -244,7 +297,61 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
     }
     
     //Validation to check if amount has 2 decimal place (e.g $20.00)
+    //It checks the settings to see if authorization is provided, if not it will ask for permissioj.
+    //If authorization already exisits, it will run the dispatchNotication() function, if authorization is available. After asking for permission, if granted, will call dispatchNotification, it not, will return.
     func isTwoDecimalNumber(testStr:String) -> Bool {
         return testStr.range(of: "^[0-9]+(?:.[0-9]{1,2})?$",options: .regularExpression, range: nil,locale: nil) != nil
     }
+    // Function to check for notification permissions and carry out actions accordingly
+    func checkForPermission(title: String, body: String){
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.getNotificationSettings{ settings in
+            switch settings.authorizationStatus {
+            case .authorized:
+                self.dispatchNotification(title: title, body: body)
+            case .denied:
+                return
+            case .notDetermined:
+                notificationCenter.requestAuthorization(options: [.alert, .sound]) { didAllow, error in
+                    if didAllow {
+                        self.dispatchNotification(title: title, body: body)
+                    }
+                }
+            default:
+                return
+            }
+        }
+    }
+    
+    // Function to create and dispatch a push otification
+    // This function is called and used in the checkPermission function
+    // The hour and the minute variable are retrieved from the current date/time of the system and used to trigger the notification (in this case, 1 minute + the current minute) These are supplied into the dateComponents which in turn is supplied into the UNCalendarNotificationTrigger(an event that triggers the notification based on the date/time supplied)
+    func dispatchNotification(title: String, body: String){
+        let identifier = "expense-tracker-notification"
+        let title = title
+        let body = body
+        let hour = Calendar.current.component(.hour, from: Date())
+        let minute = Calendar.current.component(.minute, from: Date()) + 1
+        
+        let notificationCenter = UNUserNotificationCenter.current()
+        
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = .default
+        
+        let calendar = Calendar.current
+        var dateComponents = DateComponents(calendar: calendar, timeZone: TimeZone.current)
+        dateComponents.hour = hour
+        dateComponents.minute = minute
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
+        notificationCenter.add(request)
+        print(hour, minute, title, body, "NOTIFICATION SHOULD BE WORKING")
+        
+    }
+    
 }

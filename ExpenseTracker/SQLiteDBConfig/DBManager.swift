@@ -87,7 +87,7 @@ class DBManager
             sqlite3_bind_text(insertStatement, 7, (notes as NSString).utf8String, -1, nil)
             
             if sqlite3_step(insertStatement) == SQLITE_DONE{
-                print("Successfully Insertd Row.")
+                print("Successfully Inserted Row.")
             } else {
                 print("Count not insert row.")
             }
