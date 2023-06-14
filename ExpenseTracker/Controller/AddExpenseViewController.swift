@@ -9,8 +9,14 @@ import Foundation
 import UIKit
 import UserNotifications
 
-class AddExpenseViewController : UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, UITextFieldDelegate {
+//ML Technics
+import CoreImage
+import VisionKit
+import Vision
+import CoreML
 
+class AddExpenseViewController : UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, UITextFieldDelegate, VNDocumentCameraViewControllerDelegate {
+    
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var categoryTextField: UITextField!
@@ -19,6 +25,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var recieptImageView: UIImageView!
     @IBOutlet weak var notesTextField: UITextField!
     @IBOutlet weak var addExpenseButton: UIButton!
+    @IBOutlet weak var resetImageButton: UIButton!
     
     var db = DBManager()
     
@@ -31,8 +38,11 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
     let MONTHLY_EXPENSE_CAP_KEY = "MonthlyExpenseCap"
     
     let datePicker = UIDatePicker()
+    let paymentTypePicker = UIPickerView()
+    var paymentTyplePickerOptions = ["","Card","Cash","Gift Card","Voucher","Bank Transfer","Cheque", "Digital Wallet","Other"]
     var receiptImageIdentifier:Int = -1
     var expenses = Array<Expense>()
+    var imageTaken = false
     
     var setCap: Double = 0.0
     var monthlyAmount: Double = 0.0
@@ -42,6 +52,10 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         super.viewDidLoad()
         createDatepicker()
         
+        //picker view
+        paymentTypePicker.delegate = self
+        paymentTypePicker.dataSource = self
+        paymentTypeTextField.inputView = paymentTypePicker
         //initialize image view
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         recieptImageView.isUserInteractionEnabled = true
@@ -111,7 +125,15 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
             return
         }
     }
-
+    
+    //Clear image when button pressed
+    
+    @IBAction func resetImageButtonPressed(_ sender: Any) {
+        recieptImageView.image = UIImage(named: "Tap To Add")
+        imageTaken = false
+        resetImageButton.isHidden = true
+    }
+    
     //Button click event to add all data from form into database
     @IBAction func AddExpense(_ sender: Any) {
         let expenseDate = dateTextField.text ?? ""
@@ -282,8 +304,67 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         guard let receiptImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else{
             return
         }
-        recieptImageView.image = receiptImage
+        //**start processing image
+        let ciImage = CIImage(cgImage: receiptImage.cgImage!)
+        var requestHandler = VNImageRequestHandler(ciImage: ciImage)
+        let documentDetectionRequest = VNDetectDocumentSegmentationRequest()
+        var recognizedString = ""
+        do {try requestHandler.perform([documentDetectionRequest])} catch{print(error)}
+        guard let document = documentDetectionRequest.results?.first,
+              let documentImage = perspectiveCorrectedImage(from:ciImage,rectangleObservation:document) else {
+            fatalError("Unable to get document image.")
+        }
+        recieptImageView.image = UIImage(ciImage: documentImage)
+        imageTaken = true
+        resetImageButton.isHidden = false
+        
+        //
+        var receiptRegexHandler = ReceiptRegexHandler()
+        //text detection
+        requestHandler = VNImageRequestHandler(ciImage: documentImage)
+        let ocrRequest = VNRecognizeTextRequest{request, error in
+            guard let textBlocks = request.results as? [VNRecognizedTextObservation] else {return}
+            for textObservation in textBlocks{
+                let topCandidate = textObservation.topCandidates(1)
+                if let recognizedText = topCandidate.first {
+                    receiptRegexHandler.recordRecognizedInformation(sourceString: recognizedText.string)
+                    recognizedString += recognizedText.string
+                    //print(recognizedText.string)
+                }
+            }
+        }
+        ocrRequest.recognitionLevel = .accurate
+        try? requestHandler.perform([ocrRequest])
+        dateTextField.text = receiptRegexHandler.expenseDate
+        amountTextField.text = receiptRegexHandler.amount
     }
+    
+    //**ML function
+    public func perspectiveCorrectedImage(from inputImage: CIImage, rectangleObservation: VNRectangleObservation ) -> CIImage? {
+        let imageSize = inputImage.extent.size
+        
+        // Verify detected rectangle is valid.
+        let boundingBox = rectangleObservation.boundingBox.scaled(to: imageSize)
+        guard inputImage.extent.contains(boundingBox)
+        else { print("invalid detected rectangle"); return nil}
+        
+        // Rectify the detected image and reduce it to inverted grayscale for applying model.
+        let topLeft = rectangleObservation.topLeft.scaled(to: imageSize)
+        let topRight = rectangleObservation.topRight.scaled(to: imageSize)
+        let bottomLeft = rectangleObservation.bottomLeft.scaled(to: imageSize)
+        let bottomRight = rectangleObservation.bottomRight.scaled(to: imageSize)
+        let correctedImage = inputImage
+            .cropped(to: boundingBox)
+            .applyingFilter("CIPerspectiveCorrection", parameters: [
+                "inputTopLeft": CIVector(cgPoint: topLeft),
+                "inputTopRight": CIVector(cgPoint: topRight),
+                "inputBottomLeft": CIVector(cgPoint: bottomLeft),
+                "inputBottomRight": CIVector(cgPoint: bottomRight)
+            ])
+        return correctedImage
+    }
+    
+    //**ML Function block
     
     //Function to reset all elements of the view once an expense is added
     func resetAllViewItems(){
@@ -292,8 +373,10 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         categoryTextField.text = nil
         paymentTypeTextField.text = nil
         descriptionTextField.text = nil
-        recieptImageView.image = nil
+        recieptImageView.image = UIImage(named:"Tap To Add")
         notesTextField.text = nil
+        imageTaken = false
+        resetImageButton.isHidden = true
     }
     
     //Validation to check if amount has 2 decimal place (e.g $20.00)
@@ -327,11 +410,12 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
     // This function is called and used in the checkPermission function
     // The hour and the minute variable are retrieved from the current date/time of the system and used to trigger the notification (in this case, 1 minute + the current minute) These are supplied into the dateComponents which in turn is supplied into the UNCalendarNotificationTrigger(an event that triggers the notification based on the date/time supplied)
     func dispatchNotification(title: String, body: String){
-        let identifier = "expense-tracker-notification"
+        //let identifier = "expense-tracker-notification"
         let title = title
         let body = body
         let hour = Calendar.current.component(.hour, from: Date())
-        let minute = Calendar.current.component(.minute, from: Date()) + 1
+        let minute = Calendar.current.component(.minute, from: Date())
+        let second = Calendar.current.component(.second, from: Date()) + 10
         
         let notificationCenter = UNUserNotificationCenter.current()
         
@@ -344,14 +428,49 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         var dateComponents = DateComponents(calendar: calendar, timeZone: TimeZone.current)
         dateComponents.hour = hour
         dateComponents.minute = minute
-        
+        dateComponents.second = second
+        let uuid = UUID().uuidString
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
         
-        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
         notificationCenter.add(request)
-        print(hour, minute, title, body, "NOTIFICATION SHOULD BE WORKING")
         
     }
-    
 }
+
+extension CGPoint {
+    func scaled(to size: CGSize) -> CGPoint {
+        return CGPoint(x: self.x * size.width, y: self.y * size.height)
+    }
+}
+extension CGRect {
+    func scaled(to size: CGSize) -> CGRect {
+        return CGRect(
+            x: self.origin.x * size.width,
+            y: self.origin.y * size.height,
+            width: self.size.width * size.width,
+            height: self.size.height * size.height
+        )
+    }
+}
+
+extension AddExpenseViewController: UIPickerViewDelegate, UIPickerViewDataSource{
+    
+    func numberOfComponents(in paymentTypePicker:UIPickerView) -> Int{
+        return 1
+    }
+    
+    func pickerView(_ paymentTypePicker:UIPickerView, numberOfRowsInComponent component:Int ) -> Int{
+        return paymentTyplePickerOptions.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return paymentTyplePickerOptions[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        paymentTypeTextField.text = paymentTyplePickerOptions[row]
+        paymentTypeTextField.resignFirstResponder()
+    }
+}
+

@@ -290,7 +290,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		006CFE468C1286C93F6D42C41FBCCC19 /* Pods_ExpenseTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExpenseTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		006CFE468C1286C93F6D42C41FBCCC19 /* Pods-ExpenseTracker */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-ExpenseTracker"; path = Pods_ExpenseTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		00D926F927198ED096268327409AC975 /* Renderer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Renderer.swift; path = Source/Charts/Renderers/Renderer.swift; sourceTree = "<group>"; };
 		0197B012AF8E945F04BF443D53F96C54 /* BarChartRenderer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BarChartRenderer.swift; path = Source/Charts/Renderers/BarChartRenderer.swift; sourceTree = "<group>"; };
 		01F8960361184D5C3EE8C0E3E3FCE165 /* ScatterChartView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScatterChartView.swift; path = Source/Charts/Charts/ScatterChartView.swift; sourceTree = "<group>"; };
@@ -444,7 +444,7 @@
 		9AE8FCD6CF4D98F82DD842D3A28683AE /* Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = Source/Alamofire.swift; sourceTree = "<group>"; };
 		9B22CBFB82406CA0F5ED5294DFFF63EB /* BarLineScatterCandleBubbleChartData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BarLineScatterCandleBubbleChartData.swift; path = Source/Charts/Data/Implementations/Standard/BarLineScatterCandleBubbleChartData.swift; sourceTree = "<group>"; };
 		9CFB13752B03D47D4DE4C5C05E8E2CB5 /* YAxisRenderer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = YAxisRenderer.swift; path = Source/Charts/Renderers/YAxisRenderer.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9FFFF565595C41E395FCD39DD17E4A5C /* RadarChartDataEntry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RadarChartDataEntry.swift; path = Source/Charts/Data/Implementations/Standard/RadarChartDataEntry.swift; sourceTree = "<group>"; };
 		A1C1B977ED8804E8AEEC884E7359EE58 /* Charts */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Charts; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2A99FEED6824B3873575960E77F0F6A /* StringEncoding+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "StringEncoding+Alamofire.swift"; path = "Source/StringEncoding+Alamofire.swift"; sourceTree = "<group>"; };
@@ -823,6 +823,7 @@
 				3FF9D16376468B22E087DD247EB97B20 /* Core */,
 				78A81F7C291346232BE40FB17DECFD92 /* Support Files */,
 			);
+			name = Charts;
 			path = Charts;
 			sourceTree = "<group>";
 		};
@@ -865,6 +866,7 @@
 				68732775F27118AB7AEB1A7D8564C0D6 /* Windows.swift */,
 				F7DC16DDD25E7EE328818038B067B80E /* Support Files */,
 			);
+			name = SwiftAlgorithms;
 			path = SwiftAlgorithms;
 			sourceTree = "<group>";
 		};
@@ -937,6 +939,7 @@
 				22AE6EFE51C33071195236100B187A18 /* Validation.swift */,
 				FBA9EC5CBBAC586489E42A2D125D6C34 /* Support Files */,
 			);
+			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -945,7 +948,7 @@
 			children = (
 				5D797E9A5C5782CE845840781FA1CC81 /* Alamofire */,
 				A1C1B977ED8804E8AEEC884E7359EE58 /* Charts */,
-				006CFE468C1286C93F6D42C41FBCCC19 /* Pods_ExpenseTracker.framework */,
+				006CFE468C1286C93F6D42C41FBCCC19 /* Pods-ExpenseTracker */,
 				2E8A1D75780A6A1AEE12CFB7EF751F9C /* Pods-ExpenseTracker-ExpenseTrackerUITests */,
 				41E5F89F4686B271D9E16AAFA2CD2B3B /* Pods-ExpenseTrackerTests */,
 				F3E7458F7D38C89A9DE4BBACD3450C88 /* SwiftAlgorithms */,
@@ -1104,7 +1107,7 @@
 			);
 			name = "Pods-ExpenseTracker";
 			productName = Pods_ExpenseTracker;
-			productReference = 006CFE468C1286C93F6D42C41FBCCC19 /* Pods_ExpenseTracker.framework */;
+			productReference = 006CFE468C1286C93F6D42C41FBCCC19 /* Pods-ExpenseTracker */;
 			productType = "com.apple.product-type.framework";
 		};
 		7DC75B0967DAF4C0DC060E4716460229 /* Pods-ExpenseTrackerTests */ = {

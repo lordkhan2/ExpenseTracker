@@ -45,7 +45,7 @@ class ExpensesListViewController: UIViewController, UISearchResultsUpdating, UIS
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.enablesReturnKeyAutomatically = false
         searchController.searchBar.returnKeyType = UIReturnKeyType.done
-        searchController.searchBar.placeholder = "Search by expense date"
+        searchController.searchBar.placeholder = "Search by keywords or amount"
         definesPresentationContext = true
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -66,7 +66,7 @@ class ExpensesListViewController: UIViewController, UISearchResultsUpdating, UIS
             expense in
             let searchTextMatch:Bool
             if (searchController.searchBar.text != ""){
-                searchTextMatch = expense.expenseDate.lowercased().contains(searchText.lowercased())
+                searchTextMatch = expense.expenseDate.lowercased().contains(searchText.lowercased())||expense.category.lowercased().contains(searchText.lowercased())||String(expense.amount).contains(searchText)
             }
             else
             {

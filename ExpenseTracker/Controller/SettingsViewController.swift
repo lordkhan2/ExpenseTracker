@@ -167,6 +167,18 @@ class SettingsViewController: UIViewController,UITableViewDelegate, UITableViewD
         ])
         )
         
+        models.append(Section(title: "Analytics", options: [
+            .staticCell(model: SettingsOption(title: "Generate Expense Report", icon: UIImage(systemName:"chart.bar"), iconBGColor: .systemPink){
+                //code to be added when user click the button
+                self.performSegue(withIdentifier: "ToGenerateExpenseReportView", sender: Any?.self)
+            }),
+            .staticCell(model: SettingsOption(title: "Expense Advisor", icon: UIImage(systemName:"face.smiling"), iconBGColor: .systemBlue){
+                //code to be added when user click the button
+                self.performSegue(withIdentifier: "ToChatBotViewController", sender: Any?.self)
+            })
+        ])
+        )
+        
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

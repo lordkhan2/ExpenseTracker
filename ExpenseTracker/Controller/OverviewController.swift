@@ -64,6 +64,8 @@ class OverviewController: UIViewController, ChartViewDelegate {
         set.label = chartLegendsLabel
         
         pieChart.data = data
+        pieChart.data?.setValueFont(NSUIFont.systemFont(ofSize: 13.0,weight: UIFont.Weight.medium))
+        pieChart.centerText = "Top 3 Expenses"
         
         view.addSubview(barChart)
         
@@ -72,6 +74,7 @@ class OverviewController: UIViewController, ChartViewDelegate {
         setBar.label = chartLegendsLabel
         let dataBar = BarChartData(dataSet: setBar)
         barChart.data = dataBar
+        barChart.barData?.setValueFont(NSUIFont.systemFont(ofSize: 12.0,weight: UIFont.Weight.medium))
         
         barChart.leftAxis.axisMinimum = 0
         barChart.rightAxis.enabled = false
