@@ -33,6 +33,12 @@
 		EE0A93FC2A126302006E27DA /* ExpenseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0A93FB2A126302006E27DA /* ExpenseDetailViewController.swift */; };
 		EE1A4B102A076D3300516429 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */; };
 		EE49C6F22A08CE2400409239 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE49C6F12A08CE2400409239 /* LocalFileManager.swift */; };
+		EE61E68C2A306066004472B7 /* ReceiptRegexHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61E68B2A306066004472B7 /* ReceiptRegexHandler.swift */; };
+		EE61E6902A385A69004472B7 /* ChatBotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61E68F2A385A69004472B7 /* ChatBotViewController.swift */; };
+		EE61E6922A385BE2004472B7 /* ChatBotSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61E6912A385BE2004472B7 /* ChatBotSwiftUIView.swift */; };
+		EE61E6942A3871CF004472B7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61E6932A3871CF004472B7 /* Constants.swift */; };
+		EE61E6962A3871EE004472B7 /* OpenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61E6952A3871EE004472B7 /* OpenAIService.swift */; };
+		EE61E6982A39B3D0004472B7 /* GenerateExpenseReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61E6972A39B3D0004472B7 /* GenerateExpenseReportViewController.swift */; };
 		EE98EB112A15C67A00F45581 /* NightModeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98EB102A15C67A00F45581 /* NightModeTableViewCell.swift */; };
 		EE98EB132A1A5DBD00F45581 /* ChartDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98EB122A1A5DBD00F45581 /* ChartDataHandler.swift */; };
 /* End PBXBuildFile section */
@@ -91,6 +97,12 @@
 		EE0A93FB2A126302006E27DA /* ExpenseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailViewController.swift; sourceTree = "<group>"; };
 		EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		EE49C6F12A08CE2400409239 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
+		EE61E68B2A306066004472B7 /* ReceiptRegexHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptRegexHandler.swift; sourceTree = "<group>"; };
+		EE61E68F2A385A69004472B7 /* ChatBotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBotViewController.swift; sourceTree = "<group>"; };
+		EE61E6912A385BE2004472B7 /* ChatBotSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBotSwiftUIView.swift; sourceTree = "<group>"; };
+		EE61E6932A3871CF004472B7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		EE61E6952A3871EE004472B7 /* OpenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIService.swift; sourceTree = "<group>"; };
+		EE61E6972A39B3D0004472B7 /* GenerateExpenseReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateExpenseReportViewController.swift; sourceTree = "<group>"; };
 		EE98EB102A15C67A00F45581 /* NightModeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightModeTableViewCell.swift; sourceTree = "<group>"; };
 		EE98EB122A1A5DBD00F45581 /* ChartDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDataHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -129,6 +141,9 @@
 				1C317F192A011B3900E7F4FE /* Expense.swift */,
 				1CCE63A92A0F715D00AE10F1 /* Alert.swift */,
 				EE98EB122A1A5DBD00F45581 /* ChartDataHandler.swift */,
+				EE61E68B2A306066004472B7 /* ReceiptRegexHandler.swift */,
+				EE61E6932A3871CF004472B7 /* Constants.swift */,
+				EE61E6952A3871EE004472B7 /* OpenAIService.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -243,6 +258,9 @@
 				1CCE63AB2A100A8F00AE10F1 /* AlertTableCell.swift */,
 				EE0A93FB2A126302006E27DA /* ExpenseDetailViewController.swift */,
 				EE98EB102A15C67A00F45581 /* NightModeTableViewCell.swift */,
+				EE61E68F2A385A69004472B7 /* ChatBotViewController.swift */,
+				EE61E6912A385BE2004472B7 /* ChatBotSwiftUIView.swift */,
+				EE61E6972A39B3D0004472B7 /* GenerateExpenseReportViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -498,17 +516,23 @@
 			files = (
 				EE1A4B102A076D3300516429 /* SettingTableViewCell.swift in Sources */,
 				1C317F1A2A011B3900E7F4FE /* Expense.swift in Sources */,
+				EE61E6922A385BE2004472B7 /* ChatBotSwiftUIView.swift in Sources */,
 				EE98EB132A1A5DBD00F45581 /* ChartDataHandler.swift in Sources */,
 				1C93D4E629FF8E55000F8688 /* AlertsViewController.swift in Sources */,
 				1CCE63AD2A100A8F00AE10F1 /* AlertTableCell.swift in Sources */,
 				1C317F1D2A05EE3300E7F4FE /* DBManager.swift in Sources */,
 				1C93BD092A072BD600A0236F /* ExpenseTableCell.swift in Sources */,
 				1CCE63AA2A0F715D00AE10F1 /* Alert.swift in Sources */,
+				EE61E68C2A306066004472B7 /* ReceiptRegexHandler.swift in Sources */,
 				1C4C6FEE2A0674BB00A33F39 /* AddExpenseViewController.swift in Sources */,
+				EE61E6942A3871CF004472B7 /* Constants.swift in Sources */,
 				C9820D2D29FA58BD004E0E02 /* OverviewController.swift in Sources */,
 				EE98EB112A15C67A00F45581 /* NightModeTableViewCell.swift in Sources */,
 				1C93D4E429FF8E05000F8688 /* SettingsViewController.swift in Sources */,
+				EE61E6902A385A69004472B7 /* ChatBotViewController.swift in Sources */,
+				EE61E6982A39B3D0004472B7 /* GenerateExpenseReportViewController.swift in Sources */,
 				C9820D2929FA58BD004E0E02 /* AppDelegate.swift in Sources */,
+				EE61E6962A3871EE004472B7 /* OpenAIService.swift in Sources */,
 				C9820D2B29FA58BD004E0E02 /* SceneDelegate.swift in Sources */,
 				EE0A93FC2A126302006E27DA /* ExpenseDetailViewController.swift in Sources */,
 				1C4C6FF02A068A1400A33F39 /* ExpensesListViewController.swift in Sources */,
@@ -693,6 +717,7 @@
 				DEVELOPMENT_TEAM = GF884VD933;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ExpenseTracker/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Take photo for receipt for recording purposes";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -703,7 +728,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = au.edu.uts.student.ExpenseTracker;
+				PRODUCT_BUNDLE_IDENTIFIER = au.edu.uts.student.ExpenseTracker.Showcase1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -722,6 +747,7 @@
 				DEVELOPMENT_TEAM = GF884VD933;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ExpenseTracker/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Take photo for receipt for recording purposes";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -732,7 +758,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = au.edu.uts.student.ExpenseTracker;
+				PRODUCT_BUNDLE_IDENTIFIER = au.edu.uts.student.ExpenseTracker.Showcase1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

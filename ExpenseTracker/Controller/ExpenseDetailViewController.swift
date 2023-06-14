@@ -16,10 +16,15 @@ class ExpenseDetailViewController: UIViewController {
     @IBOutlet weak var expenseCategoryTextField: UITextField!
     @IBOutlet weak var paymentTypeTextField: UITextField!
     @IBOutlet weak var receiptImageView: UIImageView!
+    @IBOutlet weak var receiptImageViewLabel: UILabel!
     @IBOutlet weak var notesTextView: UITextView!
+    @IBOutlet weak var descriptionlabel: UILabel!
+    @IBOutlet weak var notesLabel: UILabel!
     
     var expense:Expense?
     let manager = LocalFileManager()
+    var notesTextViewAppear = true
+    var descriptionTextViewAppear = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,21 +40,44 @@ class ExpenseDetailViewController: UIViewController {
             amountTextField.text = String(expense.amount)
             expenseCategoryTextField.text = expense.category
             paymentTypeTextField.text = expense.paymentType
-            descriptionTextView.text = expense.description
+            if expense.description == ""{
+                descriptionTextView.removeFromSuperview()
+                descriptionlabel.removeFromSuperview()
+                descriptionTextViewAppear = false
+            }else{
+                descriptionTextView.text = expense.description
+            }
             if expense.imageLink != "nil"{
                 receiptImageView.image = manager.getImage(identifier: expense.imageLink)
+            } else{
+                receiptImageView.removeFromSuperview()
+                receiptImageViewLabel.removeFromSuperview()
             }
-            notesTextView.text = expense.notes
+            if expense.notes != ""{
+                notesTextView.text = expense.notes
+            } else{
+                notesLabel.removeFromSuperview()
+                notesTextView.removeFromSuperview()
+                notesTextViewAppear = false
+            }
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         if traitCollection.userInterfaceStyle == .light {
-            descriptionTextView.layer.borderColor = UIColor.black.cgColor
-            noteTextView.layer.borderColor = UIColor.black.cgColor
+            if descriptionTextViewAppear{
+                descriptionTextView.layer.borderColor = UIColor.black.cgColor
+            }
+            if notesTextViewAppear{
+                noteTextView.layer.borderColor = UIColor.black.cgColor
+            }
         } else{
-            descriptionTextView.layer.borderColor = UIColor.white.cgColor
-            noteTextView.layer.borderColor = UIColor.white.cgColor
+            if descriptionTextViewAppear{
+                descriptionTextView.layer.borderColor = UIColor.white.cgColor
+            }
+            if notesTextViewAppear{
+                noteTextView.layer.borderColor = UIColor.white.cgColor
+            }
         }
     }
     
