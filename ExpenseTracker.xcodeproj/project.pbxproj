@@ -39,6 +39,7 @@
 		EE61E6942A3871CF004472B7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61E6932A3871CF004472B7 /* Constants.swift */; };
 		EE61E6962A3871EE004472B7 /* OpenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61E6952A3871EE004472B7 /* OpenAIService.swift */; };
 		EE61E6982A39B3D0004472B7 /* GenerateExpenseReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61E6972A39B3D0004472B7 /* GenerateExpenseReportViewController.swift */; };
+		EE6EB3792A3B17E8005DC224 /* ExpenseListDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6EB3782A3B17E8005DC224 /* ExpenseListDataHandler.swift */; };
 		EE98EB112A15C67A00F45581 /* NightModeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98EB102A15C67A00F45581 /* NightModeTableViewCell.swift */; };
 		EE98EB132A1A5DBD00F45581 /* ChartDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98EB122A1A5DBD00F45581 /* ChartDataHandler.swift */; };
 /* End PBXBuildFile section */
@@ -103,6 +104,7 @@
 		EE61E6932A3871CF004472B7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EE61E6952A3871EE004472B7 /* OpenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIService.swift; sourceTree = "<group>"; };
 		EE61E6972A39B3D0004472B7 /* GenerateExpenseReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateExpenseReportViewController.swift; sourceTree = "<group>"; };
+		EE6EB3782A3B17E8005DC224 /* ExpenseListDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseListDataHandler.swift; sourceTree = "<group>"; };
 		EE98EB102A15C67A00F45581 /* NightModeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightModeTableViewCell.swift; sourceTree = "<group>"; };
 		EE98EB122A1A5DBD00F45581 /* ChartDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDataHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -144,6 +146,7 @@
 				EE61E68B2A306066004472B7 /* ReceiptRegexHandler.swift */,
 				EE61E6932A3871CF004472B7 /* Constants.swift */,
 				EE61E6952A3871EE004472B7 /* OpenAIService.swift */,
+				EE6EB3782A3B17E8005DC224 /* ExpenseListDataHandler.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -525,6 +528,7 @@
 				1CCE63AA2A0F715D00AE10F1 /* Alert.swift in Sources */,
 				EE61E68C2A306066004472B7 /* ReceiptRegexHandler.swift in Sources */,
 				1C4C6FEE2A0674BB00A33F39 /* AddExpenseViewController.swift in Sources */,
+				EE6EB3792A3B17E8005DC224 /* ExpenseListDataHandler.swift in Sources */,
 				EE61E6942A3871CF004472B7 /* Constants.swift in Sources */,
 				C9820D2D29FA58BD004E0E02 /* OverviewController.swift in Sources */,
 				EE98EB112A15C67A00F45581 /* NightModeTableViewCell.swift in Sources */,
@@ -714,7 +718,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5GZC5WLRP3;
+				DEVELOPMENT_TEAM = GF884VD933;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ExpenseTracker/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Take photo for receipt for recording purposes";
@@ -744,7 +748,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5GZC5WLRP3;
+				DEVELOPMENT_TEAM = GF884VD933;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ExpenseTracker/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Take photo for receipt for recording purposes";

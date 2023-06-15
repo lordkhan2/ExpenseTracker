@@ -43,7 +43,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
     var paymentTyplePickerOptions = ["","Card","Cash","Gift Card","Voucher","Bank Transfer","Cheque", "Digital Wallet","Other"]
     
     let categoryPicker = UIPickerView()
-    let categoryPickerOptions:[String] = ["","Food & Dining", "Transportation", "Utilities", "Housing", "Entertainment", "Health & Wellness", "Personal Care", "Travel", "Shopping", "Education", "Debt Payments", "Gifts & Donations", "Miscellaneous","Business","Groceries","Transfer Payments","Other"]
+    let categoryPickerOptions:[String] = ["","Food & Dining", "Transportation", "Utilities", "Housing", "Entertainment", "Health & Wellness", "Personal Care", "Travel", "Shopping", "Education", "Debt Payments", "Gifts & Donations","Business","Groceries","Transfer Payments","Miscellaneous"]
     
     var receiptImageIdentifier:Int = -1
     var expenses = Array<Expense>()
@@ -218,7 +218,8 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         
         if setCap > 0 {
             //Checking if current monthly expense amount has breached the threshold set by User, if so sending an alert.
-            let difference = Double(round((setCap - monthlyAmount*100)/100))
+            let difference = Double(round((setCap - monthlyAmount)*100)/100)
+            print(monthlyAmount,setCap)
             
             if( difference < 100 && difference >= 0)
             {

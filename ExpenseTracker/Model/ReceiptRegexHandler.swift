@@ -2,7 +2,7 @@
 //  ReceiptRegrexHandler.swift
 //  ExpenseTracker
 //
-//  Created by Yan Hua on 7/6/2023.
+//  Created by Yangru Guo on 7/6/2023.
 //
 
 import Foundation

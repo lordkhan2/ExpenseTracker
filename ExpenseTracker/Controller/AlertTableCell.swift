@@ -14,9 +14,18 @@ class AlertTableCell: UITableViewCell {
     @IBOutlet weak var alertAmountLabel: UILabel!
     @IBOutlet weak var alertDescription: UILabel!
     
+    @IBOutlet weak var alertLevelImageView: UIImageView!
+    @IBOutlet weak var alertBubbleView: UIView!
+    @IBOutlet weak var dateImageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        dateImageView.image = UIImage(systemName: "calendar")
+        alertBubbleView.layer.cornerRadius = alertBubbleView.frame.size.height / 20
+        alertBubbleView.backgroundColor = UIColor.systemPink.withAlphaComponent(0.8)
+        alertLevelImageView.image = UIImage(systemName: "eye.trianglebadge.exclamationmark")
+        alertLevelImageView.tintColor = .systemPink.withAlphaComponent(1)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
