@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v0Z-Wp-b3X">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v0Z-Wp-b3X">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,14 +16,74 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XQ9-G1-AJO">
+                                <rect key="frame" x="0.0" y="59" width="393" height="710"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="XKV-qW-wvY">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="1276"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-qS-ygV">
+                                                <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0KK-B9-2tf">
+                                                <rect key="frame" x="0.0" y="49.999999999999972" width="393" height="432.33333333333326"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="0KK-B9-2tf" secondAttribute="height" multiplier="1:1.1" id="Sxq-jU-QRh"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="urj-jG-rea">
+                                                <rect key="frame" x="0.0" y="482.33333333333337" width="393" height="397"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="urj-jG-rea" secondAttribute="height" multiplier="1:1.01" id="xob-Zt-vwD"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e6t-ct-ZgB">
+                                                <rect key="frame" x="0.0" y="879.33333333333337" width="393" height="396.66666666666663"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="e6t-ct-ZgB" secondAttribute="height" multiplier="1:1.01" id="8gm-bv-xG4"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="XKV-qW-wvY" firstAttribute="bottom" secondItem="Mls-sy-D9Q" secondAttribute="bottom" id="4Xu-Cw-SuN"/>
+                                    <constraint firstItem="XKV-qW-wvY" firstAttribute="width" secondItem="iAU-XR-0Qs" secondAttribute="width" id="5rb-Uo-NHm"/>
+                                    <constraint firstItem="XKV-qW-wvY" firstAttribute="trailing" secondItem="Mls-sy-D9Q" secondAttribute="trailing" id="Rca-m1-Sh6"/>
+                                    <constraint firstItem="XKV-qW-wvY" firstAttribute="top" secondItem="Mls-sy-D9Q" secondAttribute="top" id="Z5b-3o-X9L"/>
+                                    <constraint firstItem="XKV-qW-wvY" firstAttribute="leading" secondItem="Mls-sy-D9Q" secondAttribute="leading" id="q2N-cP-eRi"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="Mls-sy-D9Q"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="iAU-XR-0Qs"/>
+                            </scrollView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="XQ9-G1-AJO" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Abc-UK-knn"/>
+                            <constraint firstItem="XQ9-G1-AJO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="JJ8-x6-07M"/>
+                            <constraint firstItem="XQ9-G1-AJO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LII-Lq-X0z"/>
+                            <constraint firstItem="XQ9-G1-AJO" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="p0z-ka-eyU"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Overview" image="analysis" id="j8O-dq-CiN"/>
+                    <connections>
+                        <outlet property="barChartView" destination="urj-jG-rea" id="H0O-58-dyx"/>
+                        <outlet property="categoryCountChartView" destination="e6t-ct-ZgB" id="iKp-Ew-1sG"/>
+                        <outlet property="monthLabel" destination="EHa-qS-ygV" id="eBe-jX-WJD"/>
+                        <outlet property="pieChartView" destination="0KK-B9-2tf" id="z2L-Pl-VUD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1822" y="-887"/>
+            <point key="canvasLocation" x="1820.6106870229007" y="-887.32394366197184"/>
         </scene>
         <!--SmartSpender Live-->
         <scene sceneID="EMb-OC-maj">

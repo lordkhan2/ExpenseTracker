@@ -132,8 +132,7 @@ class ChartDataHandler{
         for i in 0...preparedDataForCharts.count - 1{
             legendsLabel += (String(i+1) + "." + preparedDataForCharts[i].legendName + " ")
         }
-        let timeTuple = getCurrentMonthAndYear()
-        return "[" + legendsLabel + "] For \(timeTuple.0), \(timeTuple.1)"
+        return legendsLabel
     }
     
     // Function to convert expense subtotal to the required percentile values for the pie-chart.
@@ -177,6 +176,35 @@ class ChartDataHandler{
         }
         return barChartDataEntries
     }
+    
+    //Function to process the expense retrieve from database, get counts of each expense category and retrieve
+    //all exisiting expenses as a category - count dictionary
+    // x = Count
+    // y = Dates of current month ( say july, 1 - 31 of july)
+    // each category will be a line and there should be dots on each date - count
+    
+    func getCategories(expenses: [Expense]) -> Dictionary<String, Int>{
+        var categoryCountDict: [String:Int] = [:]
+        let categoryOptions:[String] = ["Food & Dining", "Transportation", "Utilities", "Housing", "Entertainment", "Health & Wellness", "Personal Care", "Travel", "Shopping", "Education", "Debt Payments", "Gifts & Donations", "Miscellaneous","Business","Groceries","Transfer Payments","Other"]
+        
+        for i in categoryOptions{
+            var count = 0
+            for expense in expenses{
+                if expense.category == i{
+                    count += 1
+                    print(expense.category)
+                }
+            }
+            if count != 0{
+                categoryCountDict[i] = count
+            }
+            count = 0
+        }
+        dump(categoryCountDict)
+
+        return categoryCountDict
+    }
+
 }
 
 // An extended protocol with a function that resolves all Double related values to the targeted decimal places for the Charts

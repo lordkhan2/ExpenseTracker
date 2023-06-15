@@ -10,7 +10,11 @@ import Charts
 class OverviewController: UIViewController, ChartViewDelegate {
     var pieChart = PieChartView()
     var barChart = BarChartView()
-    
+    var categoryCountChart = BarChartView()
+    @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var pieChartView: UIView!
+    @IBOutlet weak var barChartView: UIView!
+    @IBOutlet weak var categoryCountChartView: UIView!
     var db = DBManager()
     var expenses = Array<Expense>()
     
@@ -38,18 +42,30 @@ class OverviewController: UIViewController, ChartViewDelegate {
             chartHeight = view.safeAreaLayoutGuide.layoutFrame.height - 2 * spacing
             
             pieChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
-            barChart.frame = CGRect(x: spacing * 3 + chartWidth + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
+//            barChart.frame = CGRect(x: spacing * 3 + chartWidth + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
+//            categoryCountChart.frame = CGRect(x: spacing * 6 + chartWidth + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
+            barChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
+            categoryCountChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
             
         } else {
             chartWidth = view.safeAreaLayoutGuide.layoutFrame.width - 2 * spacing
             chartHeight = (view.safeAreaLayoutGuide.layoutFrame.height - 4 * spacing)/2
             
             pieChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
-            barChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: 3 * spacing + view.safeAreaLayoutGuide.layoutFrame.minY + chartHeight, width: chartWidth, height: chartHeight)
+//            barChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: 3 * spacing + view.safeAreaLayoutGuide.layoutFrame.minY + chartHeight, width: chartWidth, height: chartHeight)
+//            categoryCountChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: 6 * spacing + view.safeAreaLayoutGuide.layoutFrame.minY + chartHeight, width: chartWidth, height: chartHeight)
+            barChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
+            categoryCountChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
         }
-        view.addSubview(pieChart)
-        view.addSubview(barChart)
+        
+        pieChartView.addSubview(pieChart)
+        barChartView.addSubview(barChart)
+        categoryCountChartView.addSubview(categoryCountChart)
+        
+        let month = chartDataHandler.getCurrentMonthAndYear()
+        monthLabel.text = "Expense Summary For \(month.0) \(month.1)"
         expenses = db.read()
+        let categoryCountDict = chartDataHandler.getCategories(expenses: expenses)
         
         let filteredExpense = chartDataHandler.filterDataForCharts(expenses:expenses)
         let summarisedDataForCharts = chartDataHandler.prepareChartData(expenses: filteredExpense)
@@ -67,7 +83,9 @@ class OverviewController: UIViewController, ChartViewDelegate {
         pieChart.data?.setValueFont(NSUIFont.systemFont(ofSize: 13.0,weight: UIFont.Weight.medium))
         pieChart.centerText = "Top 3 Expenses"
         
-        view.addSubview(barChart)
+        //categoryCountChart.data = categoryCountDict
+        
+        barChartView.addSubview(barChart)
         
         let setBar = BarChartDataSet(entries: barChartEntries)
         setBar.colors = ChartColorTemplates.joyful()
@@ -85,8 +103,7 @@ class OverviewController: UIViewController, ChartViewDelegate {
         barChart.xAxis.drawGridLinesEnabled = false
         barChart.leftAxis.drawGridLinesEnabled = false
         barChart.rightAxis.drawGridLinesEnabled = false
-        
-        
     }
+    
 }
 
