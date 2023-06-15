@@ -44,12 +44,20 @@ struct ChatBotSwiftUIView: View {
     func messageView(message:ChatMessage) -> some View{
         HStack {
             if message.sender == .me{Spacer()}
+            if message.sender == .gpt{
+                Image(systemName: "face.dashed.fill")
+                    .resizable()
+                    .frame(width: 45,height:45)
+                    .foregroundColor(.mint)
+            }
             Text(message.content)
                 .foregroundColor(message.sender == .gpt ? .white : .black)
                 .padding()
                 .background(message.sender == .gpt ? .mint : .gray.opacity(0.1))
                 .cornerRadius(16)
-            if message.sender == .gpt{Spacer()}
+            if message.sender == .gpt{
+                Spacer()
+            }
         }
     }
 
@@ -85,14 +93,5 @@ enum MessageSender{
     case me
     case gpt
 }
-
-//extension ChatMessage{
-//    static let sampleMessages = [
-//        ChatMessage(id: UUID().uuidString, content: "Sample Message From me", dateCreated: Date(), sender: .me),
-//        ChatMessage(id: UUID().uuidString, content: "Sample Message From me", dateCreated: Date(), sender: .gpt),
-//        ChatMessage(id: UUID().uuidString, content: "Sample Message From me", dateCreated: Date(), sender: .me),
-//        ChatMessage(id: UUID().uuidString, content: "Sample Message From me", dateCreated: Date(), sender: .gpt)
-//    ]
-//}
 
 

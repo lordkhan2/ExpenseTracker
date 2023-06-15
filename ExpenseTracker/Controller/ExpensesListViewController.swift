@@ -107,6 +107,7 @@ extension ExpensesListViewController: UITableViewDataSource {
         cell.dateLabel.text = thisExpense.expenseDateString
         cell.categoryLabel.text = thisExpense.category
         cell.amountLabel.text = "$\(thisExpense.amount.description)"
+        cell.expenseCategoryImage(expenseCategory: thisExpense.category)
         
         cell.selectionStyle = .none
         return cell
