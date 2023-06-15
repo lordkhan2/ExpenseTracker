@@ -36,7 +36,7 @@ class ExpenseDetailViewController: UIViewController {
         noteTextView.layer.borderWidth = 1
 
         if let expense = self.expense {
-            expenseDateTextField.text = expense.expenseDate
+            expenseDateTextField.text = expense.expenseDateString
             amountTextField.text = String(expense.amount)
             expenseCategoryTextField.text = expense.category
             paymentTypeTextField.text = expense.paymentType

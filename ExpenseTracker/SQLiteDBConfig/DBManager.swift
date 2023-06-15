@@ -141,6 +141,7 @@ class DBManager
         }
         
         sqlite3_finalize(queryStatement)
+        expenses.sort { $0.expenseDate < $1.expenseDate }
         return expenses
     }
     

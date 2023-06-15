@@ -75,6 +75,5 @@ struct ReceiptRegexHandler{
             }
         }
     }
-    
-    let expenseCategory:[String] = ["Food & Dining", "Transportation", "Utilities", "Housing", "Entertainment", "Health & Wellness", "Personal Care", "Travel", "Shopping", "Education", "Debt Payments", "Gifts & Donations", "Miscellaneous","Business","Groceries","Transfer Payments","Other"]
+
 }

@@ -22,7 +22,6 @@ class ChartDataHandler{
         dateFormatter.dateStyle = .medium
         let stringDate = dateFormatter.string(from: date)
         let components = stringDate.components(separatedBy: " ")
-        
         let monthComponent:String
         if components[0].count >= 3{
             monthComponent = components[0]
@@ -43,7 +42,7 @@ class ChartDataHandler{
         
         //Looping the 2D expense array to find expenses in the current month and adding the amounts to the monthly amount variable
         for expense in expenses{
-            if(expense.expenseDate.contains(timeTuple.0) && expense.expenseDate.contains(timeTuple.1))
+            if(expense.expenseDateString.contains(timeTuple.0) && expense.expenseDateString.contains(timeTuple.1))
             {
                 filteredExpensesForCharts.append(expense)
             }

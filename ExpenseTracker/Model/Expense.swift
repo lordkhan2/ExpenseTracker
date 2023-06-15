@@ -9,7 +9,8 @@ import Foundation
 
 class Expense{
     var id: Int = 0
-    var expenseDate : String = ""
+    var expenseDateString : String = ""
+    var expenseDate: Date
     var amount: Double = 0.0
     var category: String = ""
     var paymentType: String = ""
@@ -21,7 +22,10 @@ class Expense{
          description: String, imageLink: String, notes: String){
         
         self.id = id
-        self.expenseDate = expenseDate
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d MMM yy"
+        self.expenseDate = dateFormatter.date(from: expenseDate)!
+        self.expenseDateString = expenseDate
         self.amount = amount
         self.category = category
         self.paymentType = paymentType
