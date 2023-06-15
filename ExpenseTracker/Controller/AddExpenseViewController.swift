@@ -38,8 +38,13 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
     let MONTHLY_EXPENSE_CAP_KEY = "MonthlyExpenseCap"
     
     let datePicker = UIDatePicker()
+    
     let paymentTypePicker = UIPickerView()
     var paymentTyplePickerOptions = ["","Card","Cash","Gift Card","Voucher","Bank Transfer","Cheque", "Digital Wallet","Other"]
+    
+    let categoryPicker = UIPickerView()
+    let categoryPickerOptions:[String] = ["","Food & Dining", "Transportation", "Utilities", "Housing", "Entertainment", "Health & Wellness", "Personal Care", "Travel", "Shopping", "Education", "Debt Payments", "Gifts & Donations", "Miscellaneous","Business","Groceries","Transfer Payments","Other"]
+    
     var receiptImageIdentifier:Int = -1
     var expenses = Array<Expense>()
     var imageTaken = false
@@ -52,10 +57,16 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         super.viewDidLoad()
         createDatepicker()
         
-        //picker view
+        //payment type picker view
         paymentTypePicker.delegate = self
         paymentTypePicker.dataSource = self
         paymentTypeTextField.inputView = paymentTypePicker
+        
+        //
+        categoryPicker.delegate = self
+        categoryPicker.dataSource = self
+        categoryTextField.inputView = categoryPicker
+        
         //initialize image view
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         recieptImageView.isUserInteractionEnabled = true
@@ -110,6 +121,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
+        dateFormatter.dateFormat = "d MMM yyyy"
         self.dateTextField.text = dateFormatter.string(from: datePicker.date)
         self.view.endEditing(true)
         
@@ -192,7 +204,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         //Looping the 2D expense array to find expenses in the current month and adding the amounts to the monthly amount variable
         monthlyAmount = 0.0
         for expense in expenses{
-            if(expense.expenseDate.contains(month) && expense.expenseDate.contains(year))
+            if(expense.expenseDateString.contains(month) && expense.expenseDateString.contains(year))
             {
                 monthlyAmount += expense.amount
             }
@@ -206,7 +218,7 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         
         if setCap > 0 {
             //Checking if current monthly expense amount has breached the threshold set by User, if so sending an alert.
-            let difference = setCap - monthlyAmount
+            let difference = Double(round((setCap - monthlyAmount*100)/100))
             
             if( difference < 100 && difference >= 0)
             {
@@ -377,6 +389,8 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         notesTextField.text = nil
         imageTaken = false
         resetImageButton.isHidden = true
+        categoryPicker.selectRow(0, inComponent: 0, animated: true)
+        paymentTypePicker.selectRow(0, inComponent: 0, animated: true)
     }
     
     //Validation to check if amount has 2 decimal place (e.g $20.00)
@@ -456,21 +470,34 @@ extension CGRect {
 
 extension AddExpenseViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     
-    func numberOfComponents(in paymentTypePicker:UIPickerView) -> Int{
+    func numberOfComponents(in pickerView:UIPickerView) -> Int{
         return 1
     }
     
-    func pickerView(_ paymentTypePicker:UIPickerView, numberOfRowsInComponent component:Int ) -> Int{
-        return paymentTyplePickerOptions.count
+    func pickerView(_ pickerView:UIPickerView, numberOfRowsInComponent component:Int ) -> Int{
+        if pickerView == categoryPicker {
+            return categoryPickerOptions.count
+        } else{
+            return paymentTyplePickerOptions.count
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return paymentTyplePickerOptions[row]
+        if pickerView == categoryPicker{
+            return categoryPickerOptions[row]
+        } else{
+            return paymentTyplePickerOptions[row]
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        paymentTypeTextField.text = paymentTyplePickerOptions[row]
-        paymentTypeTextField.resignFirstResponder()
+        if pickerView == categoryPicker{
+            categoryTextField.text = categoryPickerOptions[row]
+            categoryTextField.resignFirstResponder()
+        }else{
+            paymentTypeTextField.text = paymentTyplePickerOptions[row]
+            paymentTypeTextField.resignFirstResponder()
+        }
     }
 }
 

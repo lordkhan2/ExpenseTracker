@@ -66,7 +66,7 @@ class ExpensesListViewController: UIViewController, UISearchResultsUpdating, UIS
             expense in
             let searchTextMatch:Bool
             if (searchController.searchBar.text != ""){
-                searchTextMatch = expense.expenseDate.lowercased().contains(searchText.lowercased())||expense.category.lowercased().contains(searchText.lowercased())||String(expense.amount).contains(searchText)
+                searchTextMatch = expense.expenseDateString.lowercased().contains(searchText.lowercased())||expense.category.lowercased().contains(searchText.lowercased())||String(expense.amount).contains(searchText)
             }
             else
             {
@@ -104,7 +104,7 @@ extension ExpensesListViewController: UITableViewDataSource {
         else{
             thisExpense = expenses[indexPath.row]
         }
-        cell.dateLabel.text = thisExpense.expenseDate
+        cell.dateLabel.text = thisExpense.expenseDateString
         cell.categoryLabel.text = thisExpense.category
         cell.amountLabel.text = "$\(thisExpense.amount.description)"
         
