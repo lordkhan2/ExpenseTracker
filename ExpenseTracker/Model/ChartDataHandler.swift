@@ -13,6 +13,16 @@ struct SummarisedExpense{
     var subtotal:Double = 0
 }
 
+struct CategoryCountExpense{
+    var category: String = ""
+    var count: Int = 0
+}
+
+struct DailyTotalExpense{
+    var dailyTotal: Double = 0.0
+    var date: Int = 0
+}
+
 class ChartDataHandler{
     
     //Function to configure and manipulate the date returned by the system and into a tuple and return it with all necessary information in the correct format
@@ -183,8 +193,8 @@ class ChartDataHandler{
     // y = Dates of current month ( say july, 1 - 31 of july)
     // each category will be a line and there should be dots on each date - count
     
-    func getCategories(expenses: [Expense]) -> Dictionary<String, Int>{
-        var categoryCountDict: [String:Int] = [:]
+    func getCategories(expenses: [Expense]) -> [CategoryCountExpense]{
+        var categorizedCountArray: [CategoryCountExpense] = []
         let categoryOptions:[String] = ["Food & Dining", "Transportation", "Utilities", "Housing", "Entertainment", "Health & Wellness", "Personal Care", "Travel", "Shopping", "Education", "Debt Payments", "Gifts & Donations", "Miscellaneous","Business","Groceries","Transfer Payments","Other"]
         
         for i in categoryOptions{
@@ -192,19 +202,65 @@ class ChartDataHandler{
             for expense in expenses{
                 if expense.category == i{
                     count += 1
-                    print(expense.category)
                 }
             }
             if count != 0{
-                categoryCountDict[i] = count
+                let catCount = CategoryCountExpense(category: i, count: count)
+                categorizedCountArray.append(catCount)
             }
             count = 0
         }
-        dump(categoryCountDict)
-
-        return categoryCountDict
+        return categorizedCountArray
     }
-
+    
+    // Function to prepare the date according to required format for the Category - Count Bar Chart
+    func prepareCategoryCountChartEntry(preparedDataForCharts:[CategoryCountExpense]) ->[BarChartDataEntry]{
+        guard preparedDataForCharts.count > 0 else{
+            return [BarChartDataEntry]()
+        }
+        var barChartDataEntries = [BarChartDataEntry]()
+        for i in 0...preparedDataForCharts.count - 1 {
+            barChartDataEntries.append(BarChartDataEntry(x: Double(i+1), y: Double(preparedDataForCharts[i].count)))
+        }
+        return barChartDataEntries
+    }
+    
+    func getGroupedMonthExpenses(expenses: [Expense]) -> [DailyTotalExpense]{
+        var dailyTotalExpenseArray: [DailyTotalExpense] = []
+        let date: [String] = ["1", "2", "3", "4", "5", "6", "7",
+                    "8", "9", "10", "11", "12", "13",
+                    "14", "15", "16", "17", "18", "19",
+                    "20", "21", "22", "23", "24", "25",
+                    "26", "27", "28", "29", "30", "31"]
+        
+        var dailyTotalExpenditure: Double = 0.0
+        
+        for item in date{
+            for expense in expenses{
+                let components = expense.expenseDateString.components(separatedBy: " ")
+                if components[0].contains(item){
+                    dailyTotalExpenditure += expense.amount
+                }
+            }
+            let expenseObj = DailyTotalExpense(dailyTotal: dailyTotalExpenditure, date: Int(item)!)
+            dailyTotalExpenseArray.append(expenseObj)
+            dailyTotalExpenditure = 0.0
+        }
+        dump(dailyTotalExpenseArray)
+        return dailyTotalExpenseArray
+    }
+    
+    func prepareGroupedMonthExpenses(preparedDataForCharts:[DailyTotalExpense]) ->[BarChartDataEntry]{
+        guard preparedDataForCharts.count > 0 else{
+            return [BarChartDataEntry]()
+        }
+        var barChartDataEntries = [BarChartDataEntry]()
+        for i in 0...preparedDataForCharts.count - 1 {
+            barChartDataEntries.append(BarChartDataEntry(x: Double(preparedDataForCharts[i].date), y: Double(preparedDataForCharts[i].dailyTotal)))
+        }
+        return barChartDataEntries
+    }
+    
 }
 
 // An extended protocol with a function that resolves all Double related values to the targeted decimal places for the Charts

@@ -11,10 +11,13 @@ class OverviewController: UIViewController, ChartViewDelegate {
     var pieChart = PieChartView()
     var barChart = BarChartView()
     var categoryCountChart = BarChartView()
+    var lineGraph = LineChartView()
+    
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var pieChartView: UIView!
     @IBOutlet weak var barChartView: UIView!
     @IBOutlet weak var categoryCountChartView: UIView!
+    
     var db = DBManager()
     var expenses = Array<Expense>()
     
@@ -46,6 +49,7 @@ class OverviewController: UIViewController, ChartViewDelegate {
 //            categoryCountChart.frame = CGRect(x: spacing * 6 + chartWidth + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
             barChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
             categoryCountChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
+            lineGraph.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
             
         } else {
             chartWidth = view.safeAreaLayoutGuide.layoutFrame.width - 2 * spacing
@@ -56,16 +60,23 @@ class OverviewController: UIViewController, ChartViewDelegate {
 //            categoryCountChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: 6 * spacing + view.safeAreaLayoutGuide.layoutFrame.minY + chartHeight, width: chartWidth, height: chartHeight)
             barChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
             categoryCountChart.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
+            lineGraph.frame = CGRect(x: spacing + view.safeAreaLayoutGuide.layoutFrame.minX, y: spacing + view.safeAreaLayoutGuide.layoutFrame.minY, width: chartWidth, height: chartHeight)
         }
         
         pieChartView.addSubview(pieChart)
         barChartView.addSubview(barChart)
-        categoryCountChartView.addSubview(categoryCountChart)
+        categoryCountChartView.addSubview(lineGraph)
+        
         
         let month = chartDataHandler.getCurrentMonthAndYear()
         monthLabel.text = "Expense Summary For \(month.0) \(month.1)"
         expenses = db.read()
-        let categoryCountDict = chartDataHandler.getCategories(expenses: expenses)
+        let filteredCategoryCountArray = chartDataHandler.filterDataForCharts(expenses: expenses)
+        let categoryCountArray = chartDataHandler.getCategories(expenses: filteredCategoryCountArray)
+        let categoryCountCharPrep = chartDataHandler.prepareCategoryCountChartEntry(preparedDataForCharts: categoryCountArray)
+        
+        let groupedDailyExpenses = chartDataHandler.getGroupedMonthExpenses(expenses: filteredCategoryCountArray)
+        let lineGraphDailyExpenseData = chartDataHandler.prepareGroupedMonthExpenses(preparedDataForCharts: groupedDailyExpenses)
         
         let filteredExpense = chartDataHandler.filterDataForCharts(expenses:expenses)
         let summarisedDataForCharts = chartDataHandler.prepareChartData(expenses: filteredExpense)
@@ -73,6 +84,10 @@ class OverviewController: UIViewController, ChartViewDelegate {
         let pieChartEntries = chartDataHandler.preparePieChartEntry(preparedDataForPieChart: dataForPieChart)
         let barChartEntries = chartDataHandler.prepareBarChartEntry(preparedDataForCharts: summarisedDataForCharts)
         let chartLegendsLabel = chartDataHandler.getChartsLegends(preparedDataForCharts: summarisedDataForCharts)
+        
+        
+        
+        //pie chart 1 configuration
         
         let set = PieChartDataSet(entries: pieChartEntries)
         set.colors = ChartColorTemplates.material()
@@ -83,7 +98,7 @@ class OverviewController: UIViewController, ChartViewDelegate {
         pieChart.data?.setValueFont(NSUIFont.systemFont(ofSize: 13.0,weight: UIFont.Weight.medium))
         pieChart.centerText = "Top 3 Expenses"
         
-        //categoryCountChart.data = categoryCountDict
+        //bar chart 1 configurations
         
         barChartView.addSubview(barChart)
         
@@ -103,6 +118,67 @@ class OverviewController: UIViewController, ChartViewDelegate {
         barChart.xAxis.drawGridLinesEnabled = false
         barChart.leftAxis.drawGridLinesEnabled = false
         barChart.rightAxis.drawGridLinesEnabled = false
+        
+        //bar chart 2 configurations
+        
+        let categoryCountSet = BarChartDataSet(entries: categoryCountCharPrep)
+        categoryCountSet.colors = ChartColorTemplates.material()
+        categoryCountSet.label = chartLegendsLabel
+        let dataCategoryCount = BarChartData(dataSet: categoryCountSet)
+        categoryCountChart.data = dataCategoryCount
+        categoryCountChart.barData?.setValueFont(NSUIFont.systemFont(ofSize: 12.0, weight: UIFont.Weight.medium))
+        
+        categoryCountChart.leftAxis.axisMinimum = 0
+        categoryCountChart.rightAxis.enabled = false
+        categoryCountChart.xAxis.labelPosition = .bottom
+        categoryCountChart.xAxis.drawAxisLineEnabled = true
+        categoryCountChart.xAxis.drawLabelsEnabled = false
+        
+        categoryCountChart.xAxis.drawGridLinesEnabled = false
+        categoryCountChart.leftAxis.drawGridLinesEnabled = false
+        categoryCountChart.rightAxis.drawGridLinesEnabled = false
+        
+        //line chart 1 configuration
+        
+        let lineGraphSet = LineChartDataSet(entries: lineGraphDailyExpenseData, label: "Daily Expenses for Current Month")
+        
+        lineGraphSet.mode = .cubicBezier
+        lineGraphSet.drawCirclesEnabled = false
+        lineGraphSet.lineWidth = 3
+        lineGraphSet.setColor(.white)
+
+        let gradientColors = [UIColor.cyan.cgColor, UIColor.clear.cgColor] as CFArray // Colors of the gradient
+        let colorLocations:[CGFloat] = [1.0, 0.0] // Positioning of the gradient
+        let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations) // Gradient Object
+        lineGraphSet.fill = LinearGradientFill(gradient: gradient!, angle: 90)
+        lineGraphSet.drawFilledEnabled = true
+        
+        lineGraphSet.fillAlpha = 0.8
+        lineGraphSet.drawFilledEnabled = true
+        
+        lineGraphSet.drawHorizontalHighlightIndicatorEnabled = false
+        let lineData = LineChartData(dataSet: lineGraphSet)
+        lineData.setDrawValues(false)
+        lineGraph.data = lineData
+        
+        lineGraph.backgroundColor = .systemGray
+        lineGraph.rightAxis.enabled = false
+        
+        lineGraph.leftAxis.labelFont = .boldSystemFont(ofSize: 12)
+        lineGraph.leftAxis.setLabelCount(6, force: false)
+        lineGraph.leftAxis.labelTextColor = .white
+        lineGraph.leftAxis.axisLineColor = .white
+        lineGraph.leftAxis.labelPosition = .outsideChart
+        
+        lineGraph.xAxis.labelPosition = .bottom
+        lineGraph.xAxis.labelFont = .boldSystemFont(ofSize: 12)
+        lineGraph.xAxis.setLabelCount(6, force: false)
+        lineGraph.xAxis.labelTextColor = .white
+        lineGraph.xAxis.axisLineColor = .systemBlue
+        
+        lineGraph.animate(xAxisDuration: 2.0)
+        
+        
     }
     
 }

@@ -38,6 +38,13 @@
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="urj-jG-rea">
                                                 <rect key="frame" x="0.0" y="482.33333333333337" width="393" height="397"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gn4-Fh-Jey">
+                                                        <rect key="frame" x="76" y="134" width="240" height="128"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    </view>
+                                                </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="urj-jG-rea" secondAttribute="height" multiplier="1:1.01" id="xob-Zt-vwD"/>
