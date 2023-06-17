@@ -241,9 +241,9 @@
 		C9820D5829FA5900004E0E02 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C9820D2E29FA58BD004E0E02 /* Main.storyboard */,
 				1CCE63AC2A100A8F00AE10F1 /* AlertTableCell.xib */,
 				1C93BD082A072BD600A0236F /* ExpenseTableCell.xib */,
-				C9820D2E29FA58BD004E0E02 /* Main.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -256,14 +256,14 @@
 				1C93D4E529FF8E55000F8688 /* AlertsViewController.swift */,
 				1C4C6FED2A0674BB00A33F39 /* AddExpenseViewController.swift */,
 				1C4C6FEF2A068A1400A33F39 /* ExpensesListViewController.swift */,
-				1C93BD072A072BD600A0236F /* ExpenseTableCell.swift */,
-				EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */,
-				1CCE63AB2A100A8F00AE10F1 /* AlertTableCell.swift */,
 				EE0A93FB2A126302006E27DA /* ExpenseDetailViewController.swift */,
 				EE98EB102A15C67A00F45581 /* NightModeTableViewCell.swift */,
 				EE61E68F2A385A69004472B7 /* ChatBotViewController.swift */,
 				EE61E6912A385BE2004472B7 /* ChatBotSwiftUIView.swift */,
 				EE61E6972A39B3D0004472B7 /* GenerateExpenseReportViewController.swift */,
+				EE1A4B0F2A076D3300516429 /* SettingTableViewCell.swift */,
+				1C93BD072A072BD600A0236F /* ExpenseTableCell.swift */,
+				1CCE63AB2A100A8F00AE10F1 /* AlertTableCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

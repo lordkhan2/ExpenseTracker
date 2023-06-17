@@ -22,6 +22,7 @@ class AlertTableCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         dateImageView.image = UIImage(systemName: "calendar")
+        dateImageView.tintColor = .white
         alertBubbleView.layer.cornerRadius = alertBubbleView.frame.size.height / 20
         alertBubbleView.backgroundColor = UIColor.systemPink.withAlphaComponent(0.8)
         alertLevelImageView.image = UIImage(systemName: "eye.trianglebadge.exclamationmark")

@@ -19,6 +19,7 @@ class ExpenseDetailViewController: UIViewController {
     @IBOutlet weak var receiptImageViewLabel: UILabel!
     @IBOutlet weak var notesTextView: UITextView!
     @IBOutlet weak var descriptionlabel: UILabel!
+    @IBOutlet weak var backgroundPaneView: UIView!
     @IBOutlet weak var notesLabel: UILabel!
     
     var expense:Expense?
@@ -30,6 +31,8 @@ class ExpenseDetailViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        backgroundPaneView.layer.cornerRadius = backgroundPaneView.frame.size.height / 40
         
         descriptionTextView.layer.borderWidth = 1
 

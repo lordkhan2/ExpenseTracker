@@ -11,21 +11,35 @@ import Charts
 struct SummarisedExpense{
     var legendName:String = ""
     var subtotal:Double = 0
+    var subExpenses:[Expense] = [Expense]()
 }
 
 struct CategoryCountExpense{
     var category: String = ""
     var count: Int = 0
+    var subExpenses:[Expense] = [Expense]()
 }
 
 struct DailyTotalExpense{
     var dailyTotal: Double = 0.0
     var date: Int = 0
+    var subExpenses:[Expense] = [Expense]()
+}
+
+struct CumulativeExpense{
+    var cumulativeAmount: Double = 0.0
+    var date: Int = 0
+    var subExpenses:[Expense] = [Expense]()
 }
 
 class ChartDataHandler{
     
+    
+    let MONTHLY_EXPENSE_CAP_KEY = "MonthlyExpenseCap"
+    var setCap: Double = 0.0
+    
     //Function to configure and manipulate the date returned by the system and into a tuple and return it with all necessary information in the correct format
+    
     func getCurrentMonthAndYear() -> (String,String,String){
         let date = Date()
         let dateFormatter = DateFormatter()
@@ -48,7 +62,6 @@ class ChartDataHandler{
         }
         var filteredExpensesForCharts = [Expense]()
         let timeTuple = getCurrentMonthAndYear()
-
         
         //Looping the 2D expense array to find expenses in the current month and adding the amounts to the monthly amount variable
         for expense in expenses{
@@ -103,6 +116,7 @@ class ChartDataHandler{
             for expense in expenses {
                 if expense.category.uppercased() == legendName{
                     summarisedExpense.subtotal += expense.amount
+                    summarisedExpense.subExpenses.append(expense)
                 }
             }
             summarisedExpenses.append(summarisedExpense)
@@ -127,6 +141,7 @@ class ChartDataHandler{
             otherExpenses.legendName = "OTHER"
             for i in 3...summarisedExpenses.count - 1 {
                 otherExpenses.subtotal += summarisedExpenses[i].subtotal
+                otherExpenses.subExpenses += summarisedExpenses[i].subExpenses
             }
             preparedData.append(otherExpenses)
             return preparedData
@@ -159,6 +174,7 @@ class ChartDataHandler{
             var expenseForPie = SummarisedExpense()
             expenseForPie.subtotal = (preparedDataForCharts[i].subtotal / total * 100).rounded(digits: 1)
             preparedDataForPieChart.append(expenseForPie)
+            preparedDataForPieChart[i].subExpenses = preparedDataForCharts[i].subExpenses
         }
         return preparedDataForPieChart
     }
@@ -197,15 +213,17 @@ class ChartDataHandler{
         var categorizedCountArray: [CategoryCountExpense] = []
         let categoryOptions:[String] = ["Food & Dining", "Transportation", "Utilities", "Housing", "Entertainment", "Health & Wellness", "Personal Care", "Travel", "Shopping", "Education", "Debt Payments", "Gifts & Donations", "Miscellaneous","Business","Groceries","Transfer Payments","Other"]
         
-        for i in categoryOptions{
+        for category in categoryOptions{
             var count = 0
+            var subExpenses:[Expense] = [Expense]()
             for expense in expenses{
-                if expense.category == i{
+                if expense.category == category{
                     count += 1
+                    subExpenses.append(expense)
                 }
             }
             if count != 0{
-                let catCount = CategoryCountExpense(category: i, count: count)
+                let catCount = CategoryCountExpense(category: category, count: count,subExpenses: subExpenses)
                 categorizedCountArray.append(catCount)
             }
             count = 0
@@ -236,31 +254,75 @@ class ChartDataHandler{
         var dailyTotalExpenditure: Double = 0.0
         
         for item in date{
+            var subExpenses:[Expense] = [Expense]()
             for expense in expenses{
                 let components = expense.expenseDateString.components(separatedBy: " ")
-                if components[0].contains(item){
+                if Int(components[0]) == Int(item) {
                     dailyTotalExpenditure += expense.amount
+                    subExpenses.append(expense)
                 }
             }
-            let expenseObj = DailyTotalExpense(dailyTotal: dailyTotalExpenditure, date: Int(item)!)
+            let expenseObj = DailyTotalExpense(dailyTotal: dailyTotalExpenditure, date: Int(item)!,subExpenses: subExpenses)
             dailyTotalExpenseArray.append(expenseObj)
             dailyTotalExpenditure = 0.0
         }
-        dump(dailyTotalExpenseArray)
         return dailyTotalExpenseArray
     }
     
-    func prepareGroupedMonthExpenses(preparedDataForCharts:[DailyTotalExpense]) ->[BarChartDataEntry]{
+    func prepareGroupedMonthExpenses(preparedDataForCharts:[DailyTotalExpense]) ->[ChartDataEntry]{
         guard preparedDataForCharts.count > 0 else{
-            return [BarChartDataEntry]()
+            return [ChartDataEntry]()
         }
-        var barChartDataEntries = [BarChartDataEntry]()
-        for i in 0...preparedDataForCharts.count - 1 {
-            barChartDataEntries.append(BarChartDataEntry(x: Double(preparedDataForCharts[i].date), y: Double(preparedDataForCharts[i].dailyTotal)))
+        var barChartDataEntries = [ChartDataEntry]()
+        for i in 0...preparedDataForCharts.count - 1
+        {
+            barChartDataEntries.append(ChartDataEntry(x: Double(preparedDataForCharts[i].date), y: Double(preparedDataForCharts[i].dailyTotal)))
         }
         return barChartDataEntries
     }
     
+    func getCurrentMonthCumulativeExpenses(dailyTotalExpenses: [DailyTotalExpense]) -> [CumulativeExpense]{
+        var cumulativeArray: [CumulativeExpense] = []
+        var cumulativeAmount: Double = 0
+        var subexpenses:[Expense] = [Expense]()
+        
+        for dailyExp in dailyTotalExpenses{
+            cumulativeAmount += dailyExp.dailyTotal
+            subexpenses += dailyExp.subExpenses
+            //print(subexpenses.count)
+            let cumulativeObj = CumulativeExpense(cumulativeAmount: cumulativeAmount, date: dailyExp.date,subExpenses: subexpenses)
+            cumulativeArray.append(cumulativeObj)
+        }
+        return cumulativeArray
+    }
+    
+    func prepareCumulativeExpenses(preparedDataForCharts:[CumulativeExpense]) -> [ChartDataEntry]{
+        guard preparedDataForCharts.count > 0 else {
+            return [ChartDataEntry]()
+        }
+        var lineChartDataEntries = [ChartDataEntry]()
+        for i in 0...preparedDataForCharts.count - 1 {
+            lineChartDataEntries.append(ChartDataEntry(x: Double(preparedDataForCharts[i].date), y: Double(preparedDataForCharts[i].cumulativeAmount)))
+        }
+        return lineChartDataEntries
+    }
+    
+    func prepareSecondCumulativeExpensesLine(preparedDataForCharts:[CumulativeExpense])-> [ChartDataEntry]{
+        
+        guard preparedDataForCharts.count > 0 else{
+            return [ChartDataEntry]()
+        }
+        
+        if let monthlyCapRecord = UserDefaults.standard.value(forKey: self.MONTHLY_EXPENSE_CAP_KEY) as? Data{
+            let expenseCapRecord = try! PropertyListDecoder().decode(ExpenseCap.self,from: monthlyCapRecord)
+            setCap = expenseCapRecord.monthlyCapAmount
+        }
+        var lineChartDataEntries = [ChartDataEntry]()
+        for i in 0...preparedDataForCharts.count-1{
+            lineChartDataEntries.append(ChartDataEntry(x: Double(preparedDataForCharts[i].date), y: setCap))
+        }
+        return lineChartDataEntries
+    }
 }
 
 // An extended protocol with a function that resolves all Double related values to the targeted decimal places for the Charts
