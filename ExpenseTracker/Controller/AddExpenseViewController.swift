@@ -177,10 +177,11 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         }
 
         //only save image and update identifier if user has taken a photo
-        if let recieptImage = recieptImageView.image {
+        if imageTaken {
             //for data storage guideline, refer to https://developer.apple.com/documentation/foundation/optimizing_your_app_s_data_for_icloud_backup/index.html
             //the image is user generated but cannot be re-generated or downloaded. This image should be saved in <Application_Home>/Documents directory so that it can be backed up to the icloud automatically.
             //save image file manager return the url and assign to a global variable.
+            let recieptImage = recieptImageView.image!
             manager.saveImage(image: recieptImage, identifier: String(receiptImageIdentifier))
             expenseRecieptImage = String(receiptImageIdentifier)
             //update image identifer
@@ -219,7 +220,6 @@ class AddExpenseViewController : UIViewController, UIImagePickerControllerDelega
         if setCap > 0 {
             //Checking if current monthly expense amount has breached the threshold set by User, if so sending an alert.
             let difference = Double(round((setCap - monthlyAmount)*100)/100)
-            print(monthlyAmount,setCap)
             
             if( difference < 100 && difference >= 0)
             {
