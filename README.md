@@ -45,6 +45,12 @@ alerts are in-app.
 - Customizable alerts and Push Notifications
 - Support for more languages
 
+ # Application Demo:
+ A short gif demonstrating the game in action: <br/>
+ <br/>
+ <br/>
+ ![](FullExpenseTrackerDemo.gif)
+
 # How to Run
 
 At the current stage, the application has not been deployed in the AppStore and hence there is no way to download it or run it natively in
