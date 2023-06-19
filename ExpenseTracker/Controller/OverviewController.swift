@@ -47,7 +47,10 @@ class OverviewController: UIViewController, ChartViewDelegate,UIScrollViewDelega
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateChartsData()
-
+        if tableView != nil {
+            selectedExpense = [Expense]()
+            tableView.reloadData()
+        }
     }
     
     override func viewDidLayoutSubviews() {
