@@ -62,9 +62,9 @@ struct ChatBotSwiftUIView: View {
     }
 
     func sendMessage(){
-        print("buttonpressed")
         let myMessage = ChatMessage(id: UUID().uuidString, content: messageText, dateCreated: Date(), sender: .me)
         chatMessages.append(myMessage)
+        messageText = openAIService.prepareExpenseDataForAIService(userQuestion: messageText)
         openAIService.sendMessage(message:messageText).sink{ completion in
         } receiveValue: { response in
             guard let textResponse = response.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines.union(.init(charactersIn: "\""))) else {return}
